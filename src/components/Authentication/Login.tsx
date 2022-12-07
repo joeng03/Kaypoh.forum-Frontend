@@ -1,27 +1,15 @@
 import Input from "./Input";
-import Warning from "./Warning";
-import { acUserLogin } from "../store/user/action";
-import { useAppSelector, useAppDispatch } from "../store";
-import { ICredentials } from "../store/user/types";
-import { validateEmail, validatePassword } from "../utils/validators";
+import { acUserLogin } from "../../store/user/action";
+import { useAppDispatch } from "../../store";
+import { ICredentials } from "../../store/user/types";
+import { validateEmail, validatePassword } from "../../utils/validators";
 import { toastLoginError, toastFormat, toastLoginSuccess } from "utils/constants";
 
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { AxiosError } from "axios";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-//import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { TheatersRounded } from "@mui/icons-material";
+import { Button, Box, Container, Grid, Typography } from "@mui/material";
 
 function Copyright(props: any) {
     return (
@@ -34,21 +22,6 @@ function Copyright(props: any) {
 }
 
 const Login = (): JSX.Element => {
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-
-    const [emailErr, setEmailErr] = useState<string>("");
-    const [passwordErr, setPasswordErr] = useState<string>("");
-    const [btnDisabled, setBtnDisabled] = useState<boolean>(true);
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        const inputIsInvalid: boolean = emailErr !== "" || passwordErr !== "" || email === "" || password === "";
-        if (btnDisabled !== inputIsInvalid) {
-            setBtnDisabled(inputIsInvalid);
-        }
-    }, [emailErr, passwordErr, email, password]);
-
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const credentials: ICredentials = {
@@ -62,6 +35,22 @@ const Login = (): JSX.Element => {
         setEmail("");
         setPassword("");
     };
+
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+
+    const [emailErr, setEmailErr] = useState<string>("");
+    const [passwordErr, setPasswordErr] = useState<string>("");
+    const [btnDisabled, setBtnDisabled] = useState<boolean>(true);
+
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        const inputIsInvalid: boolean = emailErr !== "" || passwordErr !== "" || email === "" || password === "";
+        if (btnDisabled !== inputIsInvalid) {
+            setBtnDisabled(inputIsInvalid);
+        }
+    }, [emailErr, passwordErr, email, password]);
 
     return (
         <Container component="main" maxWidth="xs">
@@ -91,10 +80,10 @@ const Login = (): JSX.Element => {
                             message={emailErr}
                         ></Input>
                         <Input
-                            name="password"
-                            label="Password"
-                            type="password"
                             id="password"
+                            label="Password"
+                            name="password"
+                            type="password"
                             autoComplete="new-password"
                             value={password}
                             setInput={setPassword}

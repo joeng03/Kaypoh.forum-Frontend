@@ -30,11 +30,3 @@ export const acUserSignUp = (credentials: ICredentials): AppThunk<Promise<Payloa
         return dispatch(setUser(user));
     };
 };
-
-export const acGoogleSignIn = (tokenResponse: TokenResponse): AppThunk<Promise<PayloadAction<IUser>>> => {
-    return async (dispatch) => {
-        const user: IUser = await authService.google_signin(tokenResponse);
-        window.localStorage.setItem("user", JSON.stringify(user));
-        return dispatch(setUser(user));
-    };
-};
