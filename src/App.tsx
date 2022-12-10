@@ -1,43 +1,20 @@
 import SignUp from "./components/Authentication/SignUp";
 import Login from "./components/Authentication/Login";
+import Home from "./components/Home";
 import Post from "./components/Posts/Post";
-import { SwitchModeButton } from "./components/SwitchModeButton";
+
+import SwitchModeButton from "./components/SwitchModeButton";
 import "./App.css";
 import store from "./store";
-import { clientId } from "utils/constants";
 
+import PublishPost from "components/Posts/WritePost";
 import React, { useState, useMemo, createContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import { styled } from "@mui/material/styles";
-import { red, indigo, deepPurple, grey } from "@mui/material/colors";
+import { red, indigo, deepPurple, yellow } from "@mui/material/colors";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 import type { ThemeOptions, PaletteMode } from "@mui/material";
-
-type PostProps = {
-    id: number;
-    user_id: number;
-    title: string;
-    content: string;
-    reputation: number;
-    tag: string;
-    image: string;
-    created_at: Date;
-    updated_at: Date;
-};
-
-const postProps: PostProps = {
-    id: 1,
-    user_id: 2,
-    title: "Redux Flux Architecture",
-    content:
-        "In the past, present and future, we think a lot about bugs. Pearl Buck observed that, 'Every great mistake has a halfway moment, a split second when it can be recalled and perhaps remedied.' I hope that this quote will give some inspiration to the readers. What are the possible scenarios when bugs occurs or does not occur? Meanwhile, considering the importance of bugs, it is understandable that many people would be hesitant to make changes to the system. For instance, generally speaking, we have to consider many points of view about bugs before forming our own opinions. In our lives, when the discussion of bugs emerges, we have to adapt to the reality of its existence. However, this is still not the most important question in our discussion about bugs.",
-    reputation: 69,
-    tag: "TypeScript",
-    image: "https://www.freecodecamp.org/news/content/images/2022/06/2.png",
-    created_at: new Date(),
-    updated_at: new Date(),
-};
 
 // TypeScript module augmentation for @mui/material/styles
 declare module "@mui/material/styles" {
@@ -50,6 +27,13 @@ declare module "@mui/material/styles" {
         m: true;
         l: true;
         xxl: true;
+    }
+
+    interface Palette {
+        star: Palette["primary"];
+    }
+    interface PaletteOptions {
+        star: PaletteOptions["primary"];
     }
 }
 
@@ -98,6 +82,9 @@ const lightTheme: ThemeOptions = {
         warning: {
             main: red[700],
         },
+        star: {
+            main: yellow[600],
+        },
     },
     breakpoints: breakpoints,
 };
@@ -106,6 +93,9 @@ const darkTheme: ThemeOptions = {
         mode: "dark",
         warning: {
             main: red[200],
+        },
+        star: {
+            main: yellow[400],
         },
         contrastThreshold: 4.5,
     },
@@ -141,7 +131,11 @@ const App: React.FC = () => {
                                 <Routes>
                                     <Route path="/signup" element={<SignUp />} />
                                     <Route path="/" element={<Login />} />
-                                    <Route path="/post" element={<Post {...postProps} />} />
+                                    <Route
+                                        path="/publishpost"
+                                        element={<PublishPost method="create" post={undefined} />}
+                                    />
+                                    <Route path="/home" element={<Home />}></Route>
                                 </Routes>
                             </Provider>
                         </BrowserRouter>

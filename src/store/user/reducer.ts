@@ -3,9 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 const initialUserState: IUser = {
-    username: "",
-    email: "",
     token: "",
+    id: 0,
+    email: "",
+    username: "",
+    profilePic: "",
+    stars: 0,
+    bio: "",
+    created_at: new Date(0),
+    updated_at: new Date(0),
 };
 
 const userSlice = createSlice({

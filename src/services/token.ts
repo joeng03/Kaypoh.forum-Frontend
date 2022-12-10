@@ -1,11 +1,11 @@
 let token: string;
 
-const setToken = (_token: string): void => {
+export const setToken = (_token: string): void => {
     console.log(_token);
     token = _token;
 };
 
-const getToken = (): {
+export const getToken = (): {
     headers: {
         Authorization: string;
     };
@@ -14,6 +14,3 @@ const getToken = (): {
         headers: { Authorization: `Bearer ${token}` },
     };
 };
-
-const tokenService = { setToken, getToken };
-export default tokenService;

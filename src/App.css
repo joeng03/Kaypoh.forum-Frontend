@@ -44,3 +44,20 @@ li {
 ul {
   padding-inline-start: unset;
 }
+
+.toolbar-darkmode{
+  color:rgba(0, 0, 0, 0.87);
+}
+.toolbar-darkmode button{
+  color:rgba(0, 0, 0, 0.87);
+}
+.wrapper-class {
+  margin: 0 auto;
+  width: 70vh;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 2%;
+}
+.toolbar-class {
+  border: 1px solid #ccc;
+}

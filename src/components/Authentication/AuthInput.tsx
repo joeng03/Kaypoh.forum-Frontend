@@ -2,13 +2,13 @@ import Warning from "./Warning";
 import React from "react";
 import { Grid, TextField } from "@mui/material";
 
-type InputProps = {
+type AuthInputProps = {
     id: string;
     label: string;
     name: string;
     autoComplete: string;
     value: string;
-    setInput: React.Dispatch<React.SetStateAction<string>>;
+    setValue: React.Dispatch<React.SetStateAction<string>>;
     setMessage: React.Dispatch<React.SetStateAction<string>>;
     validate: (input: string) => string;
     message: string;
@@ -16,7 +16,7 @@ type InputProps = {
     type?: string;
 };
 
-const Input = (props: InputProps): JSX.Element => {
+const AuthInput = (props: AuthInputProps): JSX.Element => {
     return (
         <Grid item xs={12}>
             <TextField
@@ -29,7 +29,7 @@ const Input = (props: InputProps): JSX.Element => {
                 name={props.name}
                 autoComplete={props.autoComplete}
                 value={props.value}
-                onChange={({ target }) => props.setInput(target.value)}
+                onChange={({ target }) => props.setValue(target.value)}
                 onFocus={() => props.setMessage("")}
                 onBlur={({ target }) => props.setMessage(props.validate(target.value))}
                 autoFocus={"autoFocus" in props && props.autoFocus}
@@ -40,4 +40,4 @@ const Input = (props: InputProps): JSX.Element => {
     );
 };
 
-export default Input;
+export default AuthInput;

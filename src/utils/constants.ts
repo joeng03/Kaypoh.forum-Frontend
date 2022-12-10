@@ -2,7 +2,7 @@ import type { ToastOptions } from "react-toastify";
 
 export const toastSignUpError = (errors: { email?: string; username?: string }): string => {
     let message = "";
-    if ("email" in errors) {
+    if (errors && "email" in errors) {
         message += "Email";
     }
     if ("username" in errors) {
@@ -25,4 +25,6 @@ export const toastFormat: ToastOptions = {
 };
 
 export const emailRegex = new RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/);
-export const clientId = "644077220041-d30ip5992q0qd1e2ieu3q3naokcpnv51.apps.googleusercontent.com";
+
+export const titleMaxLength = 255;
+export const contentMaxLength = 3e4;

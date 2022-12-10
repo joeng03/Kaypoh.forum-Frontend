@@ -1,4 +1,7 @@
-import React from "react";
+import { IPost } from "store/posts/types";
+import { BASE_URL } from "utils/endpoints";
+import React, { useState } from "react";
+import DOMPurify from "isomorphic-dompurify";
 import {
     Avatar,
     Box,
@@ -15,17 +18,8 @@ import {
 } from "@mui/material";
 
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
-type PostProps = {
-    id: number;
-    user_id: number;
-    title: string;
-    content: string;
-    reputation: number;
-    tag: string;
-    image: string;
-    created_at: Date;
-    updated_at: Date;
-};
+import { yellow } from "@mui/material/colors";
+type PostProps = IPost;
 
 const postStyle = {
     position: "relative",
@@ -33,6 +27,7 @@ const postStyle = {
     transition: "0.3s",
     height: "20rem",
     width: "30em",
+    mt: "2rem",
     borderRadius: ".625rem!important",
     boxShadow: "0 8px 40px -12px rgba(0,0,0,0.2)",
     "&:hover": {
@@ -53,17 +48,25 @@ const avatarStyle = {
     border: "0.1rem solid",
 };
 
+const sanitizeData = (data: string) => ({
+    __html: DOMPurify.sanitize(data),
+});
+
 const Post = (props: PostProps): JSX.Element => {
-    const theme = useTheme();
+    const handleStar = () => {
+        setStarClicked(!starClicked);
+    };
+    const [starClicked, setStarClicked] = useState<boolean>(false);
     return (
         <Card raised sx={postStyle}>
-            <CardMedia image={props.image} sx={{ height: "40%", position: "relative" }}>
+            <CardMedia image={BASE_URL + props.image} sx={{ height: "40%", position: "relative" }}>
                 <Chip label={props.tag} size="small" color="secondary" sx={chipStyle} />
             </CardMedia>
             <CardContent>
                 <Typography sx={{ fontSize: "1.2rem", fontWeight: "bold", mb: "0.4em" }}>{props.title}</Typography>
                 <Typography
                     variant="body1"
+                    dangerouslySetInnerHTML={sanitizeData(props.content)}
                     sx={{
                         display: "-webkit-box",
                         overflow: "hidden",
@@ -72,9 +75,7 @@ const Post = (props: PostProps): JSX.Element => {
                         fontFamily: "Open Sans, sans-serif",
                         textAlign: "left",
                     }}
-                >
-                    {props.content}
-                </Typography>
+                ></Typography>
             </CardContent>
             <Divider />
             <CardActions sx={{ position: "relative" }}>
@@ -85,18 +86,18 @@ const Post = (props: PostProps): JSX.Element => {
                     target="_blank"
                     sx={avatarStyle}
                 >
-                    {props.user_id}
+                    {props.user.username}
                 </Avatar>
-                <Typography sx={{ fontSize: "0.9em" }}>{"Ed Sheeran"}</Typography>
+                <Typography sx={{ fontSize: "0.9em" }}>{props.user.username}</Typography>
                 <Typography sx={{ fontSize: "0.9em" }}>
-                    {props.created_at.toLocaleDateString("en-US", {
+                    {new Date(props.created_at).toLocaleDateString("en-US", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
                     })}
                 </Typography>
-                <IconButton aria-label="upvote" sx={{ position: "absolute", right: "0" }}>
-                    <StarRoundedIcon />
+                <IconButton aria-label="star" sx={{ position: "absolute", right: "0" }} onClick={handleStar}>
+                    <StarRoundedIcon sx={{ color: starClicked ? "star.main" : "inherit" }} />
                 </IconButton>
             </CardActions>
         </Card>

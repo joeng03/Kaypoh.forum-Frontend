@@ -2,10 +2,10 @@ import { ColorContext } from "../App";
 import { Box, IconButton, useTheme } from "@mui/material";
 import DarkIcon from "@mui/icons-material/DarkModeRounded";
 import LightIcon from "@mui/icons-material/LightModeRounded";
-import { yellow, grey } from "@mui/material/colors";
+import { amber, grey } from "@mui/material/colors";
 import React, { useContext } from "react";
 
-export const SwitchModeButton = (): JSX.Element => {
+const SwitchModeButton = (): JSX.Element => {
     const theme = useTheme();
     const colorMode = useContext(ColorContext);
     return (
@@ -18,9 +18,9 @@ export const SwitchModeButton = (): JSX.Element => {
             }}
         >
             {theme.palette.mode === "light" ? "Light" : "Dark"} mode
-            <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+            <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode}>
                 {theme.palette.mode === "dark" ? (
-                    <LightIcon sx={{ fontSize: "2rem", color: yellow[400] }} />
+                    <LightIcon sx={{ fontSize: "2rem", color: amber[200] }} />
                 ) : (
                     <DarkIcon sx={{ fontSize: "2rem", color: grey[400] }} />
                 )}
@@ -28,3 +28,5 @@ export const SwitchModeButton = (): JSX.Element => {
         </Box>
     );
 };
+
+export default SwitchModeButton;
