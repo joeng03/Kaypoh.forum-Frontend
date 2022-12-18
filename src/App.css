@@ -53,11 +53,22 @@ ul {
 }
 .wrapper-class {
   margin: 0 auto;
-  width: 70vh;
-  padding: 1rem;
+  width: 85vw;
+  max-width: 600px;
+  padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 2%;
 }
 .toolbar-class {
   border: 1px solid #ccc;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }

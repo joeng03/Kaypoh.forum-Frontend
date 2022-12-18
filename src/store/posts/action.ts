@@ -18,14 +18,18 @@ export const acSetPosts = (): AppThunk<Promise<PayloadAction<IPost[]>>> => {
     };
 };
 
-export const acUpdatePost = (post: FormData, post_id: number): AppThunk<Promise<PayloadAction<IPost>>> => {
+export const acUpdatePost = (
+    post: IPost | FormData,
+    post_id: number,
+    type: string,
+): AppThunk<Promise<PayloadAction<IPost>>> => {
     return async (dispatch) => {
-        const updatedPost = await postService.update(post, post_id);
+        const updatedPost = await postService.update(post, post_id, type);
         return dispatch(updatePost(updatedPost));
     };
 };
 
-export const acdeletePost = (post_id: number): AppThunk<Promise<PayloadAction<number>>> => {
+export const acDeletePost = (post_id: number): AppThunk<Promise<PayloadAction<number>>> => {
     return async (dispatch) => {
         await postService.remove(post_id);
         return dispatch(deletePost(post_id));

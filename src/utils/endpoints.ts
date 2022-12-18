@@ -1,12 +1,12 @@
 export const BASE_URL = "http://localhost:3000";
 
 //Users
-export const SIGN_UP = `${BASE_URL}/users/signup`;
-export const LOG_IN = `${BASE_URL}/users/login`;
-export const LOG_OUT = `${BASE_URL}/users/logout`;
+export const SIGN_UP = "/users/signup";
+export const LOG_IN = "/users/login";
+export const LOG_OUT = "/users/logout";
 
 //Posts
-export const POSTS = `${BASE_URL}/posts`;
+export const POSTS = "/posts";
 
 //Comments
-export const COMMENTS = `${BASE_URL}/comments`;
+export const COMMENTS = "/comments";

@@ -7,13 +7,13 @@ import { validateUsername, validateEmail, validatePassword } from "../../utils/v
 import { toastSignUpSuccess, toastSignUpError, toastFormat } from "utils/constants";
 
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Typography, Container, Button, TextField, Grid, Box } from "@mui/material";
 import Slide from "@mui/material/Slide";
 
-const SignUp = (): JSX.Element => {
+const SignUp: React.FC = () => {
     const [username, setUsername] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -24,6 +24,7 @@ const SignUp = (): JSX.Element => {
     const [btnDisabled, setBtnDisabled] = useState<boolean>(true);
     const [show, setShow] = useState<boolean>(false);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         setShow(true);
@@ -50,7 +51,10 @@ const SignUp = (): JSX.Element => {
             password,
         };
         dispatch(acUserSignUp(credentials))
-            .then(() => toast.success(toastSignUpSuccess, toastFormat))
+            .then(() => {
+                toast.success(toastSignUpSuccess, toastFormat);
+                navigate("/");
+            })
             .catch((err) => toast.error(toastSignUpError(err.response.data.errors), toastFormat));
 
         setUsername("");
@@ -59,8 +63,8 @@ const SignUp = (): JSX.Element => {
     };
 
     return (
-        <Slide direction="left" in={show} timeout={600}>
-            <Container component="main" maxWidth="xs">
+        <Slide direction="up" in={show} timeout={650}>
+            <Container component="main">
                 <Box
                     sx={{
                         mt: 8,
@@ -72,44 +76,49 @@ const SignUp = (): JSX.Element => {
                     <Typography component="h1" variant="h5">
                         Sign Up
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSignUp} sx={{ mt: 3 }}>
-                        <Grid container spacing={0.5}>
-                            <AuthInput
-                                id="Username"
-                                label="Username"
-                                name="Username"
-                                autoComplete="given-name"
-                                value={username}
-                                setValue={setUsername}
-                                setMessage={setUsernameErr}
-                                validate={validateUsername}
-                                autoFocus
-                                message={usernameErr}
-                            ></AuthInput>
-                            <AuthInput
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                                value={email}
-                                setValue={setEmail}
-                                setMessage={setEmailErr}
-                                validate={validateEmail}
-                                message={emailErr}
-                            ></AuthInput>
-                            <AuthInput
-                                id="password"
-                                label="Password"
-                                name="password"
-                                type="password"
-                                autoComplete="new-password"
-                                value={password}
-                                setValue={setPassword}
-                                setMessage={setPasswordErr}
-                                validate={validatePassword}
-                                message={passwordErr}
-                            ></AuthInput>
-                        </Grid>
+
+                    <Box
+                        component="form"
+                        noValidate
+                        onSubmit={handleSignUp}
+                        maxWidth="xs"
+                        sx={{ mt: 3, width: "80vw" }}
+                    >
+                        <AuthInput
+                            id="Username"
+                            label="Username"
+                            name="Username"
+                            autoComplete="given-name"
+                            value={username}
+                            setValue={setUsername}
+                            setMessage={setUsernameErr}
+                            validate={validateUsername}
+                            autoFocus
+                            message={usernameErr}
+                        ></AuthInput>
+                        <AuthInput
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            value={email}
+                            setValue={setEmail}
+                            setMessage={setEmailErr}
+                            validate={validateEmail}
+                            message={emailErr}
+                        ></AuthInput>
+                        <AuthInput
+                            id="password"
+                            label="Password"
+                            name="password"
+                            type="password"
+                            autoComplete="new-password"
+                            value={password}
+                            setValue={setPassword}
+                            setMessage={setPasswordErr}
+                            validate={validatePassword}
+                            message={passwordErr}
+                        ></AuthInput>
                         <Button
                             type="submit"
                             fullWidth
@@ -119,14 +128,9 @@ const SignUp = (): JSX.Element => {
                         >
                             Sign Up
                         </Button>
-                        <Grid container justifyContent="center">
-                            <Grid item>
-                                <Link to="/">Already have an account? Login</Link>
-                            </Grid>
-                        </Grid>
+                        <Link to="/login">Already have an account? Login</Link>
                     </Box>
                 </Box>
-                <ToastContainer />
             </Container>
         </Slide>
     );

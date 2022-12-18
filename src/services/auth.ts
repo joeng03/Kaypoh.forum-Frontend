@@ -1,10 +1,9 @@
-import { getToken } from "./token";
 import { SIGN_UP, LOG_IN, LOG_OUT } from "../utils/endpoints";
 import { ICredentials, IUser } from "../store/user/types";
 import axios from "axios";
 
-const signup = async (credentials: ICredentials): Promise<IUser> => {
-    const response = await axios.post(SIGN_UP, { user: credentials });
+export const verifyCookie = async (): Promise<IUser> => {
+    const response = await axios.get(LOG_IN);
     return response.data;
 };
 
@@ -13,10 +12,15 @@ const login = async (credentials: ICredentials): Promise<IUser> => {
     return response.data;
 };
 
-const logout = async () => {
-    const response = await axios.delete(LOG_OUT, getToken());
+const signup = async (credentials: ICredentials): Promise<IUser> => {
+    const response = await axios.post(SIGN_UP, { user: credentials });
     return response.data;
 };
 
-const authService = { signup, login, logout };
+const logout = async () => {
+    const response = await axios.delete(LOG_OUT);
+    return response.data;
+};
+
+const authService = { verifyCookie, login, signup, logout };
 export default authService;

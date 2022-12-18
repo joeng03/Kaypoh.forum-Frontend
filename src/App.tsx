@@ -1,22 +1,29 @@
+import { useAppDispatch, useAppSelector } from "./store";
 import SignUp from "./components/Authentication/SignUp";
 import Login from "./components/Authentication/Login";
 import Home from "./components/Home";
-import Post from "./components/Posts/Post";
-
+import ViewPost from "./components/Posts/ViewPost";
 import SwitchModeButton from "./components/SwitchModeButton";
+import { IPost, initialPostState } from "./store/posts/types";
+import RequireAuth from "components/Authentication/RequireAuth";
+import WritePost from "components/Posts/WritePost";
 import "./App.css";
-import store from "./store";
+import { acSetPosts } from "store/posts/action";
 
-import PublishPost from "components/Posts/WritePost";
-import React, { useState, useMemo, createContext } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Provider } from "react-redux";
+import React, { useState, useEffect, useMemo, createContext } from "react";
+import { BrowserRouter, Routes, Route, useMatch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import { styled } from "@mui/material/styles";
-import { red, indigo, deepPurple, yellow } from "@mui/material/colors";
+import { red, indigo, deepPurple, yellow, grey, amber } from "@mui/material/colors";
 import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
-import type { ThemeOptions, PaletteMode } from "@mui/material";
+import type { ThemeOptions, PaletteMode, PaletteColor, PaletteColorOptions } from "@mui/material";
 
 // TypeScript module augmentation for @mui/material/styles
+type Icon = {
+    sun?: string;
+    moon?: string;
+    star: string;
+};
 declare module "@mui/material/styles" {
     interface BreakpointOverrides {
         sm: false;
@@ -28,12 +35,13 @@ declare module "@mui/material/styles" {
         l: true;
         xxl: true;
     }
-
     interface Palette {
-        star: Palette["primary"];
+        icon: Icon;
+        primaryGradient: string;
     }
     interface PaletteOptions {
-        star: PaletteOptions["primary"];
+        icon: Icon;
+        primaryGradient: string;
     }
 }
 
@@ -52,16 +60,16 @@ const breakpoints = {
 const MediaQuery = styled("div")(({ theme }) => ({
     padding: theme.spacing(1),
     [theme.breakpoints.down("m")]: {
-        fontSize: "0.85rem",
+        fontSize: "0.9rem",
     },
     [theme.breakpoints.down("s")]: {
-        fontSize: "0.8rem",
+        fontSize: "0.85rem",
     },
     [theme.breakpoints.down("xs")]: {
-        fontSize: "0.75rem",
+        fontSize: "0.8rem",
     },
     [theme.breakpoints.up("m")]: {
-        fontSize: "0.9rem",
+        fontSize: "0.95rem",
     },
     [theme.breakpoints.up("l")]: {
         fontSize: "1rem",
@@ -77,13 +85,19 @@ const MediaQuery = styled("div")(({ theme }) => ({
 const lightTheme: ThemeOptions = {
     palette: {
         mode: "light",
-        primary: indigo,
-        secondary: deepPurple,
+        primaryGradient: "linear-gradient(to right,#3EADCF,#ABE9CD)",
+        primary: {
+            main: "#3EADCF",
+        },
+        secondary: {
+            main: "#ABE9CD",
+        },
         warning: {
             main: red[700],
         },
-        star: {
-            main: yellow[600],
+        icon: {
+            moon: grey[400],
+            star: yellow[600],
         },
     },
     breakpoints: breakpoints,
@@ -91,14 +105,23 @@ const lightTheme: ThemeOptions = {
 const darkTheme: ThemeOptions = {
     palette: {
         mode: "dark",
+        primaryGradient: "linear-gradient(to right,#3EADCF,#ABE9CD)",
+        primary: {
+            main: "#3EADCF",
+        },
+        secondary: {
+            main: "#ABE9CD",
+        },
         warning: {
             main: red[200],
         },
-        star: {
-            main: yellow[400],
+        icon: {
+            sun: amber[200],
+            star: yellow[300],
         },
         contrastThreshold: 4.5,
     },
+
     breakpoints: breakpoints,
 };
 
@@ -108,7 +131,7 @@ interface ColorContextSchema {
 export const ColorContext = createContext<ColorContextSchema>({} as ColorContextSchema);
 
 const App: React.FC = () => {
-    const [mode, setMode] = useState<PaletteMode>("dark");
+    const [mode, setMode] = useState<PaletteMode>("light");
     const theme = useMemo(() => createTheme(mode === "light" ? lightTheme : darkTheme), [mode]);
     const colorMode = useMemo(
         () => ({
@@ -118,6 +141,38 @@ const App: React.FC = () => {
         }),
         [],
     );
+    const dispatch = useAppDispatch();
+    const posts = useAppSelector((state) => state.posts);
+
+    const [viewPost, setViewPost] = useState<IPost>(initialPostState);
+    const [writePost, setWritePost] = useState<IPost>(initialPostState);
+
+    const matchViewPost = useMatch("/posts/:id");
+    const matchWritePost = useMatch("/writepost/:id");
+
+    useEffect(() => {
+        dispatch(acSetPosts());
+    }, []);
+    useEffect(() => {
+        setViewPost(
+            matchViewPost
+                ? posts.reduce(
+                      (acc, post) => (post.id.toString() === matchViewPost.params.id ? post : acc),
+                      initialPostState,
+                  )
+                : initialPostState,
+        );
+    }, [posts, matchViewPost]);
+    useEffect(() => {
+        setWritePost(
+            matchWritePost
+                ? posts.reduce(
+                      (acc, post) => (post.id.toString() === matchWritePost.params.id ? post : acc),
+                      initialPostState,
+                  )
+                : initialPostState,
+        );
+    }, [posts, matchWritePost]);
 
     return (
         <div className="App">
@@ -126,19 +181,51 @@ const App: React.FC = () => {
                     <MediaQuery>
                         <CssBaseline enableColorScheme />
                         <SwitchModeButton />
-                        <BrowserRouter>
-                            <Provider store={store}>
-                                <Routes>
-                                    <Route path="/signup" element={<SignUp />} />
-                                    <Route path="/" element={<Login />} />
-                                    <Route
-                                        path="/publishpost"
-                                        element={<PublishPost method="create" post={undefined} />}
-                                    />
-                                    <Route path="/home" element={<Home />}></Route>
-                                </Routes>
-                            </Provider>
-                        </BrowserRouter>
+                        <ToastContainer />
+                        <Routes>
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/signup" element={<SignUp />} />
+                            <Route
+                                path="/posts/:id"
+                                element={
+                                    <RequireAuth>
+                                        <ViewPost post={viewPost} />
+                                    </RequireAuth>
+                                }
+                            />
+                            <Route
+                                path="/posts"
+                                element={
+                                    <RequireAuth>
+                                        <Home posts={posts} />
+                                    </RequireAuth>
+                                }
+                            />
+                            <Route
+                                path="/writepost/:id"
+                                element={
+                                    <RequireAuth>
+                                        <WritePost post={writePost} />
+                                    </RequireAuth>
+                                }
+                            />
+                            <Route
+                                path="/writepost"
+                                element={
+                                    <RequireAuth>
+                                        <WritePost post={writePost} />
+                                    </RequireAuth>
+                                }
+                            />
+                            <Route
+                                path="/"
+                                element={
+                                    <RequireAuth>
+                                        <Home posts={posts} />
+                                    </RequireAuth>
+                                }
+                            />
+                        </Routes>
                     </MediaQuery>
                 </ThemeProvider>
             </ColorContext.Provider>

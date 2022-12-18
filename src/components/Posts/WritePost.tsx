@@ -1,11 +1,19 @@
 import PostInput from "./PostInput";
 import ContentEditor from "./ContentEditor";
+import Loading from "components/Loading";
+import { IUser } from "store/user/types";
 import { IPost } from "store/posts/types";
 import { acCreatePost, acUpdatePost } from "store/posts/action";
 import { useAppSelector, useAppDispatch } from "store";
 import fetchBlob from "services/blob";
+import { toastPublishPostSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
+import { BASE_URL } from "utils/endpoints";
 
 import React, { useState, useEffect, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { EditorState } from "draft-js";
+import { convertToHTML, convertFromHTML } from "draft-convert";
+import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -14,38 +22,35 @@ import TextField from "@mui/material/TextField";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import SendIcon from "@mui/icons-material/Send";
 import Typography from "@mui/material/Typography";
-import Input from "@mui/material/Input";
-import { EditorState } from "draft-js";
-import { convertToHTML, convertFromHTML } from "draft-convert";
 
 type WritePostProps = {
-    method: "create" | "update";
-    post: IPost | undefined;
+    post: IPost;
 };
-
-const WritePost = (props: WritePostProps): JSX.Element => {
+const WritePost = ({ post }: WritePostProps): JSX.Element => {
     const [title, setTitle] = useState<string>("");
     const [editorState, setEditorState] = useState<EditorState>(() => EditorState.createEmpty());
     const [tag, setTag] = useState<string>("");
     const [image, setImage] = useState<File>();
     const postImage = useRef<HTMLImageElement>(null);
-
-    const user = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const { id } = useParams();
+    const user = useAppSelector((state) => state.user);
 
     useEffect(() => {
-        if (props.method === "update" && props.post) {
-            setTitle(props.post.title);
-            setEditorState(() => EditorState.createWithContent(convertFromHTML((props.post as IPost).content)));
-            setTag(props.post.tag);
-            if (props.post.image) {
-                fetchBlob("http://localhost:3000" + props.post.image).then((blob) => {
+        if (id) {
+            setTitle(post.title);
+            setEditorState(() => EditorState.createWithContent(convertFromHTML((post as IPost).content)));
+            setTag(post.tag);
+            if (post.image) {
+                fetchBlob(post.image).then((blob) => {
                     const imageFile: File = new File([blob], "");
                     showAndSetImage(imageFile);
                 });
             }
         }
-    }, []);
+    }, [post]);
 
     const showAndSetImage = (file: File) => {
         if (postImage.current) {
@@ -64,21 +69,29 @@ const WritePost = (props: WritePostProps): JSX.Element => {
         */
         postFormData.append("post[title]", title);
         postFormData.append("post[content]", convertToHTML(editorState.getCurrentContent()));
-        postFormData.append("post[stars]", props.method === "update" && props.post ? props.post.stars.toString() : "0");
+        postFormData.append("post[stars]", post ? post.stars.toString() : "0");
         postFormData.append("post[tag]", tag);
-        postFormData.append("post[image]", image as Blob);
-        postFormData.append("post[user_id]", user.id.toString());
-
-        if (props.method === "update" && props.post) {
-            dispatch(acUpdatePost(postFormData, props.post.id));
-        } else {
-            dispatch(acCreatePost(postFormData));
+        if (image) {
+            postFormData.append("post[image]", image as Blob);
         }
+        postFormData.append("post[user_id]", user!.id.toString());
+
+        (id ? dispatch(acUpdatePost(postFormData, post.id, "write")) : dispatch(acCreatePost(postFormData)))
+            .then(() => {
+                toast.success(toastPublishPostSuccess, toastFormat);
+                navigate("/");
+            })
+            .catch(() => {
+                toast.warning(toastNotAuthorizedWarning, toastFormat);
+                navigate("/");
+            });
     };
 
-    return (
-        <Container component="main" maxWidth="s" sx={{ mt: 8, width: "80vh" }}>
-            <Box component="form" noValidate onSubmit={handlePublishPost}>
+    return id && post.id === -1 ? (
+        <Loading />
+    ) : (
+        <Container component="main" maxWidth="s" sx={{ mt: 8, mb: 8, width: "95vw" }}>
+            <Box component="form" noValidate onSubmit={handlePublishPost} width="100%">
                 <Grid container spacing={1} direction="column">
                     <Grid item xs={1}>
                         <PostInput value={title} setValue={setTitle} placeholder="Title" />
@@ -91,15 +104,8 @@ const WritePost = (props: WritePostProps): JSX.Element => {
                             placeholder="Tell your story..."
                         />
                     </Grid>
-                    <Grid item xs={2} sx={{ position: "relative" }}>
-                        <Box
-                            component="img"
-                            id="post-img"
-                            maxHeight="25rem"
-                            width="100%"
-                            ref={postImage}
-                            sx={{ display: "block", pb: "0.5rem" }}
-                        ></Box>
+                    <Grid item xs={2} sx={{ position: "relative", mb: 8 }}>
+                        <Box component="img" width="100%" ref={postImage} sx={{ display: "block", pb: "0.5rem" }}></Box>
                         <Button
                             component="label"
                             variant="outlined"

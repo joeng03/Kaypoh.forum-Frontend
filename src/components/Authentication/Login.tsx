@@ -7,7 +7,7 @@ import { toastLoginError, toastFormat, toastLoginSuccess } from "utils/constants
 
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button, Box, Container, Grid, Typography } from "@mui/material";
 import Slide from "@mui/material/Slide";
@@ -49,48 +49,45 @@ const Login = (): JSX.Element => {
     };
 
     return (
-        <Slide direction="right" in={show} timeout={600}>
-            <Container component="main" maxWidth="xs">
+        <Slide direction="down" in={show} timeout={600}>
+            <Container component="main">
                 <Box
                     sx={{
                         mt: 8,
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
-                        border: "none",
                     }}
                 >
                     {" "}
                     <Typography component="h1" variant="h5">
                         Login
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleLogin} sx={{ mt: 3 }}>
-                        <Grid container spacing={0.5}>
-                            <AuthInput
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                                value={email}
-                                setValue={setEmail}
-                                setMessage={setEmailErr}
-                                validate={validateEmail}
-                                autoFocus
-                                message={emailErr}
-                            ></AuthInput>
-                            <AuthInput
-                                id="password"
-                                label="Password"
-                                name="password"
-                                type="password"
-                                autoComplete="new-password"
-                                value={password}
-                                setValue={setPassword}
-                                setMessage={setPasswordErr}
-                                validate={validatePassword}
-                                message={passwordErr}
-                            ></AuthInput>
-                        </Grid>
+                    <Box component="form" noValidate onSubmit={handleLogin} maxWidth="xs" sx={{ mt: 3, width: "80vw" }}>
+                        <AuthInput
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            value={email}
+                            setValue={setEmail}
+                            setMessage={setEmailErr}
+                            validate={validateEmail}
+                            autoFocus
+                            message={emailErr}
+                        ></AuthInput>
+                        <AuthInput
+                            id="password"
+                            label="Password"
+                            name="password"
+                            type="password"
+                            autoComplete="new-password"
+                            value={password}
+                            setValue={setPassword}
+                            setMessage={setPasswordErr}
+                            validate={validatePassword}
+                            message={passwordErr}
+                        ></AuthInput>
                         <Button
                             type="submit"
                             fullWidth
@@ -100,14 +97,9 @@ const Login = (): JSX.Element => {
                         >
                             Login
                         </Button>
-                        <Grid container justifyContent="center">
-                            <Grid item>
-                                <Link to="/signup">{"Don't have an account yet? Sign Up"}</Link>
-                            </Grid>
-                        </Grid>
+                        <Link to="/signup">{"Don't have an account yet? Sign Up"}</Link>
                     </Box>
                 </Box>
-                <ToastContainer />
             </Container>
         </Slide>
     );

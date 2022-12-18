@@ -11,7 +11,7 @@ const SwitchModeButton = (): JSX.Element => {
     return (
         <Box
             sx={{
-                position: "absolute",
+                position: "fixed",
                 top: "1rem",
                 right: "2rem",
                 fontSize: "1rem",
@@ -20,9 +20,9 @@ const SwitchModeButton = (): JSX.Element => {
             {theme.palette.mode === "light" ? "Light" : "Dark"} mode
             <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode}>
                 {theme.palette.mode === "dark" ? (
-                    <LightIcon sx={{ fontSize: "2rem", color: amber[200] }} />
+                    <LightIcon sx={{ fontSize: "2rem", color: "icon.sun" }} />
                 ) : (
-                    <DarkIcon sx={{ fontSize: "2rem", color: grey[400] }} />
+                    <DarkIcon sx={{ fontSize: "2rem", color: "icon.moon" }} />
                 )}
             </IconButton>
         </Box>

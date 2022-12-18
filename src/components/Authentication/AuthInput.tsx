@@ -1,6 +1,6 @@
 import Warning from "./Warning";
 import React from "react";
-import { Grid, TextField } from "@mui/material";
+import { Grid, TextField, Container } from "@mui/material";
 
 type AuthInputProps = {
     id: string;
@@ -18,10 +18,8 @@ type AuthInputProps = {
 
 const AuthInput = (props: AuthInputProps): JSX.Element => {
     return (
-        <Grid item xs={12}>
+        <>
             <TextField
-                required
-                fullWidth
                 variant="filled"
                 size="small"
                 id={props.id}
@@ -34,9 +32,11 @@ const AuthInput = (props: AuthInputProps): JSX.Element => {
                 onBlur={({ target }) => props.setMessage(props.validate(target.value))}
                 autoFocus={"autoFocus" in props && props.autoFocus}
                 type={"type" in props ? props.type : undefined}
+                required
+                fullWidth
             />
             <Warning message={props.message} />
-        </Grid>
+        </>
     );
 };
 

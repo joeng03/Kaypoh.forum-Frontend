@@ -1,22 +1,21 @@
 import Post from "./Posts/Post";
-import WritePost from "./Posts/WritePost";
-import { acSetPosts } from "store/posts/action";
+import Loading from "./Loading";
+import { IPost } from "store/posts/types";
 import { useAppSelector, useAppDispatch } from "store";
 import React, { useEffect } from "react";
 
 import Grid from "@mui/material/Grid";
 
-const Home = (): JSX.Element => {
-    const posts = useAppSelector((state) => state.posts);
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        dispatch(acSetPosts());
-    }, []);
-    return (
-        <Grid container spacing={0.5} flexDirection="column">
+type HomeProps = {
+    posts: IPost[];
+};
+const Home = ({ posts }: HomeProps): JSX.Element => {
+    return !posts ? (
+        <Loading />
+    ) : (
+        <Grid container spacing={0.5} flexDirection="column" sx={{ mb: "8" }}>
             {posts.map((post) => (
-                <Post key={post.id} {...post}></Post>
+                <Post key={post.id} {...post} />
             ))}
         </Grid>
     );
