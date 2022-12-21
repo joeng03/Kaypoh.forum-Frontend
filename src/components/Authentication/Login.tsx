@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Button, Box, Container, Grid, Typography } from "@mui/material";
 import Slide from "@mui/material/Slide";
 
-const Login = (): JSX.Element => {
+const Login = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
@@ -34,7 +34,7 @@ const Login = (): JSX.Element => {
         }
     }, [emailErr, passwordErr, email, password]);
 
-    const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const credentials: ICredentials = {
             email,

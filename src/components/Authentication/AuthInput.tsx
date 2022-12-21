@@ -16,7 +16,7 @@ type AuthInputProps = {
     type?: string;
 };
 
-const AuthInput = (props: AuthInputProps): JSX.Element => {
+const AuthInput = (props: AuthInputProps) => {
     return (
         <>
             <TextField

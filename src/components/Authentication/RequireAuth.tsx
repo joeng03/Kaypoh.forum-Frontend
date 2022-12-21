@@ -4,7 +4,6 @@ import { verifyCookie } from "../../services/auth";
 import { acSetUser } from "../../store/user/action";
 import { acSetPosts } from "../../store/posts/action";
 import { useAppSelector, useAppDispatch } from "store";
-import LogoutButton from "components/LogoutButton";
 import React, { useState, useEffect } from "react";
 
 const RequireAuth: React.FC<{ children: React.ReactElement }> = ({ children }) => {
@@ -21,16 +20,7 @@ const RequireAuth: React.FC<{ children: React.ReactElement }> = ({ children }) =
     }, []);
 
     //if user is not logged in, the default id is -1 (Reference: "../../store/user/reducer.ts")
-    return isLoading ? (
-        <Loading />
-    ) : user.id === -1 ? (
-        <Login />
-    ) : (
-        <>
-            <LogoutButton />
-            {children}
-        </>
-    );
+    return isLoading ? <Loading /> : user.id === -1 ? <Login /> : <>{children}</>;
 };
 
 export default RequireAuth;

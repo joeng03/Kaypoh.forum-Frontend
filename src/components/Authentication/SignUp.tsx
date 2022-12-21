@@ -13,7 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Typography, Container, Button, TextField, Grid, Box } from "@mui/material";
 import Slide from "@mui/material/Slide";
 
-const SignUp: React.FC = () => {
+const SignUp = () => {
     const [username, setUsername] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");

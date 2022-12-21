@@ -2,11 +2,11 @@ import { IPost } from "./types";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-const initialPostState: IPost[] = [];
+const initialPostsState: IPost[] = [];
 
 const userSlice = createSlice({
     name: "posts",
-    initialState: initialPostState,
+    initialState: initialPostsState,
     reducers: {
         createPost(state, action) {
             state.push(action.payload);

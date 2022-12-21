@@ -1,5 +1,5 @@
 import PostInput from "./PostInput";
-import ContentEditor from "./ContentEditor";
+import ContentEditor from "../ContentEditor";
 import Loading from "components/Loading";
 import { IUser } from "store/user/types";
 import { IPost } from "store/posts/types";
@@ -21,12 +21,11 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import SendIcon from "@mui/icons-material/Send";
-import Typography from "@mui/material/Typography";
 
 type WritePostProps = {
     post: IPost;
 };
-const WritePost = ({ post }: WritePostProps): JSX.Element => {
+const WritePost = ({ post }: WritePostProps) => {
     const [title, setTitle] = useState<string>("");
     const [editorState, setEditorState] = useState<EditorState>(() => EditorState.createEmpty());
     const [tag, setTag] = useState<string>("");
@@ -36,12 +35,13 @@ const WritePost = ({ post }: WritePostProps): JSX.Element => {
     const navigate = useNavigate();
 
     const { id } = useParams();
+    //if id is undefined, this is a "create" process, else it is an "update" process
     const user = useAppSelector((state) => state.user);
 
     useEffect(() => {
         if (id) {
             setTitle(post.title);
-            setEditorState(() => EditorState.createWithContent(convertFromHTML((post as IPost).content)));
+            setEditorState(() => EditorState.createWithContent(convertFromHTML(post.content)));
             setTag(post.tag);
             if (post.image) {
                 fetchBlob(post.image).then((blob) => {

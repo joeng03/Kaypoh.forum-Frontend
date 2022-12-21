@@ -1,5 +1,6 @@
 import userReducer from "./user/reducer";
 import postsReducer from "./posts/reducer";
+import commentsReducer from "./comments/reducer";
 import { configureStore } from "@reduxjs/toolkit";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -10,6 +11,7 @@ const store = configureStore({
     reducer: {
         user: userReducer,
         posts: postsReducer,
+        comments: commentsReducer,
     },
 });
 

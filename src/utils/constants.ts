@@ -4,6 +4,9 @@ export const toastSignUpSuccess = "Successfully signed up!";
 export const toastLoginSuccess = "Successfully logged in!";
 export const toastLogoutSuccess = "Successfully logged out!";
 export const toastPublishPostSuccess = "Succesfully published post!";
+export const toastDeletePostSuccess = "Successfully deleted post!";
+export const toastPublishCommentSuccess = "Succesfully published comment!";
+export const toastDeleteCommentSuccess = "Successfully deleted comment!";
 export const toastSignUpError = (errors: { email?: string; username?: string }): string => {
     let message = "";
     if (errors && "email" in errors) {
@@ -17,7 +20,8 @@ export const toastSignUpError = (errors: { email?: string; username?: string }):
 
 export const toastLoginError = "Incorrect email and/or password";
 export const toastLogoutError = "Unable to logout";
-export const toastNotAuthorizedWarning = "You are not authorized to perform this action";
+export const toastNotAuthorizedWarning =
+    "You are not authorized to perform this action. If your session has expired, please sign in again";
 
 export const toastFormat: ToastOptions = {
     position: "bottom-right",
@@ -32,5 +36,6 @@ export const toastFormat: ToastOptions = {
 
 export const emailRegex = new RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/);
 
-export const titleMaxLength = 255;
-export const contentMaxLength = 3e4;
+export const passwordMinLength = 6;
+export const stringMaxLength = 255;
+export const textMaxLength = 3e4;

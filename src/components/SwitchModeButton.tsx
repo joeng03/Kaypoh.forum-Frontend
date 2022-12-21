@@ -5,14 +5,13 @@ import LightIcon from "@mui/icons-material/LightModeRounded";
 import { amber, grey } from "@mui/material/colors";
 import React, { useContext } from "react";
 
-const SwitchModeButton = (): JSX.Element => {
+const SwitchModeButton = () => {
     const theme = useTheme();
     const colorMode = useContext(ColorContext);
     return (
         <Box
             sx={{
                 position: "fixed",
-                top: "1rem",
                 right: "2rem",
                 fontSize: "1rem",
             }}

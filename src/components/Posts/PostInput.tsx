@@ -7,7 +7,7 @@ type PostInputProps = {
     placeholder: string;
 };
 
-const PostInput = (props: PostInputProps): JSX.Element => {
+const PostInput = (props: PostInputProps) => {
     return (
         <TextField
             variant="standard"

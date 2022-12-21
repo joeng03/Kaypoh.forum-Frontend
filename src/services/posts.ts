@@ -17,8 +17,16 @@ const readOne = async (id: number): Promise<IPost> => {
     return response.data;
 };
 
-const readAll = async (): Promise<IPost[]> => {
-    const response = await axios.get(POSTS);
+const readAll = async (page?: number, columnName?: string, searchValue?: string, sortBy?: string): Promise<IPost[]> => {
+    const config = {
+        params: {
+            page,
+            columnName,
+            searchValue,
+            sortBy,
+        },
+    };
+    const response = await axios.get(POSTS, config);
     return response.data;
 };
 

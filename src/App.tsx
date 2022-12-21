@@ -1,10 +1,15 @@
 import { useAppDispatch, useAppSelector } from "./store";
 import SignUp from "./components/Authentication/SignUp";
 import Login from "./components/Authentication/Login";
-import Home from "./components/Home";
+import PostsList from "./components/Posts/PostsList";
 import ViewPost from "./components/Posts/ViewPost";
-import SwitchModeButton from "./components/SwitchModeButton";
 import { IPost, initialPostState } from "./store/posts/types";
+import CommentsList from "components/Comments/CommentsList";
+import WriteComment from "components/Comments/WriteComment";
+import CommentCard from "components/Comments/CommentCard";
+import { initialCommentState } from "store/comments/types";
+import { initialUserState } from "store/user/types";
+
 import RequireAuth from "components/Authentication/RequireAuth";
 import WritePost from "components/Posts/WritePost";
 import "./App.css";
@@ -23,6 +28,7 @@ type Icon = {
     sun?: string;
     moon?: string;
     star: string;
+    cancel: string;
 };
 declare module "@mui/material/styles" {
     interface BreakpointOverrides {
@@ -58,7 +64,6 @@ const breakpoints = {
 };
 
 const MediaQuery = styled("div")(({ theme }) => ({
-    padding: theme.spacing(1),
     [theme.breakpoints.down("m")]: {
         fontSize: "0.9rem",
     },
@@ -98,9 +103,15 @@ const lightTheme: ThemeOptions = {
         icon: {
             moon: grey[400],
             star: yellow[600],
+            cancel: red[400],
         },
     },
     breakpoints: breakpoints,
+    typography: {
+        button: {
+            textTransform: "none",
+        },
+    },
 };
 const darkTheme: ThemeOptions = {
     palette: {
@@ -118,11 +129,16 @@ const darkTheme: ThemeOptions = {
         icon: {
             sun: amber[200],
             star: yellow[300],
+            cancel: red[200],
         },
-        contrastThreshold: 4.5,
     },
 
     breakpoints: breakpoints,
+    typography: {
+        button: {
+            textTransform: "none",
+        },
+    },
 };
 
 interface ColorContextSchema {
@@ -147,7 +163,7 @@ const App: React.FC = () => {
     const [viewPost, setViewPost] = useState<IPost>(initialPostState);
     const [writePost, setWritePost] = useState<IPost>(initialPostState);
 
-    const matchViewPost = useMatch("/posts/:id");
+    const matchViewPost = useMatch("/posts/:id/*");
     const matchWritePost = useMatch("/writepost/:id");
 
     useEffect(() => {
@@ -180,29 +196,30 @@ const App: React.FC = () => {
                 <ThemeProvider theme={theme}>
                     <MediaQuery>
                         <CssBaseline enableColorScheme />
-                        <SwitchModeButton />
                         <ToastContainer />
                         <Routes>
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/signup" element={<SignUp />} />
+                            <Route path="login" element={<Login />} />
+                            <Route path="signup" element={<SignUp />} />
                             <Route
-                                path="/posts/:id"
+                                path="posts/:id"
                                 element={
                                     <RequireAuth>
                                         <ViewPost post={viewPost} />
                                     </RequireAuth>
                                 }
-                            />
+                            >
+                                <Route path="comments" element={<CommentsList />}></Route>
+                            </Route>
                             <Route
-                                path="/posts"
+                                path="posts"
                                 element={
                                     <RequireAuth>
-                                        <Home posts={posts} />
+                                        <PostsList posts={posts} />
                                     </RequireAuth>
                                 }
                             />
                             <Route
-                                path="/writepost/:id"
+                                path="writepost/:id"
                                 element={
                                     <RequireAuth>
                                         <WritePost post={writePost} />
@@ -210,7 +227,7 @@ const App: React.FC = () => {
                                 }
                             />
                             <Route
-                                path="/writepost"
+                                path="writepost"
                                 element={
                                     <RequireAuth>
                                         <WritePost post={writePost} />
@@ -218,10 +235,10 @@ const App: React.FC = () => {
                                 }
                             />
                             <Route
-                                path="/"
+                                index
                                 element={
                                     <RequireAuth>
-                                        <Home posts={posts} />
+                                        <PostsList posts={posts} />
                                     </RequireAuth>
                                 }
                             />

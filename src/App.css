@@ -45,6 +45,35 @@ ul {
   padding-inline-start: unset;
 }
 
+.avatar{
+  margin-right: 0.4em;
+  border: 0.1rem solid;
+}
+
+.card{
+  position: relative;
+  margin: 0.5rem auto;
+  transition: 0.3s;
+  height: 20rem;
+  max-width:30rem;
+  width: 90vw;
+  border-radius: 0.625rem!important;
+}
+.modal{
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 400px;
+  width: 90vw;
+  background-color: white;
+  border-radius: .5rem!important;
+  box-shadow: 24%;
+  padding:2rem;
+}
 .toolbar-darkmode{
   color:rgba(0, 0, 0, 0.87);
 }
@@ -52,12 +81,12 @@ ul {
   color:rgba(0, 0, 0, 0.87);
 }
 .wrapper-class {
-  margin: 0 auto;
-  width: 85vw;
+  margin:0 auto;
+  width: 95%;
   max-width: 600px;
   padding: 0.5rem;
   border: 1px solid #ccc;
-  border-radius: 2%;
+  border-radius: 0.7rem!important;
 }
 .toolbar-class {
   border: 1px solid #ccc;
@@ -72,3 +101,5 @@ ul {
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
+
+
