@@ -167,7 +167,7 @@ const App: React.FC = () => {
     const matchWritePost = useMatch("/writepost/:id");
 
     useEffect(() => {
-        dispatch(acSetPosts());
+        dispatch(acSetPosts(1, "title", "", "created_at DESC"));
     }, []);
     useEffect(() => {
         setViewPost(

@@ -1,7 +1,9 @@
 import { IPost } from "store/posts/types";
+import { IStar } from "store/user/types";
 import { BASE_URL } from "utils/endpoints";
 import { toastDeletePostSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
-import { acUpdatePost, acDeletePost } from "store/posts/action";
+import { acDeletePost } from "store/posts/action";
+import { acUserStarPost, acUserUnStarPost } from "store/user/action";
 import { useAppDispatch, useAppSelector } from "store";
 import ConfirmationModal from "components/ConfirmationModal";
 import React, { useState } from "react";
@@ -46,11 +48,15 @@ const sanitizeData = (data: string) => ({
 type PostCardProps = { post: IPost };
 
 const PostCard = ({ post }: PostCardProps) => {
-    const [cardRaised, setCardRaised] = useState<boolean>(true);
-    const [starClicked, setStarClicked] = useState<boolean>(false);
-    const [modalOpen, setModalOpen] = useState<boolean>(false);
-
     const user = useAppSelector((state) => state.user);
+
+    const [cardRaised, setCardRaised] = useState<boolean>(true);
+    const [starClicked, setStarClicked] = useState<boolean>(
+        user.stars.find((star) => star.post_id === post.id) ? true : false,
+    );
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [starsCount, setStarsCount] = useState<number>(post.stars_count);
+
     const dispatch = useAppDispatch();
 
     const onModalOpen = () => setModalOpen(true);
@@ -61,16 +67,19 @@ const PostCard = ({ post }: PostCardProps) => {
             .catch(() => toast.warning(toastNotAuthorizedWarning, toastFormat));
     };
     const handleStarClick = () => {
-        dispatch(
-            acUpdatePost(
-                {
-                    ...post,
-                    stars: starClicked ? post.stars - 1 : post.stars + 1,
-                },
-                post.id,
-                "star",
-            ),
-        );
+        if (starClicked) {
+            const star_id = (user.stars.find((star) => star.post_id === post.id) as IStar).id;
+            dispatch(acUserUnStarPost(user, star_id));
+            setStarsCount(starsCount - 1);
+        } else {
+            const star: IStar = {
+                id: -1,
+                user_id: user.id,
+                post_id: post.id,
+            };
+            dispatch(acUserStarPost(user, star));
+            setStarsCount(starsCount + 1);
+        }
         setStarClicked(!starClicked);
     };
 
@@ -81,7 +90,7 @@ const PostCard = ({ post }: PostCardProps) => {
             onMouseLeave={() => setCardRaised(true)}
             raised={cardRaised}
         >
-            <CardMedia image={BASE_URL + post.image} sx={{ height: "40%", position: "relative" }}>
+            <CardMedia image={BASE_URL + post.image} sx={{ height: "35%", position: "relative" }}>
                 {user.id === post.user.id && (
                     <Box
                         sx={{
@@ -106,7 +115,7 @@ const PostCard = ({ post }: PostCardProps) => {
                 {post.tag && <Chip label={post.tag} size="small" color="secondary" sx={chipStyle} />}
             </CardMedia>
             <Link to={`/posts/${post.id}`} style={{ color: "inherit", textDecoration: "inherit" }}>
-                <CardContent sx={{ cursor: "pointer" }}>
+                <CardContent sx={{ height: "47%", cursor: "pointer" }}>
                     <Typography
                         sx={{
                             fontSize: "1.2rem",
@@ -124,7 +133,7 @@ const PostCard = ({ post }: PostCardProps) => {
                             display: "-webkit-box",
                             overflow: "hidden",
                             WebkitBoxOrient: "vertical",
-                            WebkitLineClamp: 3,
+                            WebkitLineClamp: 2,
                             textAlign: "left",
                         }}
                     ></Typography>
@@ -149,11 +158,18 @@ const PostCard = ({ post }: PostCardProps) => {
                         day: "numeric",
                     })}
                 </Typography>
-                <IconButton aria-label="star" sx={{ position: "absolute", right: "0" }} onClick={handleStarClick}>
-                    <Tooltip title="Star this post" placement="bottom" disableInteractive>
-                        <StarRoundedIcon sx={{ color: starClicked ? "icon.star" : "inherit" }} />
-                    </Tooltip>
-                </IconButton>
+                <Box sx={{ position: "absolute", right: "0.4rem", display: "flex", alignItems: "center" }}>
+                    <IconButton aria-label="star" onClick={handleStarClick} sx={{ p: 0 }}>
+                        <Tooltip
+                            title={(starClicked ? "Unstar" : "Star") + " this post"}
+                            placement="bottom"
+                            disableInteractive
+                        >
+                            <StarRoundedIcon sx={{ color: starClicked ? "icon.star" : "inherit" }} />
+                        </Tooltip>
+                    </IconButton>
+                    {starsCount}
+                </Box>
             </CardActions>
             <ConfirmationModal
                 open={modalOpen}

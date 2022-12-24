@@ -4,12 +4,18 @@ export interface ICredentials {
     username?: string;
 }
 
+export interface IStar {
+    id: number;
+    user_id: number;
+    post_id: number;
+}
+
 export interface IUser {
     id: number;
     email: string;
     username: string;
     profilePic?: string;
-    stars: number;
+    stars: IStar[];
     bio: string;
     created_at: string;
     updated_at: string;
@@ -21,7 +27,7 @@ export const initialUserState: IUser = {
     email: "",
     username: "",
     profilePic: "",
-    stars: 0,
+    stars: [],
     bio: "",
     created_at: "",
     updated_at: "",

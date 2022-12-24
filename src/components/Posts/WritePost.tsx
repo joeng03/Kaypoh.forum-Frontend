@@ -69,14 +69,19 @@ const WritePost = ({ post }: WritePostProps) => {
         */
         postFormData.append("post[title]", title);
         postFormData.append("post[content]", convertToHTML(editorState.getCurrentContent()));
-        postFormData.append("post[stars]", post ? post.stars.toString() : "0");
+
         postFormData.append("post[tag]", tag);
+
+        postFormData.append("post[user_id]", user.id.toString());
+
+        // if (!id) {
+        //     postFormData.append("post[stars]", "0");
+        // }
         if (image) {
             postFormData.append("post[image]", image as Blob);
         }
-        postFormData.append("post[user_id]", user!.id.toString());
 
-        (id ? dispatch(acUpdatePost(postFormData, post.id, "write")) : dispatch(acCreatePost(postFormData)))
+        (id ? dispatch(acUpdatePost(postFormData, post.id)) : dispatch(acCreatePost(postFormData)))
             .then(() => {
                 toast.success(toastPublishPostSuccess, toastFormat);
                 navigate("/");

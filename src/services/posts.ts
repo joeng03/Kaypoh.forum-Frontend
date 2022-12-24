@@ -17,47 +17,25 @@ const readOne = async (id: number): Promise<IPost> => {
     return response.data;
 };
 
-const readAll = async (page?: number, columnName?: string, searchValue?: string, sortBy?: string): Promise<IPost[]> => {
+const readAll = async (page: number, columnName: string, searchValue: string, sortBy: string): Promise<IPost[]> => {
     const config = {
         params: {
-            page,
             columnName,
             searchValue,
             sortBy,
         },
     };
-    const response = await axios.get(POSTS, config);
+    const response = await axios.get(`${POSTS}/page/${page}`, config);
     return response.data;
 };
 
-const update = async (post: IPost | FormData, id: number, type: string): Promise<IPost> => {
-    const config = {
-        params: {
-            type: type,
+const update = async (post: FormData, id: number): Promise<IPost> => {
+    const response = await axios.put(`${POSTS}/${id}`, post, {
+        headers: {
+            "Content-Type": "multipart/form-data",
         },
-    };
-
-    //check type of post
-    if (Object.prototype.hasOwnProperty.call(post, "id")) {
-        const transformedRequest = {
-            ...post,
-            user_id: (post as IPost).user.id,
-            id: undefined,
-            user: undefined,
-            created_at: undefined,
-            updated_at: undefined,
-        };
-        const response = await axios.put(`${POSTS}/${id}`, transformedRequest, config);
-        return response.data;
-    } else {
-        const response = await axios.put(`${POSTS}/${id}`, post, {
-            ...config,
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
-        return response.data;
-    }
+    });
+    return response.data;
 };
 
 const remove = async (id: number): Promise<void> => {

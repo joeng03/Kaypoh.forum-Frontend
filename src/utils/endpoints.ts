@@ -10,3 +10,6 @@ export const POSTS = "/posts";
 
 //Comments
 export const COMMENTS = "/comments";
+
+//Stars
+export const STARS = "/stars";

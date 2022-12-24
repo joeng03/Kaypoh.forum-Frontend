@@ -1,6 +1,6 @@
 import { useAppDispatch } from "store";
 import { acSetPosts } from "store/posts/action";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -27,8 +27,15 @@ const PostsNavigation = () => {
     const [sortBy, setSortBy] = useState<string>("created_at DESC");
     const [page, setPage] = useState<number>(1);
 
+    const isMount = useRef(true);
+
+    // This useEffect hook only works after first render, as the initial posts are already fetched in <App/>
     useEffect(() => {
-        dispatch(acSetPosts(page, columnName, searchValue, sortBy));
+        if (isMount.current) {
+            isMount.current = false;
+        } else {
+            dispatch(acSetPosts(page, columnName, searchValue, sortBy));
+        }
     }, [page, columnName, sortBy]);
 
     const dispatch = useAppDispatch();
@@ -90,6 +97,7 @@ const PostsNavigation = () => {
                             >
                                 <MenuItem value="created_at DESC">Date created</MenuItem>
                                 <MenuItem value="updated_at DESC">Date Updated</MenuItem>
+                                <MenuItem value="stars">Stars</MenuItem>
                                 <MenuItem value="tag">Tag</MenuItem>
                             </Select>
                         </Box>
@@ -103,11 +111,11 @@ const PostsNavigation = () => {
                     bottom: 0,
                     padding: "0.5rem 0rem",
                     background: "background",
+                    zIndex: 1600,
                 }}
             >
                 <Pagination
-                    count={10}
-                    size="large"
+                    count={100}
                     variant="outlined"
                     color="primary"
                     page={page}

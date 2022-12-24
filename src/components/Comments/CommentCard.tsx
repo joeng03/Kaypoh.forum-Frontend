@@ -38,7 +38,6 @@ const CommentCard = ({ comment, method }: CommentCardProps) => {
             .then(() => toast.success(toastDeleteCommentSuccess, toastFormat))
             .catch(() => toast.warning(toastNotAuthorizedWarning, toastFormat));
     };
-    console.log(isView);
 
     return (
         <Card
@@ -49,7 +48,7 @@ const CommentCard = ({ comment, method }: CommentCardProps) => {
             sx={{ maxWidth: "48rem", height: "16.5rem", overflow: "scroll" }}
         >
             <Grid container spacing={0.5}>
-                <Grid item xs={2}>
+                <Grid item xs={2} mt="0.8rem">
                     <Box display="flex" flexDirection="row">
                         <Box>
                             <Avatar

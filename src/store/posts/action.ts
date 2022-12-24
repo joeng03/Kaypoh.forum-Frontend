@@ -12,10 +12,10 @@ export const acCreatePost = (post: FormData): AppThunk<Promise<PayloadAction<IPo
 };
 
 export const acSetPosts = (
-    page?: number,
-    columnName?: string,
-    searchValue?: string,
-    sortBy?: string,
+    page: number,
+    columnName: string,
+    searchValue: string,
+    sortBy: string,
 ): AppThunk<Promise<PayloadAction<IPost[]>>> => {
     return async (dispatch) => {
         const posts = await postService.readAll(page, columnName, searchValue, sortBy);
@@ -23,13 +23,9 @@ export const acSetPosts = (
     };
 };
 
-export const acUpdatePost = (
-    post: IPost | FormData,
-    post_id: number,
-    type: string,
-): AppThunk<Promise<PayloadAction<IPost>>> => {
+export const acUpdatePost = (post: FormData, post_id: number): AppThunk<Promise<PayloadAction<IPost>>> => {
     return async (dispatch) => {
-        const updatedPost = await postService.update(post, post_id, type);
+        const updatedPost = await postService.update(post, post_id);
         return dispatch(updatePost(updatedPost));
     };
 };

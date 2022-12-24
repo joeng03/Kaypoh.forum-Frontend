@@ -3,7 +3,7 @@ import DOMPurify from "isomorphic-dompurify";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-const maxDisplayLength = 100;
+const maxDisplayLength = 300;
 const sanitizeData = (data: string) => ({
     __html: DOMPurify.sanitize(data),
 });
@@ -29,7 +29,9 @@ const ViewComment = ({ content }: ViewCommentProps) => {
                 sx={{ textAlign: "left" }}
             />
             {exceededDisplayLength && (
-                <Typography onClick={toggleReadMore}>{isReadMore ? "...read more" : " show less"}</Typography>
+                <Typography onClick={toggleReadMore} sx={{ cursor: "pointer" }}>
+                    {isReadMore ? "...read more" : " show less"}
+                </Typography>
             )}
         </Box>
     );

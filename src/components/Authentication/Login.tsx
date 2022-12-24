@@ -3,6 +3,7 @@ import { acUserLogin } from "../../store/user/action";
 import { useAppDispatch } from "../../store";
 import { ICredentials } from "../../store/user/types";
 import { validateEmail, validatePassword } from "../../utils/validators";
+import { acSetPosts } from "store/posts/action";
 import { toastLoginError, toastFormat, toastLoginSuccess } from "utils/constants";
 
 import React, { useState, useEffect } from "react";
@@ -41,7 +42,10 @@ const Login = () => {
             password,
         };
         dispatch(acUserLogin(credentials))
-            .then(() => toast.success(toastLoginSuccess, toastFormat))
+            .then(() => {
+                dispatch(acSetPosts(1, "title", "", "created_at DESC"));
+                toast.success(toastLoginSuccess, toastFormat);
+            })
             .catch(() => toast.error(toastLoginError, toastFormat));
 
         setEmail("");
