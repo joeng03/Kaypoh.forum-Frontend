@@ -43,7 +43,7 @@ const Login = () => {
         };
         dispatch(acUserLogin(credentials))
             .then(() => {
-                dispatch(acSetPosts(1, "title", "", "created_at DESC"));
+                dispatch(acSetPosts());
                 toast.success(toastLoginSuccess, toastFormat);
             })
             .catch(() => toast.error(toastLoginError, toastFormat));

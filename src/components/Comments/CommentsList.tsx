@@ -52,14 +52,19 @@ const CommentsList = () => {
         // box-shadow: 24%;
         // padding:2rem;
 
-        <Fade in timeout={{ enter: 700, exit: 400 }}>
-            <Box sx={{ margin: "3.5rem 0rem", maxWidth: "m" }}>
-                <CommentCard comment={comment} method="create" />
-                {comments.map((comment) => (
-                    <CommentCard key={comment.id} comment={comment} method="update" />
-                ))}
-            </Box>
-        </Fade>
+        // <Fade in timeout={{ enter: 700, exit: 400 }}>
+        <Box
+            sx={{
+                margin: "3.5rem 0rem",
+                maxWidth: "m",
+            }}
+        >
+            <CommentCard comment={comment} method="create" />
+            {comments.map((comment) => (
+                <CommentCard key={comment.id} comment={comment} method="update" />
+            ))}
+        </Box>
+        // </Fade>
     );
 };
 

@@ -1,4 +1,5 @@
-export const BASE_URL = "http://localhost:3000";
+export const BASE_URL = "https://kaypoh-forum.onrender.com";
+//export const BASE_URL = "http://localhost:3000";
 
 //Users
 export const SIGN_UP = "/users/signup";

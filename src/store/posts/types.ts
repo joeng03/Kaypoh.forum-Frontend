@@ -10,6 +10,7 @@ export interface IPost {
     updated_at: string;
     user: IUser;
     stars_count: number;
+    forum_id: number;
 }
 
 //-1 is used as the default id for an empty IPost object as database ids are non-negative
@@ -24,4 +25,5 @@ export const initialPostState = {
     updated_at: "",
     user: initialUserState,
     stars_count: 0,
+    forum_id: -1,
 };

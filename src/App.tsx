@@ -1,12 +1,14 @@
 import { useAppDispatch, useAppSelector } from "./store";
+import { IPost, initialPostState } from "./store/posts/types";
 import SignUp from "./components/Authentication/SignUp";
 import Login from "./components/Authentication/Login";
 import PostsList from "./components/Posts/PostsList";
 import ViewPost from "./components/Posts/ViewPost";
-import { IPost, initialPostState } from "./store/posts/types";
+import SwitchModeButton from "components/SwitchModeButton";
 import CommentsList from "components/Comments/CommentsList";
 import WriteComment from "components/Comments/WriteComment";
 import CommentCard from "components/Comments/CommentCard";
+import ViewProfile from "components/ViewProfile";
 import { initialCommentState } from "store/comments/types";
 import { initialUserState } from "store/user/types";
 
@@ -92,10 +94,14 @@ const lightTheme: ThemeOptions = {
         mode: "light",
         primaryGradient: "linear-gradient(to right,#3EADCF,#ABE9CD)",
         primary: {
-            main: "#3EADCF",
+            main: "#4bc7ea",
+            light: "#8bdef7",
+            dark: "#3eadcf",
         },
         secondary: {
-            main: "#ABE9CD",
+            main: "#76d9af",
+            light: "#abe9cd",
+            dark: "#00ae66",
         },
         warning: {
             main: red[700],
@@ -118,10 +124,14 @@ const darkTheme: ThemeOptions = {
         mode: "dark",
         primaryGradient: "linear-gradient(to right,#3EADCF,#ABE9CD)",
         primary: {
-            main: "#3EADCF",
+            main: "#4bc7ea",
+            light: "#8bdef7",
+            dark: "#3eadcf",
         },
         secondary: {
-            main: "#ABE9CD",
+            main: "#76d9af",
+            light: "#abe9cd",
+            dark: "#00ae66",
         },
         warning: {
             main: red[200],
@@ -167,7 +177,7 @@ const App: React.FC = () => {
     const matchWritePost = useMatch("/writepost/:id");
 
     useEffect(() => {
-        dispatch(acSetPosts(1, "title", "", "created_at DESC"));
+        dispatch(acSetPosts());
     }, []);
     useEffect(() => {
         setViewPost(
@@ -196,6 +206,7 @@ const App: React.FC = () => {
                 <ThemeProvider theme={theme}>
                     <MediaQuery>
                         <CssBaseline enableColorScheme />
+
                         <ToastContainer />
                         <Routes>
                             <Route path="login" element={<Login />} />
@@ -231,6 +242,14 @@ const App: React.FC = () => {
                                 element={
                                     <RequireAuth>
                                         <WritePost post={writePost} />
+                                    </RequireAuth>
+                                }
+                            />
+                            <Route
+                                path="profile"
+                                element={
+                                    <RequireAuth>
+                                        <ViewProfile />
                                     </RequireAuth>
                                 }
                             />

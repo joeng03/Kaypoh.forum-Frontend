@@ -43,11 +43,17 @@ const WriteComment = ({ comment, method, onCancel }: WriteCommentProps) => {
             content: convertToHTML(editorState.getCurrentContent()),
         };
         console.log(currentComment);
-        (method === "update" ? dispatch(acUpdateComment(currentComment)) : dispatch(acCreateComment(currentComment)))
+        (method === "update"
+            ? dispatch(acUpdateComment(currentComment)).then(() => {
+                  toast.success(toastPublishCommentSuccess, toastFormat);
+                  onCancel();
+              })
+            : dispatch(acCreateComment(currentComment))
+        )
             .then(() => {
                 toast.success(toastPublishCommentSuccess, toastFormat);
-                onCancel();
             })
+
             .catch(() => {
                 toast.warning(toastNotAuthorizedWarning, toastFormat);
             });

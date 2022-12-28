@@ -3,10 +3,6 @@ import { IStar } from "store/user/types";
 import axios from "axios";
 
 const create = async (star: IStar): Promise<IStar> => {
-    const transformedStarRequest = {
-        ...star,
-        id: undefined,
-    };
     const response = await axios.post(STARS, star);
     return response.data;
 };

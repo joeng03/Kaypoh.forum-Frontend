@@ -33,10 +33,10 @@ const ViewPost = ({ post }: ViewPostProps) => {
     const [starClicked, setStarClicked] = useState<boolean>(false);
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [starsCount, setStarsCount] = useState<number>(0);
+
     useEffect(() => {
         setStarsCount(post.stars_count);
         setStarClicked(user.stars.find((star) => star.post_id === post.id) ? true : false);
-        console.log("asdfsdf");
     }, [post]);
     const onModalOpen = () => setModalOpen(true);
     const onModalClose = () => setModalOpen(false);
@@ -82,7 +82,7 @@ const ViewPost = ({ post }: ViewPostProps) => {
                 component="img"
                 width="80%"
                 maxWidth="m"
-                src={BASE_URL + post.image}
+                src={post.image}
                 sx={{ display: "block", pb: "0.5rem" }}
             ></Box>
 

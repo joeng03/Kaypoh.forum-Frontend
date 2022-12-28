@@ -5,7 +5,7 @@ export const validateUsername = (username: string): string => {
         return "Username is required";
     }
     if (username.indexOf(" ") >= 0) {
-        return "Username must not contain any whitespaces";
+        return "Username must not contain whitespace";
     }
     if (username.length > stringMaxLength) {
         return `Username must have less than ${stringMaxLength} characters`;

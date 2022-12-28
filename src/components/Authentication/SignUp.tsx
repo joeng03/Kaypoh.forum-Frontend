@@ -4,6 +4,7 @@ import { acUserSignUp } from "../../store/user/action";
 import { useAppDispatch } from "../../store";
 import { ICredentials } from "../../store/user/types";
 import { validateUsername, validateEmail, validatePassword } from "../../utils/validators";
+import { acSetPosts } from "store/posts/action";
 import { toastSignUpSuccess, toastSignUpError, toastFormat } from "utils/constants";
 
 import React, { useState, useEffect } from "react";
@@ -52,6 +53,7 @@ const SignUp = () => {
         };
         dispatch(acUserSignUp(credentials))
             .then(() => {
+                dispatch(acSetPosts());
                 toast.success(toastSignUpSuccess, toastFormat);
                 navigate("/");
             })
