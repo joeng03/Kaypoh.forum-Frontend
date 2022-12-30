@@ -52,7 +52,7 @@ const CommentCard = ({ comment, method }: CommentCardProps) => {
                     <Box display="flex" flexDirection="row">
                         <Box>
                             <Avatar
-                                src={comment.user.profilePic}
+                                src={comment.user.profile_picture}
                                 component="a"
                                 href=""
                                 target="_blank"

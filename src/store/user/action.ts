@@ -30,6 +30,12 @@ export const acUserUnStarPost = (user: IUser, star_id: number): AppThunk<Promise
         return dispatch(setUser(user));
     };
 };
+export const acUserUpdateProfile = (user: FormData): AppThunk<Promise<PayloadAction<IUser>>> => {
+    return async (dispatch) => {
+        const updatedUser: IUser = await authService.update(user);
+        return dispatch(setUser(updatedUser));
+    };
+};
 export const acUserLogin = (credentials: ICredentials): AppThunk<Promise<PayloadAction<IUser>>> => {
     return async (dispatch) => {
         const user: IUser = await authService.login(credentials);

@@ -1,10 +1,7 @@
 import { useAppDispatch, useAppSelector } from "store";
-import { acUpdatePost } from "store/posts/action";
-import { acSetComments } from "store/comments/action";
 import { acUserStarPost, acUserUnStarPost } from "store/user/action";
 import { IPost } from "store/posts/types";
 import { IStar } from "store/user/types";
-import { BASE_URL } from "utils/endpoints";
 import Loading from "components/Loading";
 import React, { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
@@ -18,7 +15,6 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import ChatBubbleOutlineRoundedIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
-import CircularProgress from "@mui/material/CircularProgress";
 
 const sanitizeData = (data: string) => ({
     __html: DOMPurify.sanitize(data),
@@ -89,7 +85,13 @@ const ViewPost = ({ post }: ViewPostProps) => {
             <Grid container position="relative">
                 <Grid item xs={9.5}>
                     <Box display="flex" flexDirection="row" columnGap="0.5rem" alignItems="center">
-                        <Avatar src={post.user.profilePic} component="a" href="" target="_blank" className="avatar">
+                        <Avatar
+                            src={post.user.profile_picture}
+                            component="a"
+                            href=""
+                            target="_blank"
+                            className="avatar"
+                        >
                             {post.user.username}
                         </Avatar>
                         <Box>

@@ -1,4 +1,4 @@
-import AuthInput from "./AuthInput";
+import Input from "../Input";
 import "../../App.css";
 import { acUserSignUp } from "../../store/user/action";
 import { useAppDispatch } from "../../store";
@@ -11,7 +11,10 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Typography, Container, Button, TextField, Grid, Box } from "@mui/material";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 import Slide from "@mui/material/Slide";
 
 const SignUp = () => {
@@ -86,7 +89,7 @@ const SignUp = () => {
                         maxWidth="xs"
                         sx={{ mt: 3, width: "80vw" }}
                     >
-                        <AuthInput
+                        <Input
                             id="Username"
                             label="Username"
                             name="Username"
@@ -97,8 +100,8 @@ const SignUp = () => {
                             validate={validateUsername}
                             autoFocus
                             message={usernameErr}
-                        ></AuthInput>
-                        <AuthInput
+                        ></Input>
+                        <Input
                             id="email"
                             label="Email Address"
                             name="email"
@@ -108,8 +111,8 @@ const SignUp = () => {
                             setMessage={setEmailErr}
                             validate={validateEmail}
                             message={emailErr}
-                        ></AuthInput>
-                        <AuthInput
+                        ></Input>
+                        <Input
                             id="password"
                             label="Password"
                             name="password"
@@ -120,7 +123,7 @@ const SignUp = () => {
                             setMessage={setPasswordErr}
                             validate={validatePassword}
                             message={passwordErr}
-                        ></AuthInput>
+                        ></Input>
                         <Button
                             type="submit"
                             fullWidth

@@ -1,8 +1,8 @@
-import Warning from "./Warning";
+import Warning from "./Authentication/Warning";
 import React from "react";
-import { Grid, TextField, Container } from "@mui/material";
+import TextField from "@mui/material/TextField";
 
-type AuthInputProps = {
+type InputProps = {
     id: string;
     label: string;
     name: string;
@@ -16,7 +16,7 @@ type AuthInputProps = {
     type?: string;
 };
 
-const AuthInput = (props: AuthInputProps) => {
+const Input = (props: InputProps) => {
     return (
         <>
             <TextField
@@ -40,4 +40,4 @@ const AuthInput = (props: AuthInputProps) => {
     );
 };
 
-export default AuthInput;
+export default Input;

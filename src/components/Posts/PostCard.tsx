@@ -1,6 +1,5 @@
 import { IPost } from "store/posts/types";
 import { IStar } from "store/user/types";
-import { BASE_URL } from "utils/endpoints";
 import { toastDeletePostSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
 import { acDeletePost } from "store/posts/action";
 import { acUserStarPost, acUserUnStarPost } from "store/user/action";
@@ -10,25 +9,20 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import DOMPurify from "isomorphic-dompurify";
-import {
-    Avatar,
-    Box,
-    Card,
-    CardActions,
-    CardHeader,
-    CardMedia,
-    CardContent,
-    Chip,
-    Divider,
-    Fab,
-    Grid,
-    IconButton,
-    useTheme,
-    Modal,
-    Typography,
-    Tooltip,
-} from "@mui/material";
 
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
+import Chip from "@mui/material/Chip";
+import Divider from "@mui/material/Divider";
+import Fab from "@mui/material/Fab";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -49,6 +43,7 @@ type PostCardProps = { post: IPost };
 
 const PostCard = ({ post }: PostCardProps) => {
     const user = useAppSelector((state) => state.user);
+    console.log(post);
 
     const [cardRaised, setCardRaised] = useState<boolean>(true);
     const [starClicked, setStarClicked] = useState<boolean>(
@@ -150,13 +145,7 @@ const PostCard = ({ post }: PostCardProps) => {
             <Divider />
             <Grid>
                 <CardActions sx={{ position: "relative" }}>
-                    <Avatar
-                        src="https://www.biography.com/.image/t_share/MTM5ODkxNzYyODU1NDIwOTM4/ed-sheeran-gettyimages-494227430_1600jpg.jpg"
-                        component="a"
-                        href=""
-                        target="_blank"
-                        className="avatar"
-                    >
+                    <Avatar src={post.user.profile_picture} component="a" href="" target="_blank" className="avatar">
                         {post.user.username}
                     </Avatar>
                     <Typography sx={{ fontSize: "0.9rem", fontWeight: "bold" }}>{post.user.username}</Typography>

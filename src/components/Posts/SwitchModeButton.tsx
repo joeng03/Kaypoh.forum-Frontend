@@ -1,9 +1,8 @@
-import { ColorContext } from "../App";
+import { ColorContext } from "../../App";
 import { Box, IconButton, useTheme } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import DarkIcon from "@mui/icons-material/DarkModeRounded";
 import LightIcon from "@mui/icons-material/LightModeRounded";
-import { amber, grey } from "@mui/material/colors";
 import React, { useContext } from "react";
 
 const SwitchModeButton = () => {

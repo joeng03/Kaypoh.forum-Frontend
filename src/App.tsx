@@ -4,7 +4,7 @@ import SignUp from "./components/Authentication/SignUp";
 import Login from "./components/Authentication/Login";
 import PostsList from "./components/Posts/PostsList";
 import ViewPost from "./components/Posts/ViewPost";
-import SwitchModeButton from "components/SwitchModeButton";
+import SwitchModeButton from "components/Posts/SwitchModeButton";
 import CommentsList from "components/Comments/CommentsList";
 import WriteComment from "components/Comments/WriteComment";
 import CommentCard from "components/Comments/CommentCard";

@@ -1,7 +1,7 @@
 import { useAppDispatch } from "store";
 import { acSetPosts } from "store/posts/action";
 import { acUserLogout } from "store/user/action";
-import SwitchModeButton from "components/SwitchModeButton";
+import SwitchModeButton from "components/Posts/SwitchModeButton";
 import { toastLogoutSuccess, toastLogoutError, toastFormat } from "utils/constants";
 import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
@@ -10,7 +10,6 @@ import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import InputLabel from "@mui/material/InputLabel";
@@ -30,7 +29,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddBoxTwoToneIcon from "@mui/icons-material/AddBoxTwoTone";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
-import type { Theme } from "@mui/material/styles";
 import type { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -39,36 +37,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: "inherit",
 }));
 const drawerWidth = 240;
-
-const openedMixin = (theme: Theme) => ({
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-    }),
-    overflowX: "hidden",
-});
-
-const closedMixin = (theme: Theme) => ({
-    transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: "hidden",
-    width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.up("s")]: {
-        width: `calc(${theme.spacing(8)} + 1px)`,
-    },
-});
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-}));
 
 interface AppBarProps extends MuiAppBarProps {
     open?: boolean;

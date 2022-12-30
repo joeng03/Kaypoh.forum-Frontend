@@ -21,7 +21,6 @@ const CommentsList = () => {
 
     useEffect(() => {
         dispatch(acSetComments(post_id));
-        console.log(comments);
     }, []);
 
     const comment: IComment = {

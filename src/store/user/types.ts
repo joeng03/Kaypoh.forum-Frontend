@@ -14,7 +14,7 @@ export interface IUser {
     id: number;
     email: string;
     username: string;
-    profilePic?: string;
+    profile_picture: string;
     stars: IStar[];
     bio: string;
     created_at: string;
@@ -26,7 +26,7 @@ export const initialUserState: IUser = {
     id: -1,
     email: "",
     username: "",
-    profilePic: "",
+    profile_picture: "",
     stars: [],
     bio: "",
     created_at: "",

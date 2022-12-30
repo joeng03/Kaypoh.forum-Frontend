@@ -7,6 +7,10 @@ export const verifyCookie = async (): Promise<IUser> => {
     return response.data;
 };
 
+const update = async (user: FormData): Promise<IUser> => {
+    const response = await axios.put(SIGN_UP, user);
+    return response.data;
+};
 const login = async (credentials: ICredentials): Promise<IUser> => {
     const response = await axios.post(LOG_IN, { user: credentials });
     return response.data;
@@ -22,5 +26,5 @@ const logout = async () => {
     return response.data;
 };
 
-const authService = { verifyCookie, login, signup, logout };
+const authService = { verifyCookie, update, login, signup, logout };
 export default authService;

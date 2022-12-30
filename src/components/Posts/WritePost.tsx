@@ -7,7 +7,6 @@ import { acCreatePost, acUpdatePost } from "store/posts/action";
 import { useAppSelector, useAppDispatch } from "store";
 import fetchBlob from "services/blob";
 import { toastPublishPostSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
-import { BASE_URL } from "utils/endpoints";
 
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -18,7 +17,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import SendIcon from "@mui/icons-material/Send";
 
@@ -59,7 +57,7 @@ const WritePost = ({ post }: WritePostProps) => {
         setImage(file);
     };
 
-    const handlePublishPost = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handlePublishPost = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const postFormData = new FormData();
 

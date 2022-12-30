@@ -6,11 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { useTheme } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/LogoutRounded";
 
 const LogoutButton = () => {
-    const theme = useTheme();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const handleLogout = () => {

@@ -1,4 +1,4 @@
-import AuthInput from "./AuthInput";
+import Input from "../Input";
 import { acUserLogin } from "../../store/user/action";
 import { useAppDispatch } from "../../store";
 import { ICredentials } from "../../store/user/types";
@@ -10,7 +10,10 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Button, Box, Container, Grid, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 import Slide from "@mui/material/Slide";
 
 const Login = () => {
@@ -68,7 +71,7 @@ const Login = () => {
                         Login
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleLogin} maxWidth="xs" sx={{ mt: 3, width: "80vw" }}>
-                        <AuthInput
+                        <Input
                             id="email"
                             label="Email Address"
                             name="email"
@@ -79,8 +82,8 @@ const Login = () => {
                             validate={validateEmail}
                             autoFocus
                             message={emailErr}
-                        ></AuthInput>
-                        <AuthInput
+                        ></Input>
+                        <Input
                             id="password"
                             label="Password"
                             name="password"
@@ -91,7 +94,7 @@ const Login = () => {
                             setMessage={setPasswordErr}
                             validate={validatePassword}
                             message={passwordErr}
-                        ></AuthInput>
+                        ></Input>
                         <Button
                             type="submit"
                             fullWidth
