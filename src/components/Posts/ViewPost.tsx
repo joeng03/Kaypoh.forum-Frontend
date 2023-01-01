@@ -63,10 +63,10 @@ const ViewPost = ({ post }: ViewPostProps) => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                width: "90vw",
+                width: "87vw",
             }}
         >
-            <Box display="flex" flexDirection="row" columnGap="0.5rem" alignItems="center">
+            <Box display="flex" flexDirection="row" columnGap="0.5rem" alignItems="center" pb="0.75rem">
                 <Typography variant="h4" fontWeight="bold" fontFamily={"'Open Sans',sans-serif "}>
                     {post.title}{" "}
                 </Typography>
@@ -85,13 +85,7 @@ const ViewPost = ({ post }: ViewPostProps) => {
             <Grid container position="relative">
                 <Grid item xs={9.5}>
                     <Box display="flex" flexDirection="row" columnGap="0.5rem" alignItems="center">
-                        <Avatar
-                            src={post.user.profile_picture}
-                            component="a"
-                            href=""
-                            target="_blank"
-                            className="avatar"
-                        >
+                        <Avatar src={post.user.profile_picture} className="avatar">
                             {post.user.username}
                         </Avatar>
                         <Box>

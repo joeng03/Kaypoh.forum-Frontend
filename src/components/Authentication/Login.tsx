@@ -7,7 +7,7 @@ import { acSetPosts } from "store/posts/action";
 import { toastLoginError, toastFormat, toastLoginSuccess } from "utils/constants";
 
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
@@ -26,6 +26,7 @@ const Login = () => {
     const [show, setShow] = useState<boolean>(false);
 
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         setShow(true);
@@ -48,25 +49,31 @@ const Login = () => {
             .then(() => {
                 dispatch(acSetPosts());
                 toast.success(toastLoginSuccess, toastFormat);
+                navigate("/");
             })
             .catch(() => toast.error(toastLoginError, toastFormat));
 
         setEmail("");
         setPassword("");
     };
-
     return (
-        <Slide direction="down" in={show} timeout={600}>
-            <Container component="main">
-                <Box
-                    sx={{
-                        mt: 8,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                    }}
-                >
-                    {" "}
+        <Container
+            className="container"
+            sx={{
+                display: "flex",
+            }}
+        >
+            <Slide direction="down" in={show} timeout={650}>
+                <Box className="noselect form" maxWidth="s">
+                    <Typography
+                        component="h1"
+                        variant="h5"
+                        sx={{
+                            fontWeight: "bold",
+                        }}
+                    >
+                        Welcome to Kaypoh.forum
+                    </Typography>
                     <Typography component="h1" variant="h5">
                         Login
                     </Typography>
@@ -104,11 +111,13 @@ const Login = () => {
                         >
                             Login
                         </Button>
-                        <Link to="/signup">{"Don't have an account yet? Sign Up"}</Link>
+                        <Link to="/signup" style={{ color: "#005e97" }}>
+                            {"Don't have an account yet? Sign Up"}
+                        </Link>
                     </Box>
                 </Box>
-            </Container>
-        </Slide>
+            </Slide>
+        </Container>
     );
 };
 

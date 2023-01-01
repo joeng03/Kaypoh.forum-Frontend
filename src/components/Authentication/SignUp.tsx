@@ -27,6 +27,7 @@ const SignUp = () => {
     const [passwordErr, setPasswordErr] = useState<string>("");
     const [btnDisabled, setBtnDisabled] = useState<boolean>(true);
     const [show, setShow] = useState<boolean>(false);
+
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -68,16 +69,9 @@ const SignUp = () => {
     };
 
     return (
-        <Slide direction="up" in={show} timeout={650}>
-            <Container component="main">
-                <Box
-                    sx={{
-                        mt: 8,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                    }}
-                >
+        <Container className="container" sx={{ display: "flex" }}>
+            <Slide direction="up" in={show} timeout={650}>
+                <Box className="noselect form" maxWidth="s">
                     <Typography component="h1" variant="h5">
                         Sign Up
                     </Typography>
@@ -133,11 +127,13 @@ const SignUp = () => {
                         >
                             Sign Up
                         </Button>
-                        <Link to="/login">Already have an account? Login</Link>
+                        <Link to="/login" style={{ color: "#005e97" }}>
+                            Already have an account? Login
+                        </Link>
                     </Box>
                 </Box>
-            </Container>
-        </Slide>
+            </Slide>
+        </Container>
     );
 };
 

@@ -1,12 +1,9 @@
 import PostCard from "./PostCard";
 import PostsNavigation from "./PostsNavigation";
 import Loading from "../Loading";
-import { acSetPosts } from "store/posts/action";
 import { IPost } from "store/posts/types";
-import { useAppSelector, useAppDispatch } from "store";
-import React, { useEffect } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
-import Pagination from "@mui/material/Pagination";
 
 type PostsListProps = {
     posts: IPost[];

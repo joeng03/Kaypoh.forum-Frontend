@@ -1,163 +1,30 @@
+import "./App.css";
 import { useAppDispatch, useAppSelector } from "./store";
 import { IPost, initialPostState } from "./store/posts/types";
 import SignUp from "./components/Authentication/SignUp";
 import Login from "./components/Authentication/Login";
 import PostsList from "./components/Posts/PostsList";
 import ViewPost from "./components/Posts/ViewPost";
-import SwitchModeButton from "components/Posts/SwitchModeButton";
+import NotFound from "./components/NotFound";
+import { lightTheme, darkTheme, ColorContext } from "utils/theme";
+import { acSetPosts } from "store/posts/action";
 import CommentsList from "components/Comments/CommentsList";
-import WriteComment from "components/Comments/WriteComment";
-import CommentCard from "components/Comments/CommentCard";
-import ViewProfile from "components/ViewProfile";
-import { initialCommentState } from "store/comments/types";
-import { initialUserState } from "store/user/types";
-
+import Profile from "components/Profile";
 import RequireAuth from "components/Authentication/RequireAuth";
 import WritePost from "components/Posts/WritePost";
-import "./App.css";
-import { acSetPosts } from "store/posts/action";
 
-import React, { useState, useEffect, useMemo, createContext } from "react";
-import { BrowserRouter, Routes, Route, useMatch } from "react-router-dom";
+import React, { useState, useEffect, useMemo } from "react";
+import { Routes, Route, useMatch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { styled } from "@mui/material/styles";
-import { red, indigo, deepPurple, yellow, grey, amber } from "@mui/material/colors";
-import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
-import type { ThemeOptions, PaletteMode, PaletteColor, PaletteColorOptions } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import createTheme from "@mui/material/styles/createTheme";
+import type { PaletteMode } from "@mui/material";
 
-// TypeScript module augmentation for @mui/material/styles
-type Icon = {
-    sun?: string;
-    moon?: string;
-    star: string;
-    cancel: string;
-};
-declare module "@mui/material/styles" {
-    interface BreakpointOverrides {
-        sm: false;
-        md: false;
-        lg: false;
-        xxs: true;
-        s: true;
-        m: true;
-        l: true;
-        xxl: true;
-    }
-    interface Palette {
-        icon: Icon;
-        primaryGradient: string;
-    }
-    interface PaletteOptions {
-        icon: Icon;
-        primaryGradient: string;
-    }
-}
-
-const breakpoints = {
-    values: {
-        xxs: 0,
-        xs: 400,
-        s: 600,
-        m: 900,
-        l: 1200,
-        xl: 1600,
-        xxl: 1800,
-    },
-};
-
-const MediaQuery = styled("div")(({ theme }) => ({
-    [theme.breakpoints.down("m")]: {
-        fontSize: "0.9rem",
-    },
-    [theme.breakpoints.down("s")]: {
-        fontSize: "0.85rem",
-    },
-    [theme.breakpoints.down("xs")]: {
-        fontSize: "0.8rem",
-    },
-    [theme.breakpoints.up("m")]: {
-        fontSize: "0.95rem",
-    },
-    [theme.breakpoints.up("l")]: {
-        fontSize: "1rem",
-    },
-    [theme.breakpoints.up("xl")]: {
-        fontSize: "1.1rem",
-    },
-    [theme.breakpoints.up("xxl")]: {
-        fontSize: "1.2rem",
-    },
-}));
-
-const lightTheme: ThemeOptions = {
-    palette: {
-        mode: "light",
-        primaryGradient: "linear-gradient(to right,#3EADCF,#ABE9CD)",
-        primary: {
-            main: "#4bc7ea",
-            light: "#8bdef7",
-            dark: "#3eadcf",
-        },
-        secondary: {
-            main: "#76d9af",
-            light: "#abe9cd",
-            dark: "#00ae66",
-        },
-        warning: {
-            main: red[700],
-        },
-        icon: {
-            moon: grey[400],
-            star: yellow[600],
-            cancel: red[400],
-        },
-    },
-    breakpoints: breakpoints,
-    typography: {
-        button: {
-            textTransform: "none",
-        },
-    },
-};
-const darkTheme: ThemeOptions = {
-    palette: {
-        mode: "dark",
-        primaryGradient: "linear-gradient(to right,#3EADCF,#ABE9CD)",
-        primary: {
-            main: "#4bc7ea",
-            light: "#8bdef7",
-            dark: "#3eadcf",
-        },
-        secondary: {
-            main: "#76d9af",
-            light: "#abe9cd",
-            dark: "#00ae66",
-        },
-        warning: {
-            main: red[200],
-        },
-        icon: {
-            sun: amber[200],
-            star: yellow[300],
-            cancel: red[200],
-        },
-    },
-
-    breakpoints: breakpoints,
-    typography: {
-        button: {
-            textTransform: "none",
-        },
-    },
-};
-
-interface ColorContextSchema {
-    toggleColorMode: () => void;
-}
-export const ColorContext = createContext<ColorContextSchema>({} as ColorContextSchema);
-
-const App: React.FC = () => {
-    const [mode, setMode] = useState<PaletteMode>("light");
+const App = () => {
+    const [mode, setMode] = useState<PaletteMode>(
+        localStorage.getItem("mode") ? (localStorage.getItem("mode") as PaletteMode) : "dark",
+    );
     const theme = useMemo(() => createTheme(mode === "light" ? lightTheme : darkTheme), [mode]);
     const colorMode = useMemo(
         () => ({
@@ -179,6 +46,9 @@ const App: React.FC = () => {
     useEffect(() => {
         dispatch(acSetPosts());
     }, []);
+    useEffect(() => {
+        localStorage.setItem("mode", mode);
+    }, [mode]);
     useEffect(() => {
         setViewPost(
             matchViewPost
@@ -204,65 +74,78 @@ const App: React.FC = () => {
         <div className="App">
             <ColorContext.Provider value={colorMode}>
                 <ThemeProvider theme={theme}>
-                    <MediaQuery>
-                        <CssBaseline enableColorScheme />
+                    <CssBaseline enableColorScheme />
 
-                        <ToastContainer />
-                        <Routes>
-                            <Route path="login" element={<Login />} />
-                            <Route path="signup" element={<SignUp />} />
-                            <Route
-                                path="posts/:id"
-                                element={
-                                    <RequireAuth>
-                                        <ViewPost post={viewPost} />
-                                    </RequireAuth>
-                                }
-                            >
-                                <Route path="comments" element={<CommentsList />}></Route>
-                            </Route>
-                            <Route
-                                path="posts"
-                                element={
-                                    <RequireAuth>
-                                        <PostsList posts={posts} />
-                                    </RequireAuth>
-                                }
-                            />
-                            <Route
-                                path="writepost/:id"
-                                element={
-                                    <RequireAuth>
-                                        <WritePost post={writePost} />
-                                    </RequireAuth>
-                                }
-                            />
-                            <Route
-                                path="writepost"
-                                element={
-                                    <RequireAuth>
-                                        <WritePost post={writePost} />
-                                    </RequireAuth>
-                                }
-                            />
-                            <Route
-                                path="profile"
-                                element={
-                                    <RequireAuth>
-                                        <ViewProfile />
-                                    </RequireAuth>
-                                }
-                            />
-                            <Route
-                                index
-                                element={
-                                    <RequireAuth>
-                                        <PostsList posts={posts} />
-                                    </RequireAuth>
-                                }
-                            />
-                        </Routes>
-                    </MediaQuery>
+                    <ToastContainer />
+                    <Routes>
+                        <Route
+                            path="login"
+                            element={
+                                <ThemeProvider theme={createTheme(lightTheme)}>
+                                    <Login />{" "}
+                                </ThemeProvider>
+                            }
+                        />
+                        <Route
+                            path="signup"
+                            element={
+                                <ThemeProvider theme={createTheme(lightTheme)}>
+                                    <SignUp />{" "}
+                                </ThemeProvider>
+                            }
+                        />
+                        <Route
+                            path="posts/:id"
+                            element={
+                                <RequireAuth>
+                                    <ViewPost post={viewPost} />
+                                </RequireAuth>
+                            }
+                        >
+                            <Route path="comments" element={<CommentsList />}></Route>
+                        </Route>
+                        <Route
+                            path="posts"
+                            element={
+                                <RequireAuth>
+                                    <PostsList posts={posts} />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="writepost/:id"
+                            element={
+                                <RequireAuth>
+                                    <WritePost post={writePost} />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="writepost"
+                            element={
+                                <RequireAuth>
+                                    <WritePost post={writePost} />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="profile"
+                            element={
+                                <RequireAuth>
+                                    <Profile />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            index
+                            element={
+                                <RequireAuth>
+                                    <PostsList posts={posts} />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
                 </ThemeProvider>
             </ColorContext.Provider>
         </div>

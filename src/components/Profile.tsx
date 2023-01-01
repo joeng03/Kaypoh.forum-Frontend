@@ -2,10 +2,9 @@ import Input from "./Input";
 import { acUserUpdateProfile } from "store/user/action";
 import { useAppSelector, useAppDispatch } from "store";
 import fetchBlob from "services/blob";
-import { validateEmail, validateUsername, validatePassword } from "utils/validators";
+import { validateEmail, validateUsername } from "utils/validators";
 import { toastUpdateProfileSuccess, toastUpdateProfileError, toastFormat } from "utils/constants";
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -14,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import SendIcon from "@mui/icons-material/Send";
 
-const ViewProfile = () => {
+const Profile = () => {
     const [createdAt, setCreatedAt] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [username, setUsername] = useState<string>("");
@@ -28,14 +27,12 @@ const ViewProfile = () => {
     const profilePicRef = useRef<HTMLImageElement>(null);
     const user = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-    console.log(user);
 
     useEffect(() => {
         setCreatedAt(user.created_at);
         setEmail(user.email);
         setUsername(user.username);
-        setBio(user.bio);
+        setBio(user.bio ? user.bio : "");
         if (user.profile_picture) {
             fetchBlob(user.profile_picture).then((blob) => {
                 const imageFile: File = new File([blob], "");
@@ -151,4 +148,4 @@ const ViewProfile = () => {
     );
 };
 
-export default ViewProfile;
+export default Profile;

@@ -8,7 +8,6 @@ import ConfirmationModal from "components/ConfirmationModal";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import DOMPurify from "isomorphic-dompurify";
 
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -23,27 +22,75 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
+import useTheme from "@mui/material/styles/useTheme";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const chipStyle = {
-    top: "0.8em",
-    right: "0.8em",
-    position: "absolute",
-    backgroundColor: "secondary",
-    fontSize: "0.85em",
+const extractContent = (html: string) => {
+    return new DOMParser().parseFromString(html, "text/html").documentElement.textContent;
+};
+type PostCardMediaProps = {
+    image: string;
+    verticalLayout?: boolean;
 };
 
-const sanitizeData = (data: string) => ({
-    __html: DOMPurify.sanitize(data),
-});
+const PostCardMedia = ({ image, verticalLayout = false }: PostCardMediaProps) => {
+    return (
+        <CardMedia
+            image={image}
+            sx={{
+                height: verticalLayout ? "40%" : "100%",
+                position: "relative",
+            }}
+        />
+    );
+};
+
+type PostCardContentProps = {
+    post_id: number;
+    title: string;
+    content: string;
+    verticalLayout?: boolean;
+};
+
+const PostCardContent = ({ post_id, title, content, verticalLayout = false }: PostCardContentProps) => {
+    return (
+        <Link to={`/posts/${post_id}`} style={{ color: "inherit", textDecoration: "inherit" }}>
+            <CardContent sx={{ height: "100%", pb: 0, cursor: "pointer" }}>
+                <Typography
+                    variant="h6"
+                    sx={{
+                        fontWeight: "bold",
+                        fontFamily: "Open Sans, sans-serif",
+                        mb: verticalLayout ? "0.4rem " : "1rem",
+                    }}
+                >
+                    {title}
+                </Typography>
+                <Typography
+                    variant="body1"
+                    sx={{
+                        display: "-webkit-box",
+                        overflow: "hidden",
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: verticalLayout ? 3 : 4,
+                        textAlign: "left",
+                        wordWrap: "break-word",
+                    }}
+                >
+                    {extractContent(content)}
+                </Typography>
+            </CardContent>
+        </Link>
+    );
+};
 
 type PostCardProps = { post: IPost };
 
 const PostCard = ({ post }: PostCardProps) => {
     const user = useAppSelector((state) => state.user);
-    console.log(post);
 
     const [cardRaised, setCardRaised] = useState<boolean>(true);
     const [starClicked, setStarClicked] = useState<boolean>(
@@ -53,7 +100,10 @@ const PostCard = ({ post }: PostCardProps) => {
     const [starsCount, setStarsCount] = useState<number>(post.stars_count);
 
     const dispatch = useAppDispatch();
+    const theme = useTheme();
 
+    // Use screen width to determine and adjust the PostCard layout
+    const verticalLayout = useMediaQuery(theme.breakpoints.down("s"));
     const onModalOpen = () => setModalOpen(true);
     const onModalClose = () => setModalOpen(false);
     const handleDeletePost = () => {
@@ -84,18 +134,57 @@ const PostCard = ({ post }: PostCardProps) => {
             onMouseEnter={() => setCardRaised(false)}
             onMouseLeave={() => setCardRaised(true)}
             raised={cardRaised}
-            sx={{ height: "17rem", maxWidth: "40rem" }}
+            sx={{ height: verticalLayout ? "20rem" : "16rem", maxWidth: "40rem" }}
         >
-            <Grid container height="80%">
-                <Grid item xs={4}>
-                    <CardMedia image={post.image} sx={{ height: "100%", position: "relative" }}>
+            {" "}
+            {post.tag && <Chip label={post.tag} size="small" color="secondary" className="chip" />}
+            {verticalLayout ? (
+                <>
+                    <PostCardMedia image={post.image} verticalLayout={true} />
+                    <PostCardContent
+                        post_id={post.id}
+                        title={post.title}
+                        content={post.content}
+                        verticalLayout={true}
+                    />
+                </>
+            ) : (
+                <Grid container height="80%">
+                    <Grid item xs={4}>
+                        <PostCardMedia image={post.image} />
+                    </Grid>
+                    <Grid item xs={8}>
+                        <PostCardContent post_id={post.id} title={post.title} content={post.content} />
+                    </Grid>
+                </Grid>
+            )}
+            <div style={{ position: "absolute", bottom: "0", width: "100%" }}>
+                <Divider />
+                <Grid>
+                    <CardActions sx={{ position: "relative" }}>
+                        <Avatar
+                            src={post.user.profile_picture}
+                            component="a"
+                            href=""
+                            target="_blank"
+                            className="avatar"
+                        >
+                            {post.user.username}
+                        </Avatar>
+                        <Typography sx={{ fontSize: "0.9rem", fontWeight: "bold" }}>{post.user.username}</Typography>
+                        <Typography sx={{ fontSize: "0.9rem" }}>
+                            {new Date(post.created_at).toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                            })}
+                        </Typography>
                         {user.id === post.user.id && (
                             <Box
                                 sx={{
-                                    position: "absolute",
                                     display: "flex",
-                                    flexDirection: "column",
-                                    rowGap: "0.5rem",
+                                    flexDirection: "row",
+                                    columnGap: "0.75rem",
                                     transform: "scale(0.55)",
                                 }}
                             >
@@ -110,66 +199,21 @@ const PostCard = ({ post }: PostCardProps) => {
                                 </Fab>
                             </Box>
                         )}
-                    </CardMedia>
+                        <Box sx={{ position: "absolute", right: "0.4rem", display: "flex", alignItems: "center" }}>
+                            <IconButton aria-label="star" onClick={handleStarClick} sx={{ p: "0.15rem" }}>
+                                <Tooltip
+                                    title={(starClicked ? "Unstar" : "Star") + " this post"}
+                                    placement="bottom"
+                                    disableInteractive
+                                >
+                                    <StarRoundedIcon sx={{ color: starClicked ? "icon.star" : "inherit" }} />
+                                </Tooltip>
+                            </IconButton>
+                            {starsCount}
+                        </Box>
+                    </CardActions>
                 </Grid>
-                <Grid item xs={8}>
-                    <Link to={`/posts/${post.id}`} style={{ color: "inherit", textDecoration: "inherit" }}>
-                        <CardContent sx={{ cursor: "pointer", pb: 0 }}>
-                            <Typography
-                                sx={{
-                                    fontSize: "1.2rem",
-                                    fontWeight: "bold",
-                                    fontFamily: "Open Sans, sans-serif",
-                                    mb: "0.4rem ",
-                                }}
-                            >
-                                {post.title}
-                            </Typography>
-                            {post.tag && <Chip label={post.tag} size="small" color="secondary" sx={chipStyle} />}
-                            <Typography
-                                variant="body1"
-                                dangerouslySetInnerHTML={sanitizeData(post.content)}
-                                sx={{
-                                    display: "-webkit-box",
-                                    overflow: "hidden",
-                                    WebkitBoxOrient: "vertical",
-                                    WebkitLineClamp: 3,
-                                    textAlign: "left",
-                                }}
-                            ></Typography>
-                        </CardContent>
-                    </Link>
-                </Grid>
-            </Grid>
-
-            <Divider />
-            <Grid>
-                <CardActions sx={{ position: "relative" }}>
-                    <Avatar src={post.user.profile_picture} component="a" href="" target="_blank" className="avatar">
-                        {post.user.username}
-                    </Avatar>
-                    <Typography sx={{ fontSize: "0.9rem", fontWeight: "bold" }}>{post.user.username}</Typography>
-                    <Typography sx={{ fontSize: "0.9rem" }}>
-                        {new Date(post.created_at).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                        })}
-                    </Typography>
-                    <Box sx={{ position: "absolute", right: "0.4rem", display: "flex", alignItems: "center" }}>
-                        <IconButton aria-label="star" onClick={handleStarClick} sx={{ p: 0 }}>
-                            <Tooltip
-                                title={(starClicked ? "Unstar" : "Star") + " this post"}
-                                placement="bottom"
-                                disableInteractive
-                            >
-                                <StarRoundedIcon sx={{ color: starClicked ? "icon.star" : "inherit" }} />
-                            </Tooltip>
-                        </IconButton>
-                        {starsCount}
-                    </Box>
-                </CardActions>
-            </Grid>
+            </div>
             <ConfirmationModal
                 open={modalOpen}
                 onClose={onModalClose}

@@ -1,12 +1,13 @@
 import { useAppDispatch } from "store";
 import { acSetPosts } from "store/posts/action";
 import { acUserLogout } from "store/user/action";
-import SwitchModeButton from "components/Posts/SwitchModeButton";
+import SwitchModeButton from "components/SwitchModeButton";
 import { toastLogoutSuccess, toastLogoutError, toastFormat } from "utils/constants";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
+import useTheme from "@mui/material/styles/useTheme";
 import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -31,10 +32,28 @@ import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import ExitToAppTwoToneIcon from "@mui/icons-material/ExitToAppTwoTone";
 import type { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const InputBaseWrapper = styled(Box)(({ theme }) => ({
+    position: "relative",
+    display: "block",
     width: "30vw",
     maxWidth: theme.breakpoints.values.xs,
-    color: "inherit",
+    borderRadius: "1rem",
+    background: theme.palette.mode === "light" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.3)",
+    "&:hover": {
+        background: theme.palette.mode === "light" ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.15)",
+    },
+    "&:focus-within": {
+        background: "transparent",
+    },
+}));
+
+const StyledInputBase = styled(InputBase)(() => ({
+    position: "absolute",
+    left: "1rem",
+    width: "100%",
+    "& input::placeholder": {
+        fontSize: "0.9rem",
+    },
 }));
 const drawerWidth = 240;
 
@@ -46,6 +65,7 @@ const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
     zIndex: theme.zIndex.drawer + 1,
+    boxShadow: "none",
     transition: theme.transitions.create(["width", "margin"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -62,24 +82,24 @@ const AppBar = styled(MuiAppBar, {
 
 const PostsNavigation = () => {
     const [searchValue, setSearchValue] = useState<string>("");
-    const [columnName, setColumnName] = useState<string>("title");
-    const [sortBy, setSortBy] = useState<string>("created_at DESC");
+    const [columnName, setColumnName] = useState<string>(
+        localStorage.getItem("columnName") ? (localStorage.getItem("columnName") as string) : "title",
+    );
+    const [sortBy, setSortBy] = useState<string>(
+        localStorage.getItem("sortBy") ? (localStorage.getItem("sortBy") as string) : "created_at DESC",
+    );
     const [page, setPage] = useState<number>(1);
     const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
-    const isMount = useRef(true);
-
-    // This useEffect hook only works after first render, as the initial posts are already fetched in <App/>
     useEffect(() => {
-        if (isMount.current) {
-            isMount.current = false;
-        } else {
-            dispatch(acSetPosts(page, columnName, searchValue, sortBy));
-        }
+        dispatch(acSetPosts(page, columnName, searchValue, sortBy));
+        localStorage.setItem("columnName", columnName);
+        localStorage.setItem("sortBy", sortBy);
     }, [page, columnName, sortBy]);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const theme = useTheme();
 
     const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -90,7 +110,7 @@ const PostsNavigation = () => {
         dispatch(acUserLogout())
             .then(() => {
                 toast.success(toastLogoutSuccess, toastFormat);
-                navigate("/");
+                navigate("/login");
             })
             .catch(() => {
                 toast.error(toastLogoutError, toastFormat);
@@ -99,7 +119,16 @@ const PostsNavigation = () => {
 
     return (
         <>
-            <AppBar position="fixed" color="transparent" sx={{ backdropFilter: "blur(20px)", overflow: "scroll" }}>
+            <AppBar
+                position="fixed"
+                color="transparent"
+                sx={{
+                    background: theme.palette.mode === "light" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.4)",
+                    backdropFilter: "blur(15px)",
+                    overflow: "scroll",
+                    fontSize: "0.9rem",
+                }}
+            >
                 <Toolbar>
                     {drawerOpen ? (
                         <IconButton size="large" edge="start" color="inherit" onClick={() => setDrawerOpen(false)}>
@@ -112,15 +141,24 @@ const PostsNavigation = () => {
                     )}
 
                     <Box component="form" onSubmit={handleSearch} sx={{ display: "flex", margin: "0 auto" }}>
-                        <StyledInputBase
-                            value={searchValue}
-                            onChange={({ target }: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-                                setSearchValue(target.value)
-                            }
-                            placeholder="Search…"
-                        />
-                        <Button type="submit" endIcon={<SearchIcon />} sx={{ p: 0 }} />
-                        <InputLabel sx={{ display: { xxs: "none", m: "flex" }, alignItems: "center", mr: "0.5rem" }}>
+                        <InputBaseWrapper>
+                            <StyledInputBase
+                                value={searchValue}
+                                onChange={({ target }: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+                                    setSearchValue(target.value)
+                                }
+                                placeholder="Search…"
+                            />
+                        </InputBaseWrapper>
+                        <Button type="submit" startIcon={<SearchIcon />} />
+                        <InputLabel
+                            sx={{
+                                display: { xxs: "none", m: "flex" },
+                                alignItems: "center",
+                                mr: "0.5rem",
+                                fontSize: "inherit",
+                            }}
+                        >
                             Search by
                         </InputLabel>
                         <Select
@@ -135,7 +173,14 @@ const PostsNavigation = () => {
                             <MenuItem value="content">Content</MenuItem>
                             <MenuItem value="tag">Tag</MenuItem>
                         </Select>
-                        <InputLabel sx={{ display: { xxs: "none", m: "flex" }, alignItems: "center", mr: "0.5rem" }}>
+                        <InputLabel
+                            sx={{
+                                display: { xxs: "none", m: "flex" },
+                                alignItems: "center",
+                                mr: "0.5rem",
+                                fontSize: "inherit",
+                            }}
+                        >
                             Sort by
                         </InputLabel>
                         <Select
@@ -180,21 +225,8 @@ const PostsNavigation = () => {
                 onClose={() => setDrawerOpen(false)}
                 transitionDuration={{ enter: 400, exit: 300 }}
             >
-                <Box
-                    sx={{ width: "12rem", mt: "3rem" }}
-                    role="presentation"
-                    // onClick={toggleDrawer(anchor, false)}
-                    // onKeyDown={toggleDrawer(anchor, false)}
-                >
+                <Box sx={{ width: "12rem", mt: "3rem" }} role="presentation">
                     <List>
-                        {/* {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-                            <ListItem key={text} disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>{<MailIcon />}</ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))} */}
                         <Link to="/writepost" style={{ color: "inherit", textDecoration: "inherit" }}>
                             <ListItem key="Create post" disablePadding>
                                 <ListItemButton>

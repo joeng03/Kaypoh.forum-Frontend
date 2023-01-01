@@ -1,7 +1,6 @@
 import PostInput from "./PostInput";
 import ContentEditor from "../ContentEditor";
 import Loading from "components/Loading";
-import { IUser } from "store/user/types";
 import { IPost } from "store/posts/types";
 import { acCreatePost, acUpdatePost } from "store/posts/action";
 import { useAppSelector, useAppDispatch } from "store";

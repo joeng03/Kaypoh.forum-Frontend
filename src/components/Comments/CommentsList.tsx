@@ -1,5 +1,3 @@
-import WriteComment from "./WriteComment";
-import ViewComment from "./ViewComment";
 import CommentCard from "./CommentCard";
 import { useAppDispatch, useAppSelector } from "store";
 import { IComment, initialCommentState } from "store/comments/types";

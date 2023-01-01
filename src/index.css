@@ -7,8 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -ms-overflow-style: none;  
   scrollbar-width: none;  
-  /* background-image: linear-gradient(to top right, #fff1eb 0%, #ace0f9 100%); */
-
+  /* background: linear-gradient(45deg, #FFDEE9 20%, #7fd7ef 100%)  no-repeat; */
 }
 
 ::-webkit-scrollbar {

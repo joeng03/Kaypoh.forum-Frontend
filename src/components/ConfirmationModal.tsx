@@ -25,15 +25,17 @@ const ConfirmationModal = ({ open, onClose, handleConfirm, confirmationText }: C
         >
             <Fade in={open} timeout={{ enter: 700, exit: 400 }}>
                 <Box className="modal">
-                    <Typography variant="body1">{confirmationText}</Typography>
-                    <Typography variant="body1" fontWeight="bold">
+                    <Typography variant="body1" color="rgba(0, 0, 0, 0.87)">
+                        {confirmationText}
+                    </Typography>
+                    <Typography variant="body1" fontWeight="bold" color="rgba(0, 0, 0, 0.87)">
                         This action is irreversible.
                     </Typography>
                     <Button
                         component="label"
                         variant="outlined"
                         size="small"
-                        color="warning"
+                        color="error"
                         onClick={handleConfirm}
                         sx={{
                             m: "0 auto",

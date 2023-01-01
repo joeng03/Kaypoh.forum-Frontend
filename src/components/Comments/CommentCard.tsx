@@ -6,7 +6,6 @@ import { acDeleteComment } from "store/comments/action";
 import { IComment } from "store/comments/types";
 import { toastDeleteCommentSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
 import React, { useState } from "react";
-import DOMPurify from "isomorphic-dompurify";
 import { toast } from "react-toastify";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -51,13 +50,7 @@ const CommentCard = ({ comment, method }: CommentCardProps) => {
                 <Grid item xs={2} mt="0.8rem">
                     <Box display="flex" flexDirection="row">
                         <Box>
-                            <Avatar
-                                src={comment.user.profile_picture}
-                                component="a"
-                                href=""
-                                target="_blank"
-                                className="avatar"
-                            >
+                            <Avatar src={comment.user.profile_picture} className="avatar">
                                 {comment.user.username}
                             </Avatar>
 

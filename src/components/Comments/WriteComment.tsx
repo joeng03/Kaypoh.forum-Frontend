@@ -1,24 +1,18 @@
 import ContentEditor from "../ContentEditor";
 import { IComment } from "store/comments/types";
 import { acCreateComment, acUpdateComment } from "store/comments/action";
-import { useAppSelector, useAppDispatch } from "store";
-import fetchBlob from "services/blob";
+import { useAppDispatch } from "store";
 import { toastPublishCommentSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
 
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { EditorState } from "draft-js";
 import { convertToHTML, convertFromHTML } from "draft-convert";
 import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import SendIcon from "@mui/icons-material/Send";
 import CancelIcon from "@mui/icons-material/Cancel";
-import Icon from "@mui/material/Icon";
 
 type WriteCommentProps = {
     comment: IComment;
@@ -76,7 +70,7 @@ const WriteComment = ({ comment, method, onCancel }: WriteCommentProps) => {
                             variant="outlined"
                             size="small"
                             color="warning"
-                            endIcon={<CancelIcon />}
+                            endIcon={<CancelIcon sx={{ color: "icon.cancel" }} />}
                             sx={{
                                 position: "absolute",
                                 left: "0.7rem",

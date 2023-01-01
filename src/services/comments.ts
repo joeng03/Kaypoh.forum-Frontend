@@ -1,7 +1,6 @@
 import { COMMENTS } from "../utils/endpoints";
 import { IComment } from "../store/comments/types";
 import axios from "axios";
-import { transform } from "typescript";
 
 const transformCommentRequest = (comment: IComment) => ({
     ...comment,

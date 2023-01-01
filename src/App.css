@@ -56,8 +56,28 @@ ul {
   height: 20rem;
   max-width:30rem;
   width: 90vw;
-  border-radius: 0.625rem!important;
+  border-radius: 0.5rem!important; 
 }
+/* .card:hover{
+    box-shadow: 0 8px 30px -6px rgba(0,0,0,0.3);
+} */
+
+.container{
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFDEE9;
+  background-image: linear-gradient(45deg, #FFDEE9 20%, #7fd7ef 100%);
+}
+
+.chip{
+  top: 0.8rem;
+  right: 0.8rem;
+  position: absolute;
+  font-size: 0.85rem;
+}
+
 .modal{
   display: flex;
   flex-direction: column;
@@ -69,16 +89,32 @@ ul {
   max-width: 400px;
   width: 90vw;
   background-color: white;
-  border-radius: .5rem!important;
+  border-radius: 0.7rem!important;
   box-shadow: 24%;
-  padding:2rem;
+  padding:2.5rem;
 }
+
+.form{   
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100vw;
+  height: 65vh;
+  border-radius: 1.5rem;
+  background: rgba(255,255,255,0.4);
+  color: #424242;
+}
+
 .toolbar-darkmode{
   color:rgba(0, 0, 0, 0.87);
 }
+
 .toolbar-darkmode button{
   color:rgba(0, 0, 0, 0.87);
 }
+
 .wrapper-class {
   margin:0 auto;
   width: 95%;
