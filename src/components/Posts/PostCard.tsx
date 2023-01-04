@@ -1,11 +1,11 @@
 import { IPost } from "store/posts/types";
 import { IStar } from "store/user/types";
-import { toastDeletePostSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
+import { toastDeleteSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
 import { acDeletePost } from "store/posts/action";
 import { acUserStarPost, acUserUnStarPost } from "store/user/action";
 import { useAppDispatch, useAppSelector } from "store";
 import ConfirmationModal from "components/ConfirmationModal";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -28,8 +28,8 @@ import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const extractContent = (html: string) => {
-    return new DOMParser().parseFromString(html, "text/html").documentElement.textContent;
+const extractContent = (htmlString: string) => {
+    return new DOMParser().parseFromString(htmlString, "text/html").documentElement.textContent;
 };
 type PostCardMediaProps = {
     image: string;
@@ -93,11 +93,15 @@ const PostCard = ({ post }: PostCardProps) => {
     const user = useAppSelector((state) => state.user);
 
     const [cardRaised, setCardRaised] = useState<boolean>(true);
-    const [starClicked, setStarClicked] = useState<boolean>(
-        user.stars.find((star) => star.post_id === post.id) ? true : false,
-    );
-    const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [starClicked, setStarClicked] = useState<boolean>(false);
     const [starsCount, setStarsCount] = useState<number>(post.stars_count);
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (user) {
+            setStarClicked(user.stars.find((star) => star.post_id === post.id) !== undefined);
+        }
+    }, [user]);
 
     const dispatch = useAppDispatch();
     const theme = useTheme();
@@ -108,7 +112,7 @@ const PostCard = ({ post }: PostCardProps) => {
     const onModalClose = () => setModalOpen(false);
     const handleDeletePost = () => {
         dispatch(acDeletePost(post.id))
-            .then(() => toast.success(toastDeletePostSuccess, toastFormat))
+            .then(() => toast.success(toastDeleteSuccess("post"), toastFormat))
             .catch(() => toast.warning(toastNotAuthorizedWarning, toastFormat));
     };
     const handleStarClick = () => {
@@ -136,8 +140,7 @@ const PostCard = ({ post }: PostCardProps) => {
             raised={cardRaised}
             sx={{ height: verticalLayout ? "20rem" : "16rem", maxWidth: "40rem" }}
         >
-            {" "}
-            {post.tag && <Chip label={post.tag} size="small" color="secondary" className="chip" />}
+            {post.topic.name && <Chip label={post.topic.name} size="small" color="secondary" className="chip" />}
             {verticalLayout ? (
                 <>
                     <PostCardMedia image={post.image} verticalLayout={true} />

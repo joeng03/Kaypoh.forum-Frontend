@@ -8,7 +8,7 @@ export const verifyCookie = async (): Promise<IUser> => {
 };
 
 const update = async (user: FormData): Promise<IUser> => {
-    const response = await axios.patch(SIGN_UP, user);
+    const response = await axios.put(SIGN_UP, user);
     return response.data;
 };
 

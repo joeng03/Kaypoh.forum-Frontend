@@ -1,13 +1,22 @@
 import type { ToastOptions } from "react-toastify";
 
+// specific toast messages (constansts)
 export const toastSignUpSuccess = "Successfully signed up!";
 export const toastLoginSuccess = "Successfully logged in!";
 export const toastLogoutSuccess = "Successfully logged out!";
 export const toastUpdateProfileSuccess = "Successfully updated profile!";
-export const toastPublishPostSuccess = "Succesfully published post!";
-export const toastDeletePostSuccess = "Successfully deleted post!";
-export const toastPublishCommentSuccess = "Succesfully published comment!";
-export const toastDeleteCommentSuccess = "Successfully deleted comment!";
+
+export const toastLoginError = "Incorrect email and/or password";
+export const toastLogoutError = "Unable to logout";
+export const toastUpdateProfileError = "Failed to update profile";
+export const toastNotAuthorizedWarning =
+    "You are not authorized to perform this action. If your session has expired, please sign in again";
+
+// General toast messages (functions)
+export const toastPublishSuccess = (item: string) => `Successfully published ${item} !`;
+
+export const toastDeleteSuccess = (item: string) => `Successfully deleted ${item} !`;
+
 export const toastSignUpError = (errors: { email?: string; username?: string }): string => {
     let message = "";
     if (errors && "email" in errors) {
@@ -18,13 +27,6 @@ export const toastSignUpError = (errors: { email?: string; username?: string }):
     }
     return `${message} has already been taken`;
 };
-
-export const toastLoginError = "Incorrect email and/or password";
-export const toastLogoutError = "Unable to logout";
-export const toastUpdateProfileError = "Failed to update profile";
-export const toastNotAuthorizedWarning =
-    "You are not authorized to perform this action. If your session has expired, please sign in again";
-
 export const toastFormat: ToastOptions = {
     position: "bottom-right",
     autoClose: 3500,

@@ -1,5 +1,5 @@
 import PostCard from "./PostCard";
-import PostsNavigation from "./PostsNavigation";
+import PostsNavigation from "../Navigation";
 import Loading from "../Loading";
 import { IPost } from "store/posts/types";
 import React from "react";
@@ -13,7 +13,6 @@ const PostsList = ({ posts }: PostsListProps) => {
         <Loading />
     ) : (
         <>
-            <PostsNavigation />
             <Box m="3.5rem 0rem">
                 <Box display="flex" flexDirection="column">
                     {posts.map((post) => (

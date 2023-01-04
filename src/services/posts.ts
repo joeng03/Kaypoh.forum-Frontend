@@ -12,7 +12,7 @@ const create = async (post: FormData): Promise<IPost> => {
     return response.data;
 };
 
-const readOne = async (id: number): Promise<IPost> => {
+export const readOne = async (id: number): Promise<IPost> => {
     const response = await axios.get(`${POSTS}/${id}`);
     return response.data;
 };

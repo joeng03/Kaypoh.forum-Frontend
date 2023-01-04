@@ -1,17 +1,18 @@
 import "./App.css";
-import { useAppDispatch, useAppSelector } from "./store";
-import { IPost, initialPostState } from "./store/posts/types";
+import { useAppSelector } from "./store";
 import SignUp from "./components/Authentication/SignUp";
 import Login from "./components/Authentication/Login";
 import PostsList from "./components/Posts/PostsList";
 import ViewPost from "./components/Posts/ViewPost";
+import WriteTopic from "./components/Topics/WriteTopic";
+import CodeOfConduct from "./components/CodeOfConduct";
 import NotFound from "./components/NotFound";
 import { lightTheme, darkTheme, ColorContext } from "utils/theme";
-import { acSetPosts } from "store/posts/action";
 import CommentsList from "components/Comments/CommentsList";
 import Profile from "components/Profile";
 import RequireAuth from "components/Authentication/RequireAuth";
 import WritePost from "components/Posts/WritePost";
+import Navigation from "components/Navigation";
 
 import React, { useState, useEffect, useMemo } from "react";
 import { Routes, Route, useMatch } from "react-router-dom";
@@ -34,55 +35,26 @@ const App = () => {
         }),
         [],
     );
-    const dispatch = useAppDispatch();
+    const user = useAppSelector((state) => state.user);
     const posts = useAppSelector((state) => state.posts);
 
-    const [viewPost, setViewPost] = useState<IPost>(initialPostState);
-    const [writePost, setWritePost] = useState<IPost>(initialPostState);
-
-    const matchViewPost = useMatch("/posts/:id/*");
-    const matchWritePost = useMatch("/writepost/:id");
-
-    useEffect(() => {
-        dispatch(acSetPosts());
-    }, []);
     useEffect(() => {
         localStorage.setItem("mode", mode);
     }, [mode]);
-    useEffect(() => {
-        setViewPost(
-            matchViewPost
-                ? posts.reduce(
-                      (acc, post) => (post.id.toString() === matchViewPost.params.id ? post : acc),
-                      initialPostState,
-                  )
-                : initialPostState,
-        );
-    }, [posts, matchViewPost]);
-    useEffect(() => {
-        setWritePost(
-            matchWritePost
-                ? posts.reduce(
-                      (acc, post) => (post.id.toString() === matchWritePost.params.id ? post : acc),
-                      initialPostState,
-                  )
-                : initialPostState,
-        );
-    }, [posts, matchWritePost]);
 
     return (
         <div className="App">
             <ColorContext.Provider value={colorMode}>
                 <ThemeProvider theme={theme}>
                     <CssBaseline enableColorScheme />
-
+                    <Navigation />
                     <ToastContainer />
                     <Routes>
                         <Route
                             path="login"
                             element={
                                 <ThemeProvider theme={createTheme(lightTheme)}>
-                                    <Login />{" "}
+                                    <Login />
                                 </ThemeProvider>
                             }
                         />
@@ -90,7 +62,7 @@ const App = () => {
                             path="signup"
                             element={
                                 <ThemeProvider theme={createTheme(lightTheme)}>
-                                    <SignUp />{" "}
+                                    <SignUp />
                                 </ThemeProvider>
                             }
                         />
@@ -98,7 +70,7 @@ const App = () => {
                             path="posts/:id"
                             element={
                                 <RequireAuth>
-                                    <ViewPost post={viewPost} />
+                                    <ViewPost />
                                 </RequireAuth>
                             }
                         >
@@ -116,7 +88,7 @@ const App = () => {
                             path="writepost/:id"
                             element={
                                 <RequireAuth>
-                                    <WritePost post={writePost} />
+                                    <WritePost />
                                 </RequireAuth>
                             }
                         />
@@ -124,10 +96,31 @@ const App = () => {
                             path="writepost"
                             element={
                                 <RequireAuth>
-                                    <WritePost post={writePost} />
+                                    <WritePost />
                                 </RequireAuth>
                             }
                         />
+                        {user.admin_level > 0 && (
+                            <>
+                                <Route
+                                    path="writetopic/:id"
+                                    element={
+                                        <RequireAuth>
+                                            <WriteTopic />
+                                        </RequireAuth>
+                                    }
+                                />
+                                <Route
+                                    path="writetopic"
+                                    element={
+                                        <RequireAuth>
+                                            <WriteTopic />
+                                        </RequireAuth>
+                                    }
+                                />
+                            </>
+                        )}
+
                         <Route
                             path="profile"
                             element={
@@ -136,6 +129,7 @@ const App = () => {
                                 </RequireAuth>
                             }
                         />
+                        <Route path="codeofconduct" element={<CodeOfConduct />}></Route>
                         <Route
                             index
                             element={

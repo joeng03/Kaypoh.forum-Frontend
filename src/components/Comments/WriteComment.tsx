@@ -2,7 +2,7 @@ import ContentEditor from "../ContentEditor";
 import { IComment } from "store/comments/types";
 import { acCreateComment, acUpdateComment } from "store/comments/action";
 import { useAppDispatch } from "store";
-import { toastPublishCommentSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
+import { toastPublishSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
 
 import React, { useState, useEffect } from "react";
 import { EditorState } from "draft-js";
@@ -39,13 +39,13 @@ const WriteComment = ({ comment, method, onCancel }: WriteCommentProps) => {
         console.log(currentComment);
         (method === "update"
             ? dispatch(acUpdateComment(currentComment)).then(() => {
-                  toast.success(toastPublishCommentSuccess, toastFormat);
+                  toast.success(toastPublishSuccess("comment"), toastFormat);
                   onCancel();
               })
             : dispatch(acCreateComment(currentComment))
         )
             .then(() => {
-                toast.success(toastPublishCommentSuccess, toastFormat);
+                toast.success(toastPublishSuccess("comment"), toastFormat);
             })
 
             .catch(() => {

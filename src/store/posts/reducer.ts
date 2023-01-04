@@ -4,7 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 const initialPostsState: IPost[] = [];
 
-const userSlice = createSlice({
+const postsSlice = createSlice({
     name: "posts",
     initialState: initialPostsState,
     reducers: {
@@ -28,6 +28,6 @@ const userSlice = createSlice({
         },
     },
 });
-export const { createPost, setPosts, updatePost, deletePost } = userSlice.actions;
+export const { createPost, setPosts, updatePost, deletePost } = postsSlice.actions;
 
-export default userSlice.reducer;
+export default postsSlice.reducer;

@@ -4,7 +4,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 const initialCommentsState: IComment[] = [];
 
-const userSlice = createSlice({
+const commentsSlice = createSlice({
     name: "comments",
     initialState: initialCommentsState,
     reducers: {
@@ -28,6 +28,6 @@ const userSlice = createSlice({
         },
     },
 });
-export const { createComment, setComments, updateComment, deleteComment } = userSlice.actions;
+export const { createComment, setComments, updateComment, deleteComment } = commentsSlice.actions;
 
-export default userSlice.reducer;
+export default commentsSlice.reducer;

@@ -1,5 +1,5 @@
-export const BASE_URL = "https://kaypoh-forum.onrender.com";
-//export const BASE_URL = "http://localhost:8080";
+//export const BASE_URL = "https://kaypoh-forum.onrender.com";
+export const BASE_URL = "http://localhost:3001";
 
 //Users
 export const SIGN_UP = "/users/signup";
@@ -11,6 +11,9 @@ export const POSTS = "/posts";
 
 //Comments
 export const COMMENTS = "/comments";
+
+//Topics
+export const TOPICS = "/topics";
 
 //Stars
 export const STARS = "/stars";

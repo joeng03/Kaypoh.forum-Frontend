@@ -1,10 +1,11 @@
 import { useAppDispatch, useAppSelector } from "store";
 import { acUserStarPost, acUserUnStarPost } from "store/user/action";
-import { IPost } from "store/posts/types";
+import { initialPostState, IPost } from "store/posts/types";
 import { IStar } from "store/user/types";
+import { readOne } from "services/posts";
 import Loading from "components/Loading";
 import React, { useState, useEffect } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
 import DOMPurify from "isomorphic-dompurify";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -20,22 +21,34 @@ const sanitizeData = (data: string) => ({
     __html: DOMPurify.sanitize(data),
 });
 
-type ViewPostProps = {
-    post: IPost;
-};
-const ViewPost = ({ post }: ViewPostProps) => {
+const ViewPost = () => {
     const user = useAppSelector((state) => state.user);
-    const dispatch = useAppDispatch();
+
+    const [post, setPost] = useState<IPost>(initialPostState);
     const [starClicked, setStarClicked] = useState<boolean>(false);
-    const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [starsCount, setStarsCount] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(true);
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    const { id } = useParams();
 
     useEffect(() => {
-        setStarsCount(post.stars_count);
-        setStarClicked(user.stars.find((star) => star.post_id === post.id) ? true : false);
-    }, [post]);
-    const onModalOpen = () => setModalOpen(true);
-    const onModalClose = () => setModalOpen(false);
+        if (id) {
+            readOne(Number(id))
+                .then((post) => {
+                    setPost(post);
+                    setStarsCount(post.stars_count);
+                    setStarClicked(user.stars.find((star) => star.post_id === post.id) ? true : false);
+                    setLoading(false);
+                })
+                .catch(() => navigate("/notfound"));
+        } else {
+            setLoading(false);
+        }
+    }, []);
+
     const handleStarClick = () => {
         if (starClicked) {
             const star_id = (user.stars.find((star) => star.post_id === post.id) as IStar).id;
@@ -53,7 +66,7 @@ const ViewPost = ({ post }: ViewPostProps) => {
         setStarClicked(!starClicked);
     };
 
-    return post.id === -1 ? (
+    return loading ? (
         <Loading />
     ) : (
         <Box
@@ -70,8 +83,14 @@ const ViewPost = ({ post }: ViewPostProps) => {
                 <Typography variant="h4" fontWeight="bold" fontFamily={"'Open Sans',sans-serif "}>
                     {post.title}{" "}
                 </Typography>
-                {post.tag && (
-                    <Chip label={post.tag} size="medium" color="secondary" className="noselect" sx={{ ml: "0.5rem" }} />
+                {post.topic.name && (
+                    <Chip
+                        label={post.topic.name}
+                        size="medium"
+                        color="secondary"
+                        className="noselect"
+                        sx={{ ml: "0.5rem" }}
+                    />
                 )}
             </Box>
             <Box
@@ -98,7 +117,7 @@ const ViewPost = ({ post }: ViewPostProps) => {
                                     day: "numeric",
                                 })}
                             </Typography>
-                            {post.created_at != post.updated_at && (
+                            {post.created_at !== post.updated_at && (
                                 <Typography textAlign="right" fontSize="0.7rem">
                                     Updated on{" "}
                                     {new Date(post.updated_at).toLocaleDateString("en-US", {

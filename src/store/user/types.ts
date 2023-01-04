@@ -17,8 +17,8 @@ export interface IUser {
     profile_picture: string;
     stars: IStar[];
     bio: string;
+    admin_level: number;
     created_at: string;
-    updated_at: string;
 }
 
 //-1 is used as the default id for an empty IUser object as database ids are non-negative
@@ -29,6 +29,6 @@ export const initialUserState: IUser = {
     profile_picture: "",
     stars: [],
     bio: "",
+    admin_level: -1,
     created_at: "",
-    updated_at: "",
 };

@@ -8,13 +8,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import Typography from "@mui/material/Typography";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import SendIcon from "@mui/icons-material/Send";
 
 const Profile = () => {
-    const [createdAt, setCreatedAt] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [username, setUsername] = useState<string>("");
     const [bio, setBio] = useState<string>("");
@@ -22,14 +22,12 @@ const Profile = () => {
 
     const [emailErr, setEmailErr] = useState<string>("");
     const [usernameErr, setUsernameErr] = useState<string>("");
-    const [bioErr, setBioErr] = useState<string>("");
 
     const profilePicRef = useRef<HTMLImageElement>(null);
     const user = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        setCreatedAt(user.created_at);
         setEmail(user.email);
         setUsername(user.username);
         setBio(user.bio ? user.bio : "");
@@ -75,38 +73,47 @@ const Profile = () => {
                 noValidate
                 onSubmit={handleUpdateProfile}
                 maxWidth="xs"
-                sx={{ m: "0 auto", mt: 3, width: "80vw", textAlign: "left", position: "relative" }}
+                sx={{
+                    m: "0 auto",
+                    mt: "3.5rem",
+                    width: "80vw",
+                    textAlign: "left",
+                    position: "relative",
+                    display: "flex",
+                    flexDirection: "column",
+                    rowGap: "0.1rem",
+                }}
             >
                 <Avatar className="avatar" sx={{ margin: "0 auto", width: "7rem", height: "7rem" }}>
                     {" "}
                     <Box component="img" width="100%" ref={profilePicRef} sx={{ display: "block", pb: "0.5rem" }}></Box>
                 </Avatar>
-                <Typography p="1.5rem 0rem">
-                    {"Joined on " +
-                        new Date(createdAt).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                        })}
-                </Typography>
+                <Box display="flex" justifyContent="space-between" p="1.8rem 0rem">
+                    <Typography>
+                        {"Joined 🎂 " +
+                            new Date(user.created_at).toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                            })}
+                    </Typography>
+                    <Chip
+                        label={user.admin_level > 0 ? "Community Leader" : "Community Member"}
+                        size="small"
+                        color={user.admin_level > 0 ? "success" : "secondary"}
+                        sx={{ p: "0.9rem 0rem" }}
+                    />
+                </Box>
                 <Input
-                    id="Username"
-                    label="Username"
-                    name="Username"
-                    autoComplete="given-name"
+                    placeholder="Username"
                     value={username}
                     setValue={setUsername}
                     setMessage={setUsernameErr}
                     validate={validateUsername}
-                    autoFocus
                     message={usernameErr}
                 ></Input>
-
                 <Input
-                    id="email"
-                    label="Email adress"
-                    name="email"
-                    autoComplete="email"
+                    placeholder="Email"
                     value={email}
                     setValue={setEmail}
                     setMessage={setEmailErr}
@@ -114,35 +121,35 @@ const Profile = () => {
                     message={emailErr}
                 ></Input>
                 <Input
-                    id="bio"
-                    label="Bio"
-                    name="bio"
-                    autoComplete="bio"
+                    placeholder="Bio"
                     value={bio}
                     setValue={setBio}
-                    setMessage={setBioErr}
+                    setMessage={() => ""}
                     validate={() => ""}
-                    message={bioErr}
+                    message={""}
+                    required={false}
                 ></Input>
 
-                <Button component="label" variant="outlined" size="small" endIcon={<FileUploadOutlinedIcon />}>
-                    Upload Profile Picture
-                    <input
-                        accept="image/*"
-                        type="file"
-                        onChange={({ target }) => showAndSetImage((target.files as FileList)[0])}
-                        hidden
-                    />
-                </Button>
-                <Button
-                    type="submit"
-                    variant="contained"
-                    size="small"
-                    endIcon={<SendIcon />}
-                    sx={{ m: "0 auto", position: "absolute", right: "0.2rem" }}
-                >
-                    Update profile
-                </Button>
+                <div style={{ marginTop: "3.5rem" }}>
+                    <Button component="label" variant="outlined" size="small" endIcon={<FileUploadOutlinedIcon />}>
+                        Upload Profile Picture
+                        <input
+                            accept="image/*"
+                            type="file"
+                            onChange={({ target }) => showAndSetImage((target.files as FileList)[0])}
+                            hidden
+                        />
+                    </Button>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        size="small"
+                        endIcon={<SendIcon />}
+                        sx={{ m: "0 auto", position: "absolute", right: "0.2rem" }}
+                    >
+                        Update profile
+                    </Button>
+                </div>
             </Box>
         </Box>
     );

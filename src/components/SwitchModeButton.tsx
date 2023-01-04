@@ -17,7 +17,7 @@ const SwitchModeButton = () => {
                 fontSize: "1rem",
             }}
         >
-            <Typography sx={{ display: { xxs: "none", m: "inline-block" } }}>
+            <Typography sx={{ display: { xxs: "none", m: "inline-block" }, fontSize: "0.95rem" }}>
                 {" "}
                 {theme.palette.mode === "light" ? "Light" : "Dark"} mode
             </Typography>

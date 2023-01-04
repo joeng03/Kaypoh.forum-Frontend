@@ -1,4 +1,5 @@
 import userReducer from "./user/reducer";
+import topicsReducer from "./topics/reducer";
 import postsReducer from "./posts/reducer";
 import commentsReducer from "./comments/reducer";
 import { configureStore } from "@reduxjs/toolkit";
@@ -10,6 +11,7 @@ import type { TypedUseSelectorHook } from "react-redux";
 const store = configureStore({
     reducer: {
         user: userReducer,
+        topics: topicsReducer,
         posts: postsReducer,
         comments: commentsReducer,
     },

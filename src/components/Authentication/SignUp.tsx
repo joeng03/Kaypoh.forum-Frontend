@@ -69,10 +69,20 @@ const SignUp = () => {
     };
 
     return (
-        <Container className="container" sx={{ display: "flex" }}>
+        <Container className="gradient-background" sx={{ display: "flex" }}>
             <Slide direction="up" in={show} timeout={650}>
-                <Box className="noselect form" maxWidth="s">
-                    <Typography component="h1" variant="h5">
+                <Box className="noselect form" maxWidth="s" sx={{ height: "80vh" }}>
+                    <Typography
+                        component="h1"
+                        variant="h5"
+                        sx={{
+                            fontWeight: "bold",
+                            fontFamily: "'Open Sans'",
+                        }}
+                    >
+                        Welcome to Kaypoh.forum
+                    </Typography>
+                    <Typography component="h1" variant="h6">
                         Sign Up
                     </Typography>
 
@@ -84,10 +94,8 @@ const SignUp = () => {
                         sx={{ mt: 3, width: "80vw" }}
                     >
                         <Input
-                            id="Username"
-                            label="Username"
-                            name="Username"
-                            autoComplete="given-name"
+                            placeholder="Username"
+                            autoComplete="username"
                             value={username}
                             setValue={setUsername}
                             setMessage={setUsernameErr}
@@ -96,9 +104,7 @@ const SignUp = () => {
                             message={usernameErr}
                         ></Input>
                         <Input
-                            id="email"
-                            label="Email Address"
-                            name="email"
+                            placeholder="Email address"
                             autoComplete="email"
                             value={email}
                             setValue={setEmail}
@@ -107,11 +113,9 @@ const SignUp = () => {
                             message={emailErr}
                         ></Input>
                         <Input
-                            id="password"
-                            label="Password"
-                            name="password"
+                            placeholder="Password"
+                            autoComplete="password"
                             type="password"
-                            autoComplete="new-password"
                             value={password}
                             setValue={setPassword}
                             setMessage={setPasswordErr}
@@ -129,6 +133,13 @@ const SignUp = () => {
                         </Button>
                         <Link to="/login" style={{ color: "#005e97" }}>
                             Already have an account? Login
+                        </Link>
+                        <div style={{ height: "2rem" }}></div>
+                        <Link to="/codeofconduct" style={{ color: "#005e97" }}>
+                            <p style={{ fontSize: "0.85rem" }}>
+                                By signing up for an account, you have read and agree to our{" "}
+                                <b>Citizen Code of Conduct</b>.
+                            </p>
                         </Link>
                     </Box>
                 </Box>

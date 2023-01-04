@@ -58,30 +58,29 @@ const Login = () => {
     };
     return (
         <Container
-            className="container"
+            className="gradient-background"
             sx={{
                 display: "flex",
             }}
         >
-            <Slide direction="down" in={show} timeout={650}>
+            <Slide direction="down" in={show} timeout={700}>
                 <Box className="noselect form" maxWidth="s">
                     <Typography
                         component="h1"
                         variant="h5"
                         sx={{
                             fontWeight: "bold",
+                            fontFamily: "'Open Sans'",
                         }}
                     >
                         Welcome to Kaypoh.forum
                     </Typography>
-                    <Typography component="h1" variant="h5">
+                    <Typography component="h1" variant="h6">
                         Login
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleLogin} maxWidth="xs" sx={{ mt: 3, width: "80vw" }}>
                         <Input
-                            id="email"
-                            label="Email Address"
-                            name="email"
+                            placeholder="Email address"
                             autoComplete="email"
                             value={email}
                             setValue={setEmail}
@@ -91,11 +90,9 @@ const Login = () => {
                             message={emailErr}
                         ></Input>
                         <Input
-                            id="password"
-                            label="Password"
-                            name="password"
+                            placeholder="Password"
+                            autoComplete="password"
                             type="password"
-                            autoComplete="new-password"
                             value={password}
                             setValue={setPassword}
                             setMessage={setPasswordErr}

@@ -4,7 +4,7 @@ import ConfirmationModal from "components/ConfirmationModal";
 import { useAppDispatch, useAppSelector } from "store";
 import { acDeleteComment } from "store/comments/action";
 import { IComment } from "store/comments/types";
-import { toastDeleteCommentSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
+import { toastDeleteSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import Avatar from "@mui/material/Avatar";
@@ -34,13 +34,13 @@ const CommentCard = ({ comment, method }: CommentCardProps) => {
     const onModalClose = () => setModalOpen(false);
     const handleDeleteComment = () => {
         dispatch(acDeleteComment(comment.id))
-            .then(() => toast.success(toastDeleteCommentSuccess, toastFormat))
+            .then(() => toast.success(toastDeleteSuccess("comment"), toastFormat))
             .catch(() => toast.warning(toastNotAuthorizedWarning, toastFormat));
     };
 
     return (
         <Card
-            className="card noselect"
+            className="card"
             onMouseEnter={() => setCardRaised(false)}
             onMouseLeave={() => setCardRaised(true)}
             raised={cardRaised}

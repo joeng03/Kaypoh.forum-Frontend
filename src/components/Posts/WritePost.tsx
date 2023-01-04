@@ -1,11 +1,12 @@
 import PostInput from "./PostInput";
 import ContentEditor from "../ContentEditor";
 import Loading from "components/Loading";
-import { IPost } from "store/posts/types";
+import { IPost, initialPostState } from "store/posts/types";
 import { acCreatePost, acUpdatePost } from "store/posts/action";
+import { readOne } from "services/posts";
 import { useAppSelector, useAppDispatch } from "store";
 import fetchBlob from "services/blob";
-import { toastPublishPostSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
+import { toastPublishSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
 
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -19,35 +20,40 @@ import Grid from "@mui/material/Grid";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import SendIcon from "@mui/icons-material/Send";
 
-type WritePostProps = {
-    post: IPost;
-};
-const WritePost = ({ post }: WritePostProps) => {
+const WritePost = () => {
     const [title, setTitle] = useState<string>("");
     const [editorState, setEditorState] = useState<EditorState>(() => EditorState.createEmpty());
-    const [tag, setTag] = useState<string>("");
+    const [topicID, setTopicID] = useState<number>(-1);
     const [image, setImage] = useState<File>();
+    const [loading, setLoading] = useState<boolean>(true);
     const postImage = useRef<HTMLImageElement>(null);
+
+    const user = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const { id } = useParams();
     //if id is undefined, this is a "create" process, else it is an "update" process
-    const user = useAppSelector((state) => state.user);
-
     useEffect(() => {
         if (id) {
-            setTitle(post.title);
-            setEditorState(() => EditorState.createWithContent(convertFromHTML(post.content)));
-            setTag(post.tag);
-            if (post.image) {
-                fetchBlob(post.image).then((blob) => {
-                    const imageFile: File = new File([blob], "");
-                    showAndSetImage(imageFile);
-                });
-            }
+            readOne(Number(id))
+                .then((post) => {
+                    setTitle(post.title);
+                    setEditorState(() => EditorState.createWithContent(convertFromHTML(post.content)));
+                    setTopicID(post.topic.id);
+                    if (post.image) {
+                        fetchBlob(post.image).then((blob) => {
+                            const imageFile: File = new File([blob], "");
+                            showAndSetImage(imageFile);
+                        });
+                    }
+                    setLoading(false);
+                })
+                .catch(() => navigate("/notfound"));
+        } else {
+            setLoading(false);
         }
-    }, [post]);
+    }, []);
 
     const showAndSetImage = (file: File) => {
         if (postImage.current) {
@@ -67,20 +73,17 @@ const WritePost = ({ post }: WritePostProps) => {
         postFormData.append("post[title]", title);
         postFormData.append("post[content]", convertToHTML(editorState.getCurrentContent()));
 
-        postFormData.append("post[tag]", tag);
+        postFormData.append("post[topic_id]", topicID.toString());
 
         postFormData.append("post[user_id]", user.id.toString());
 
-        // if (!id) {
-        //     postFormData.append("post[stars]", "0");
-        // }
         if (image) {
             postFormData.append("post[image]", image as Blob);
         }
 
-        (id ? dispatch(acUpdatePost(postFormData, post.id)) : dispatch(acCreatePost(postFormData)))
+        (id ? dispatch(acUpdatePost(postFormData, Number(id))) : dispatch(acCreatePost(postFormData)))
             .then(() => {
-                toast.success(toastPublishPostSuccess, toastFormat);
+                toast.success(toastPublishSuccess("post"), toastFormat);
                 navigate("/");
             })
             .catch(() => {
@@ -89,7 +92,7 @@ const WritePost = ({ post }: WritePostProps) => {
             });
     };
 
-    return id && post.id === -1 ? (
+    return loading ? (
         <Loading />
     ) : (
         <Container component="main" maxWidth="s" sx={{ mt: 8, mb: 8, width: "95vw" }}>
@@ -97,7 +100,7 @@ const WritePost = ({ post }: WritePostProps) => {
                 <Grid container spacing={1} direction="column">
                     <Grid item xs={1}>
                         <PostInput value={title} setValue={setTitle} placeholder="Title" />
-                        <PostInput value={tag} setValue={setTag} placeholder="Tag" />
+                        {/* <PostInput value={topicID} setValue={setTopicID} placeholder="Tag" /> */}
                     </Grid>
                     <Grid item xs={9}>
                         <ContentEditor
