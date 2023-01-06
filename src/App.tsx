@@ -7,6 +7,7 @@ import ViewPost from "./components/Posts/ViewPost";
 import WriteTopic from "./components/Topics/WriteTopic";
 import CodeOfConduct from "./components/CodeOfConduct";
 import NotFound from "./components/NotFound";
+import ForumTopics from "components/Topics/ForumTopics";
 import { lightTheme, darkTheme, ColorContext } from "utils/theme";
 import CommentsList from "components/Comments/CommentsList";
 import Profile from "components/Profile";
@@ -36,7 +37,6 @@ const App = () => {
         [],
     );
     const user = useAppSelector((state) => state.user);
-    const posts = useAppSelector((state) => state.posts);
 
     useEffect(() => {
         localStorage.setItem("mode", mode);
@@ -80,7 +80,7 @@ const App = () => {
                             path="posts"
                             element={
                                 <RequireAuth>
-                                    <PostsList posts={posts} />
+                                    <PostsList />
                                 </RequireAuth>
                             }
                         />
@@ -100,26 +100,30 @@ const App = () => {
                                 </RequireAuth>
                             }
                         />
-                        {user.admin_level > 0 && (
-                            <>
-                                <Route
-                                    path="writetopic/:id"
-                                    element={
-                                        <RequireAuth>
-                                            <WriteTopic />
-                                        </RequireAuth>
-                                    }
-                                />
-                                <Route
-                                    path="writetopic"
-                                    element={
-                                        <RequireAuth>
-                                            <WriteTopic />
-                                        </RequireAuth>
-                                    }
-                                />
-                            </>
-                        )}
+                        <Route
+                            path="writetopic/:id"
+                            element={
+                                <RequireAuth>
+                                    <WriteTopic />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="writetopic"
+                            element={
+                                <RequireAuth>
+                                    <WriteTopic />
+                                </RequireAuth>
+                            }
+                        />
+                        <Route
+                            path="forumtopics"
+                            element={
+                                <RequireAuth>
+                                    <ForumTopics />
+                                </RequireAuth>
+                            }
+                        />
 
                         <Route
                             path="profile"
@@ -134,7 +138,7 @@ const App = () => {
                             index
                             element={
                                 <RequireAuth>
-                                    <PostsList posts={posts} />
+                                    <PostsList />
                                 </RequireAuth>
                             }
                         />

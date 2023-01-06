@@ -1,14 +1,15 @@
 import PostCard from "./PostCard";
 import PostsNavigation from "../Navigation";
 import Loading from "../Loading";
+import { acSetPosts } from "store/posts/action";
 import { IPost } from "store/posts/types";
-import React from "react";
+import { useAppDispatch, useAppSelector } from "store";
+import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 
-type PostsListProps = {
-    posts: IPost[];
-};
-const PostsList = ({ posts }: PostsListProps) => {
+const PostsList = () => {
+    const posts = useAppSelector((state) => state.posts);
+
     return !posts ? (
         <Loading />
     ) : (

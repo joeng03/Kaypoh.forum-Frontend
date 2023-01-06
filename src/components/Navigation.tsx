@@ -72,6 +72,9 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Navigation = () => {
+    const { pathname } = useLocation();
+    const isPostsPage = pathname === "/" || pathname === "/posts";
+
     const [searchValue, setSearchValue] = useState<string>("");
     const [columnName, setColumnName] = useState<string>(
         localStorage.getItem("columnName") ? (localStorage.getItem("columnName") as string) : "title",
@@ -83,9 +86,11 @@ const Navigation = () => {
     const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
     useEffect(() => {
-        dispatch(acSetPosts(page, columnName, searchValue, sortBy));
-        localStorage.setItem("columnName", columnName);
-        localStorage.setItem("sortBy", sortBy);
+        if (isPostsPage) {
+            dispatch(acSetPosts(page, columnName, searchValue, sortBy));
+            localStorage.setItem("columnName", columnName);
+            localStorage.setItem("sortBy", sortBy);
+        }
     }, [page, columnName, sortBy]);
 
     const dispatch = useAppDispatch();
@@ -97,7 +102,7 @@ const Navigation = () => {
         dispatch(acSetPosts(page, columnName, searchValue, sortBy));
     };
 
-    return useLocation().pathname !== "/login" && useLocation().pathname !== "/signup" ? (
+    return pathname !== "/login" && pathname !== "/signup" ? (
         <>
             <AppBar
                 position="fixed"
@@ -119,8 +124,15 @@ const Navigation = () => {
                             <MenuIcon />
                         </IconButton>
                     )}
-                    <HomeButton />
-                    {useLocation().pathname === "/" || useLocation().pathname === "/posts" ? (
+
+                    <HomeButton
+                        onClick={() => {
+                            setSearchValue("");
+                            setPage(1);
+                        }}
+                    />
+
+                    {isPostsPage ? (
                         <Box component="form" onSubmit={handleSearch} sx={{ display: "flex", margin: "0 auto" }}>
                             <InputBaseWrapper>
                                 <StyledInputBase
@@ -198,7 +210,7 @@ const Navigation = () => {
                     <SwitchModeButton />
                 </Toolbar>
             </AppBar>
-            {(useLocation().pathname === "/" || useLocation().pathname === "/posts") && (
+            {isPostsPage && (
                 <Box
                     sx={{
                         width: "100vw",

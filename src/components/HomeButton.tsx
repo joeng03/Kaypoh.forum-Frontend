@@ -16,10 +16,13 @@ const StyledButton = styled(Button)(({ theme }) => ({
     },
 }));
 
-const HomeButton = () => {
+type HomeButtonProps = {
+    onClick: () => void;
+};
+const HomeButton = ({ onClick }: HomeButtonProps) => {
     return (
         <Link to="/" style={{ textDecoration: "inherit" }}>
-            <StyledButton endIcon={<HomeIcon />} disableRipple disableFocusRipple>
+            <StyledButton endIcon={<HomeIcon />} onClick={onClick} disableRipple disableFocusRipple>
                 Home
             </StyledButton>
         </Link>

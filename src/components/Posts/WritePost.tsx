@@ -1,8 +1,9 @@
-import PostInput from "./PostInput";
 import ContentEditor from "../ContentEditor";
 import Loading from "components/Loading";
-import { IPost, initialPostState } from "store/posts/types";
+import PublishButton from "components/PublishButton";
+import { ITopic, initialTopicState } from "store/topics/types";
 import { acCreatePost, acUpdatePost } from "store/posts/action";
+import { acSetTopics } from "store/topics/action";
 import { readOne } from "services/posts";
 import { useAppSelector, useAppDispatch } from "store";
 import fetchBlob from "services/blob";
@@ -13,22 +14,25 @@ import { useParams, useNavigate } from "react-router-dom";
 import { EditorState } from "draft-js";
 import { convertToHTML, convertFromHTML } from "draft-convert";
 import { toast } from "react-toastify";
+import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-import SendIcon from "@mui/icons-material/Send";
+import TextField from "@mui/material/TextField";
 
 const WritePost = () => {
     const [title, setTitle] = useState<string>("");
+    const [topic, setTopic] = useState<ITopic>(initialTopicState);
     const [editorState, setEditorState] = useState<EditorState>(() => EditorState.createEmpty());
-    const [topicID, setTopicID] = useState<number>(-1);
     const [image, setImage] = useState<File>();
     const [loading, setLoading] = useState<boolean>(true);
     const postImage = useRef<HTMLImageElement>(null);
 
     const user = useAppSelector((state) => state.user);
+    const topics = useAppSelector((state) => state.topics);
+
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -40,7 +44,7 @@ const WritePost = () => {
                 .then((post) => {
                     setTitle(post.title);
                     setEditorState(() => EditorState.createWithContent(convertFromHTML(post.content)));
-                    setTopicID(post.topic.id);
+                    setTopic(post.topic);
                     if (post.image) {
                         fetchBlob(post.image).then((blob) => {
                             const imageFile: File = new File([blob], "");
@@ -53,7 +57,12 @@ const WritePost = () => {
         } else {
             setLoading(false);
         }
+        dispatch(acSetTopics());
     }, []);
+
+    useEffect(() => {
+        setTopic(topics[0]);
+    }, [topics]);
 
     const showAndSetImage = (file: File) => {
         if (postImage.current) {
@@ -70,10 +79,11 @@ const WritePost = () => {
         The postFormData keys follow the Rails parameter naming conventions
         https://guides.rubyonrails.org/v3.2.13/form_helpers.html#understanding-parameter-naming-conventions
         */
+
         postFormData.append("post[title]", title);
         postFormData.append("post[content]", convertToHTML(editorState.getCurrentContent()));
 
-        postFormData.append("post[topic_id]", topicID.toString());
+        postFormData.append("post[topic_id]", topic.id.toString());
 
         postFormData.append("post[user_id]", user.id.toString());
 
@@ -91,7 +101,7 @@ const WritePost = () => {
                 navigate("/");
             });
     };
-
+    console.log(topics);
     return loading ? (
         <Loading />
     ) : (
@@ -99,8 +109,37 @@ const WritePost = () => {
             <Box component="form" noValidate onSubmit={handlePublishPost} width="100%">
                 <Grid container spacing={1} direction="column">
                     <Grid item xs={1}>
-                        <PostInput value={title} setValue={setTitle} placeholder="Title" />
-                        {/* <PostInput value={topicID} setValue={setTopicID} placeholder="Tag" /> */}
+                        <TextField
+                            placeholder="Title"
+                            variant="standard"
+                            value={title}
+                            onChange={({ target }) => setTitle(target.value)}
+                            InputProps={{ disableUnderline: true }}
+                            sx={{ p: "0rem 1rem 1rem 1rem" }}
+                            fullWidth
+                        ></TextField>
+                        <Autocomplete
+                            size="small"
+                            value={topic}
+                            defaultValue={topics[0]}
+                            onChange={(event: any, newTopic) => {
+                                if (newTopic) {
+                                    setTopic(newTopic);
+                                }
+                            }}
+                            options={topics}
+                            getOptionLabel={(topic) => topic.name}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    variant="standard"
+                                    placeholder="Topic"
+                                    sx={{ p: "0rem 1rem 2rem 1rem" }}
+                                    fullWidth
+                                />
+                            )}
+                            disablePortal
+                        />
                     </Grid>
                     <Grid item xs={9}>
                         <ContentEditor
@@ -126,7 +165,7 @@ const WritePost = () => {
                                 hidden
                             />
                         </Button>
-                        <Button
+                        {/* <Button
                             type="submit"
                             variant="contained"
                             size="small"
@@ -134,7 +173,8 @@ const WritePost = () => {
                             sx={{ m: "0 auto", position: "absolute", right: "0.2rem" }}
                         >
                             Publish
-                        </Button>
+                        </Button> */}
+                        <PublishButton />
                     </Grid>
                 </Grid>
             </Box>

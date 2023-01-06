@@ -129,4 +129,10 @@
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+.MuiDataGrid-root 
+.MuiDataGrid-columnHeader,
+.MuiDataGrid-root
+.MuiDataGrid-cell{ 
+  outline: none !important;
+}
 
