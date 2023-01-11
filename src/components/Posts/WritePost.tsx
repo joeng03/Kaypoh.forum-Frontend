@@ -30,7 +30,6 @@ const WritePost = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const postImage = useRef<HTMLImageElement>(null);
 
-    const user = useAppSelector((state) => state.user);
     const topics = useAppSelector((state) => state.topics);
 
     const dispatch = useAppDispatch();
@@ -60,10 +59,6 @@ const WritePost = () => {
         dispatch(acSetTopics());
     }, []);
 
-    useEffect(() => {
-        setTopic(topics[0]);
-    }, [topics]);
-
     const showAndSetImage = (file: File) => {
         if (postImage.current) {
             postImage.current.src = URL.createObjectURL(file);
@@ -82,10 +77,7 @@ const WritePost = () => {
 
         postFormData.append("post[title]", title);
         postFormData.append("post[content]", convertToHTML(editorState.getCurrentContent()));
-
-        postFormData.append("post[topic_id]", topic.id.toString());
-
-        postFormData.append("post[user_id]", user.id.toString());
+        postFormData.append("post[topic_id]", topic.id === -1 ? topics[0].id.toString() : topic.id.toString());
 
         if (image) {
             postFormData.append("post[image]", image as Blob);
@@ -101,11 +93,10 @@ const WritePost = () => {
                 navigate("/");
             });
     };
-    console.log(topics);
     return loading ? (
         <Loading />
     ) : (
-        <Container component="main" maxWidth="s" sx={{ mt: 8, mb: 8, width: "95vw" }}>
+        <Container component="main" maxWidth="s" sx={{ mt: 8, mb: 8, width: "95vw", height: "80vh" }}>
             <Box component="form" noValidate onSubmit={handlePublishPost} width="100%">
                 <Grid container spacing={1} direction="column">
                     <Grid item xs={1}>

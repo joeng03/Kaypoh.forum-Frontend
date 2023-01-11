@@ -4,9 +4,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 const maxDisplayLength = 300;
-const sanitizeData = (data: string) => ({
-    __html: DOMPurify.sanitize(data),
-});
 
 type ViewCommentProps = {
     content: string;
@@ -16,22 +13,35 @@ const ViewComment = ({ content }: ViewCommentProps) => {
     const exceededDisplayLength = content.length > maxDisplayLength;
 
     const [isReadMore, setIsReadMore] = useState<boolean>(exceededDisplayLength);
+
     const toggleReadMore = () => {
         setIsReadMore(!isReadMore);
     };
 
     return (
         <Box>
-            <Typography
-                dangerouslySetInnerHTML={sanitizeData(
-                    exceededDisplayLength && isReadMore ? content.slice(0, maxDisplayLength) : content,
-                )}
-                sx={{ textAlign: "left" }}
-            />
-            {exceededDisplayLength && (
-                <Typography onClick={toggleReadMore} sx={{ cursor: "pointer" }}>
-                    {isReadMore ? "...read more" : " show less"}
-                </Typography>
+            {exceededDisplayLength ? (
+                isReadMore ? (
+                    <>
+                        <p>
+                            {content.slice(0, maxDisplayLength)}
+                            <span onClick={toggleReadMore} style={{ cursor: "pointer", fontWeight: "bold'" }}>
+                                {" ...read more"}
+                            </span>
+                        </p>
+                    </>
+                ) : (
+                    <>
+                        <p>
+                            {content}
+                            <span onClick={toggleReadMore} style={{ cursor: "pointer", fontWeight: "bold" }}>
+                                {" show less"}
+                            </span>
+                        </p>
+                    </>
+                )
+            ) : (
+                content
             )}
         </Box>
     );

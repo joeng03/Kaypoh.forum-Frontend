@@ -23,6 +23,9 @@ const readAll = async (page: number, columnName: string, searchValue: string, so
             columnName,
             searchValue,
             sortBy,
+            topics: localStorage.getItem("subscribedTopics")
+                ? JSON.parse(localStorage.getItem("subscribedTopics") as string)
+                : [],
         },
     };
     const response = await axios.get(`${POSTS}/page/${page}`, config);

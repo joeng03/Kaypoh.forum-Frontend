@@ -1,11 +1,10 @@
-import ContentEditor from "../ContentEditor";
+import Input from "components/Input";
 import { IComment } from "store/comments/types";
 import { acCreateComment, acUpdateComment } from "store/comments/action";
 import { useAppDispatch } from "store";
-import { toastPublishSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
+import { toastPublishSuccess, toastNotAuthorizedWarning, toastFormat, textMaxLength } from "utils/constants";
 
 import React, { useState, useEffect } from "react";
-import { EditorState } from "draft-js";
 import { convertToHTML, convertFromHTML } from "draft-convert";
 import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
@@ -21,22 +20,22 @@ type WriteCommentProps = {
 };
 
 const WriteComment = ({ comment, method, onCancel }: WriteCommentProps) => {
-    const [editorState, setEditorState] = useState<EditorState>(() => EditorState.createEmpty());
+    const [content, setContent] = useState("");
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (method === "update") {
-            setEditorState(() => EditorState.createWithContent(convertFromHTML(comment.content)));
+            setContent(comment.content);
         }
     }, []);
 
     const handlePublishComment = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
         const currentComment: IComment = {
             ...comment,
-            content: convertToHTML(editorState.getCurrentContent()),
+            content,
         };
-        console.log(currentComment);
         (method === "update"
             ? dispatch(acUpdateComment(currentComment)).then(() => {
                   toast.success(toastPublishSuccess("comment"), toastFormat);
@@ -45,6 +44,7 @@ const WriteComment = ({ comment, method, onCancel }: WriteCommentProps) => {
             : dispatch(acCreateComment(currentComment))
         )
             .then(() => {
+                setContent("");
                 toast.success(toastPublishSuccess("comment"), toastFormat);
             })
 
@@ -57,11 +57,18 @@ const WriteComment = ({ comment, method, onCancel }: WriteCommentProps) => {
         <Box component="form" noValidate onSubmit={handlePublishComment}>
             <Grid container spacing={1} direction="column">
                 <Grid item xs={10} position="relative">
-                    <ContentEditor
-                        editorState={editorState}
-                        setEditorState={setEditorState}
+                    <Input
                         placeholder="Add comment..."
-                    />
+                        value={content}
+                        setValue={setContent}
+                        setMessage={() => ""}
+                        validate={() => ""}
+                        message={""}
+                        rows={4}
+                        required={false}
+                        maxLength={textMaxLength}
+                        multiline
+                    ></Input>
                 </Grid>
                 <Grid item xs={2} sx={{ position: "relative" }}>
                     {method === "update" && (

@@ -13,15 +13,13 @@ const PostsList = () => {
     return !posts ? (
         <Loading />
     ) : (
-        <>
-            <Box m="3.5rem 0rem">
-                <Box display="flex" flexDirection="column">
-                    {posts.map((post) => (
-                        <PostCard key={post.id} post={post} />
-                    ))}
-                </Box>
+        <Box m="3.5rem 0rem">
+            <Box display="flex" flexDirection="column">
+                {posts.map((post) => (
+                    <PostCard key={post.id} post={post} />
+                ))}
             </Box>
-        </>
+        </Box>
     );
 };
 

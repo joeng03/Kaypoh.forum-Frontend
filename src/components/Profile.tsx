@@ -100,7 +100,7 @@ const Profile = () => {
                     <Chip
                         label={user.admin_level > 0 ? "Community Leader" : "Community Member"}
                         size="small"
-                        color={user.admin_level > 0 ? "success" : "secondary"}
+                        color={user.admin_level > 0 ? "secondary" : "default"}
                         sx={{ p: "0.9rem 0rem" }}
                     />
                 </Box>

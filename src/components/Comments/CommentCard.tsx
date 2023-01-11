@@ -16,6 +16,9 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import SentimentSatisfiedAltRoundedIcon from "@mui/icons-material/SentimentSatisfiedAltRounded";
+import SentimentNeutralRoundedIcon from "@mui/icons-material/SentimentNeutralRounded";
+import SentimentDissatisfiedRoundedIcon from "@mui/icons-material/SentimentDissatisfiedRounded";
 
 type CommentCardProps = {
     comment: IComment;
@@ -44,9 +47,9 @@ const CommentCard = ({ comment, method }: CommentCardProps) => {
             onMouseEnter={() => setCardRaised(false)}
             onMouseLeave={() => setCardRaised(true)}
             raised={cardRaised}
-            sx={{ maxWidth: "48rem", height: "16.5rem", overflow: "scroll" }}
+            sx={{ maxWidth: "48rem", height: "11.5rem" }}
         >
-            <Grid container spacing={0.5}>
+            <Grid container spacing={0.5} height="100%" sx={{ overflow: "scroll" }}>
                 <Grid item xs={2} mt="0.8rem">
                     <Box display="flex" flexDirection="row">
                         <Box>
@@ -97,6 +100,29 @@ const CommentCard = ({ comment, method }: CommentCardProps) => {
                             </Typography>
                         </Box>
                     </Box>
+                    {isView && (
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                ml: "0.2rem",
+                                position: "absolute",
+                                bottom: "0.8rem",
+                                borderRadius: "50%",
+                            }}
+                        >
+                            <Typography variant="caption"> Sentiment: </Typography>
+                            {/* {comment.sentiment} */}
+                            {comment.sentiment < 0 ? (
+                                <SentimentDissatisfiedRoundedIcon sx={{ color: "icon.negative" }} />
+                            ) : comment.sentiment > 0.25 ? (
+                                <SentimentSatisfiedAltRoundedIcon sx={{ color: "icon.positive" }} />
+                            ) : (
+                                <SentimentNeutralRoundedIcon sx={{ color: "icon.neutral" }} />
+                            )}
+                        </Box>
+                    )}
                 </Grid>
                 <Grid item xs={10}>
                     <CardContent>

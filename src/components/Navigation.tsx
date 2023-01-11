@@ -1,3 +1,4 @@
+import AppPagination from "./AppPagination";
 import { useAppDispatch } from "store";
 import { acSetPosts } from "store/posts/action";
 import SwitchModeButton from "components/SwitchModeButton";
@@ -6,7 +7,6 @@ import AppDrawer from "components/AppDrawer";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import useTheme from "@mui/material/styles/useTheme";
 import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -14,7 +14,6 @@ import IconButton from "@mui/material/IconButton";
 import InputBase from "@mui/material/InputBase";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Pagination from "@mui/material/Pagination/Pagination";
 import Select from "@mui/material/Select";
 import Toolbar from "@mui/material/Toolbar";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -55,6 +54,10 @@ interface AppBarProps extends MuiAppBarProps {
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",
 })<AppBarProps>(({ theme, open }) => ({
+    background: theme.palette.mode === "light" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.4)",
+    backdropFilter: "blur(20px)",
+    overflow: "scroll",
+    fontSize: "0.9rem",
     zIndex: theme.zIndex.drawer + 1,
     boxShadow: "none",
     transition: theme.transitions.create(["width", "margin"], {
@@ -86,6 +89,7 @@ const Navigation = () => {
     const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
     useEffect(() => {
+        console.log(isPostsPage);
         if (isPostsPage) {
             dispatch(acSetPosts(page, columnName, searchValue, sortBy));
             localStorage.setItem("columnName", columnName);
@@ -94,7 +98,6 @@ const Navigation = () => {
     }, [page, columnName, sortBy]);
 
     const dispatch = useAppDispatch();
-    const theme = useTheme();
 
     const closeDrawer = () => setDrawerOpen(false);
     const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
@@ -104,16 +107,7 @@ const Navigation = () => {
 
     return pathname !== "/login" && pathname !== "/signup" ? (
         <>
-            <AppBar
-                position="fixed"
-                color="transparent"
-                sx={{
-                    background: theme.palette.mode === "light" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.4)",
-                    backdropFilter: "blur(15px)",
-                    overflow: "scroll",
-                    fontSize: "0.9rem",
-                }}
-            >
+            <AppBar position="fixed" color="transparent">
                 <Toolbar>
                     {drawerOpen ? (
                         <IconButton size="large" edge="start" color="inherit" onClick={() => setDrawerOpen(false)}>
@@ -128,7 +122,11 @@ const Navigation = () => {
                     <HomeButton
                         onClick={() => {
                             setSearchValue("");
-                            setPage(1);
+                            if (page !== 1) {
+                                setPage(1);
+                            } else {
+                                dispatch(acSetPosts(1, columnName, "", sortBy));
+                            }
                         }}
                     />
 
@@ -211,27 +209,12 @@ const Navigation = () => {
                 </Toolbar>
             </AppBar>
             {isPostsPage && (
-                <Box
-                    sx={{
-                        width: "100vw",
-                        position: "fixed",
-                        bottom: 0,
-                        padding: "0.5rem 0rem",
-                        background: "background",
-                        zIndex: 1600,
+                <AppPagination
+                    page={page}
+                    onChange={(event: React.ChangeEvent<unknown>, value: number) => {
+                        setPage(value);
                     }}
-                >
-                    <Pagination
-                        count={100}
-                        variant="outlined"
-                        color="primary"
-                        page={page}
-                        onChange={(event: React.ChangeEvent<unknown>, value: number) => {
-                            setPage(value);
-                        }}
-                        sx={{ display: "inline-block" }}
-                    />
-                </Box>
+                />
             )}
 
             <AppDrawer drawerOpen={drawerOpen} closeDrawer={closeDrawer} />

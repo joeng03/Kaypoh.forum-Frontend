@@ -5,6 +5,7 @@ export interface IComment {
     post_id: number;
     content: string;
     user: IUser;
+    sentiment: number;
     created_at: string;
     updated_at: string;
 }
@@ -14,6 +15,7 @@ export const initialCommentState = {
     post_id: -1,
     content: "",
     user: initialUserState,
+    sentiment: 0.0,
     created_at: "",
     updated_at: "",
 };

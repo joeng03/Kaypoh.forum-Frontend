@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import amber from "@mui/material/colors/amber";
+import green from "@mui/material/colors/green";
 import grey from "@mui/material/colors/grey";
 import red from "@mui/material/colors/red";
 import yellow from "@mui/material/colors/yellow";
@@ -12,6 +13,9 @@ export type Icon = {
     moon?: string;
     star: string;
     cancel: string;
+    positive: string;
+    neutral: string;
+    negative: string;
 };
 
 declare module "@mui/material/styles" {
@@ -68,6 +72,9 @@ export const lightTheme: ThemeOptions = {
             moon: grey[400],
             star: yellow[600],
             cancel: red[600],
+            positive: green[500],
+            neutral: yellow[700],
+            negative: red[400],
         },
     },
     breakpoints: breakpoints,
@@ -82,13 +89,11 @@ export const darkTheme: ThemeOptions = {
         mode: "dark",
         primaryGradient: "linear-gradient(to right,#3EADCF,#ABE9CD)",
         primary: {
-            // main: "#4bc7ea",
             main: "#7fd7ef",
             light: "#8bdef7",
             dark: "#00a2db",
         },
         secondary: {
-            // main: "#76d9af",
             main: "#FFDEE9",
             light: "#abe9cd",
             dark: "#00ae66",
@@ -100,6 +105,9 @@ export const darkTheme: ThemeOptions = {
             sun: amber[200],
             star: yellow[300],
             cancel: red[400],
+            positive: green[400],
+            neutral: yellow[500],
+            negative: red[400],
         },
     },
 

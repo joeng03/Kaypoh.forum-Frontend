@@ -4,6 +4,7 @@ import { toastLogoutSuccess, toastLogoutError, toastFormat } from "utils/constan
 import React from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import styled from "@mui/material/styles/styled";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -31,6 +32,10 @@ const AppDrawerItem: React.FC<AppDrawerItemProps> = ({ onClick, text, children }
     );
 };
 
+const StyledDrawer = styled(Drawer)(({ theme }) => ({
+    background: theme.palette.mode === "light" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.4)",
+}));
+
 type AppDrawerProps = {
     drawerOpen: boolean;
     closeDrawer: () => void;
@@ -54,7 +59,7 @@ const AppDrawer = ({ drawerOpen, closeDrawer }: AppDrawerProps) => {
             });
     };
     return (
-        <Drawer open={drawerOpen} onClose={closeDrawer} transitionDuration={{ enter: 300, exit: 200 }}>
+        <StyledDrawer open={drawerOpen} onClose={closeDrawer} transitionDuration={{ enter: 300, exit: 200 }}>
             <Box sx={{ width: "9rem", mt: "3rem" }} role="presentation">
                 <List>
                     {user.admin_level > 0 && (
@@ -65,6 +70,13 @@ const AppDrawer = ({ drawerOpen, closeDrawer }: AppDrawerProps) => {
                             </AppDrawerItem>
                         </Link>
                     )}
+                    <Link to="/forumtopics" style={{ color: "inherit", textDecoration: "inherit" }}>
+                        <AppDrawerItem onClick={closeDrawer} text={"Forum topics"}>
+                            <span>💬</span>
+
+                            {/* <BorderColorRoundedIcon sx={{ fontSize: "0.9rem" }} /> */}
+                        </AppDrawerItem>
+                    </Link>
                     <Link to="/writepost" style={{ color: "inherit", textDecoration: "inherit" }}>
                         <AppDrawerItem onClick={closeDrawer} text={"Write post"}>
                             <span>✉️</span>
@@ -86,7 +98,7 @@ const AppDrawer = ({ drawerOpen, closeDrawer }: AppDrawerProps) => {
                     </AppDrawerItem>
                 </List>
             </Box>
-        </Drawer>
+        </StyledDrawer>
     );
 };
 

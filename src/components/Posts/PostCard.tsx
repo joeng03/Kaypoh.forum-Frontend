@@ -39,6 +39,7 @@ type PostCardMediaProps = {
 const PostCardMedia = ({ image, verticalLayout = false }: PostCardMediaProps) => {
     return (
         <CardMedia
+            component="div"
             image={image}
             sx={{
                 height: verticalLayout ? "40%" : "100%",
@@ -153,10 +154,10 @@ const PostCard = ({ post }: PostCardProps) => {
                 </>
             ) : (
                 <Grid container height="80%">
-                    <Grid item xs={4}>
+                    <Grid item xs={4.5}>
                         <PostCardMedia image={post.image} />
                     </Grid>
-                    <Grid item xs={8}>
+                    <Grid item xs={7.5}>
                         <PostCardContent post_id={post.id} title={post.title} content={post.content} />
                     </Grid>
                 </Grid>

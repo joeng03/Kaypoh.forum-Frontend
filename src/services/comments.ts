@@ -4,7 +4,6 @@ import axios from "axios";
 
 const transformCommentRequest = (comment: IComment) => ({
     ...comment,
-    user_id: comment.user.id,
     id: undefined,
     user: undefined,
     created_at: undefined,

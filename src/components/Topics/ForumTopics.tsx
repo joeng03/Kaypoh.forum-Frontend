@@ -1,9 +1,8 @@
 import { toastDeleteSuccess, toastNotAuthorizedWarning, toastFormat } from "../../utils/constants";
-import { ITopic } from "store/topics/types";
 import { acDeleteTopic, acSetTopics } from "store/topics/action";
 import { useAppDispatch, useAppSelector } from "store";
 import ConfirmationModal from "components/ConfirmationModal";
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
@@ -28,12 +27,12 @@ const ForumTopics = () => {
         {
             field: "username",
             headerName: "Created By",
-            width: 100,
+            width: 120,
         },
         {
             field: "created_at",
             headerName: "Created on",
-            width: 120,
+            width: 110,
             valueFormatter: (params) =>
                 new Date(params.value).toLocaleDateString("en-US", {
                     year: "numeric",
@@ -57,7 +56,7 @@ const ForumTopics = () => {
         columns.push({
             field: "id",
             headerName: "Edit/ Delete",
-            width: 120,
+            width: 110,
             renderCell: (params) => (
                 <Box
                     sx={{
@@ -120,9 +119,6 @@ const ForumTopics = () => {
                 height: "80vh",
                 width: "95vw",
                 m: "10vh auto 0",
-                // display: "flex",
-                // justifyContent: "center",
-                // alignItems: "center",
             }}
         >
             <DataGrid
@@ -133,8 +129,8 @@ const ForumTopics = () => {
                         sortModel: [{ field: "created_at", sort: "desc" }],
                     },
                 }}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
+                pageSize={20}
+                rowsPerPageOptions={[20]}
                 experimentalFeatures={{ newEditingApi: true }}
                 selectionModel={selectionModel}
                 onSelectionModelChange={(ids) => {
