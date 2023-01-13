@@ -2,9 +2,9 @@ import userReducer from "./user/reducer";
 import topicsReducer from "./topics/reducer";
 import postsReducer from "./posts/reducer";
 import commentsReducer from "./comments/reducer";
+
 import { configureStore } from "@reduxjs/toolkit";
 import { useSelector, useDispatch } from "react-redux";
-
 import type { ThunkAction, AnyAction } from "@reduxjs/toolkit";
 import type { TypedUseSelectorHook } from "react-redux";
 

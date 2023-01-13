@@ -7,6 +7,7 @@ import Input from "components/Input";
 import PublishButton from "components/PublishButton";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { trackPromise } from "react-promise-tracker";
 import { useParams, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -44,16 +45,17 @@ const WriteTopic = () => {
             name,
             description,
         };
-
-        (id ? dispatch(acUpdateTopic(topic)) : dispatch(acCreateTopic(topic)))
-            .then(() => {
-                toast.success(toastPublishSuccess("topic"), toastFormat);
-                navigate("/forumtopics");
-            })
-            .catch(() => {
-                toast.warning(toastNotAuthorizedWarning, toastFormat);
-                navigate("/forumtopics");
-            });
+        trackPromise(
+            (id ? dispatch(acUpdateTopic(topic)) : dispatch(acCreateTopic(topic)))
+                .then(() => {
+                    toast.success(toastPublishSuccess("topic"), toastFormat);
+                    navigate("/forumtopics");
+                })
+                .catch(() => {
+                    toast.warning(toastNotAuthorizedWarning, toastFormat);
+                    navigate("/forumtopics");
+                }),
+        );
     };
 
     return (

@@ -5,7 +5,7 @@ import { useAppDispatch } from "store";
 import { toastPublishSuccess, toastNotAuthorizedWarning, toastFormat, textMaxLength } from "utils/constants";
 
 import React, { useState, useEffect } from "react";
-import { convertToHTML, convertFromHTML } from "draft-convert";
+import { trackPromise } from "react-promise-tracker";
 import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -36,21 +36,23 @@ const WriteComment = ({ comment, method, onCancel }: WriteCommentProps) => {
             ...comment,
             content,
         };
-        (method === "update"
-            ? dispatch(acUpdateComment(currentComment)).then(() => {
-                  toast.success(toastPublishSuccess("comment"), toastFormat);
-                  onCancel();
-              })
-            : dispatch(acCreateComment(currentComment))
-        )
-            .then(() => {
-                setContent("");
-                toast.success(toastPublishSuccess("comment"), toastFormat);
-            })
+        trackPromise(
+            (method === "update"
+                ? dispatch(acUpdateComment(currentComment)).then(() => {
+                      toast.success(toastPublishSuccess("comment"), toastFormat);
+                      onCancel();
+                  })
+                : dispatch(acCreateComment(currentComment))
+            )
+                .then(() => {
+                    setContent("");
+                    toast.success(toastPublishSuccess("comment"), toastFormat);
+                })
 
-            .catch(() => {
-                toast.warning(toastNotAuthorizedWarning, toastFormat);
-            });
+                .catch(() => {
+                    toast.warning(toastNotAuthorizedWarning, toastFormat);
+                }),
+        );
     };
 
     return (

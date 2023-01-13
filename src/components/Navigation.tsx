@@ -4,6 +4,7 @@ import { acSetPosts } from "store/posts/action";
 import SwitchModeButton from "components/SwitchModeButton";
 import HomeButton from "components/HomeButton";
 import AppDrawer from "components/AppDrawer";
+import Loading from "components/Loading";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { styled } from "@mui/material/styles";
@@ -19,6 +20,7 @@ import Toolbar from "@mui/material/Toolbar";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import { trackPromise } from "react-promise-tracker";
 import type { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 
 const InputBaseWrapper = styled(Box)(({ theme }) => ({
@@ -89,9 +91,8 @@ const Navigation = () => {
     const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
     useEffect(() => {
-        console.log(isPostsPage);
         if (isPostsPage) {
-            dispatch(acSetPosts(page, columnName, searchValue, sortBy));
+            trackPromise(dispatch(acSetPosts(page, columnName, searchValue, sortBy)));
             localStorage.setItem("columnName", columnName);
             localStorage.setItem("sortBy", sortBy);
         }
@@ -102,12 +103,12 @@ const Navigation = () => {
     const closeDrawer = () => setDrawerOpen(false);
     const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        dispatch(acSetPosts(page, columnName, searchValue, sortBy));
+        trackPromise(dispatch(acSetPosts(page, columnName, searchValue, sortBy)));
     };
 
-    return pathname !== "/login" && pathname !== "/signup" ? (
+    return (
         <>
-            <AppBar position="fixed" color="transparent">
+            <AppBar>
                 <Toolbar>
                     {drawerOpen ? (
                         <IconButton size="large" edge="start" color="inherit" onClick={() => setDrawerOpen(false)}>
@@ -125,7 +126,7 @@ const Navigation = () => {
                             if (page !== 1) {
                                 setPage(1);
                             } else {
-                                dispatch(acSetPosts(1, columnName, "", sortBy));
+                                trackPromise(dispatch(acSetPosts(1, columnName, "", sortBy)));
                             }
                         }}
                     />
@@ -207,6 +208,7 @@ const Navigation = () => {
                     )}
                     <SwitchModeButton />
                 </Toolbar>
+                <Loading />
             </AppBar>
             {isPostsPage && (
                 <AppPagination
@@ -219,8 +221,6 @@ const Navigation = () => {
 
             <AppDrawer drawerOpen={drawerOpen} closeDrawer={closeDrawer} />
         </>
-    ) : (
-        <></>
     );
 };
 

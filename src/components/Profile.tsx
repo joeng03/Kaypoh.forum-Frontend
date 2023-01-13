@@ -5,6 +5,7 @@ import fetchBlob from "services/blob";
 import { validateEmail, validateUsername } from "utils/validators";
 import { toastUpdateProfileSuccess, toastUpdateProfileError, toastFormat } from "utils/constants";
 import React, { useState, useEffect, useRef } from "react";
+import { trackPromise } from "react-promise-tracker";
 import { toast } from "react-toastify";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -54,11 +55,13 @@ const Profile = () => {
         if (profilePic) {
             profileFormData.append("user[profile_picture]", profilePic as Blob);
         }
-        dispatch(acUserUpdateProfile(profileFormData))
-            .then(() => {
-                toast.success(toastUpdateProfileSuccess, toastFormat);
-            })
-            .catch(() => toast.error(toastUpdateProfileError, toastFormat));
+        trackPromise(
+            dispatch(acUserUpdateProfile(profileFormData))
+                .then(() => {
+                    toast.success(toastUpdateProfileSuccess, toastFormat);
+                })
+                .catch(() => toast.error(toastUpdateProfileError, toastFormat)),
+        );
     };
     const showAndSetImage = (file: File) => {
         if (profilePicRef.current) {

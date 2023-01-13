@@ -4,11 +4,12 @@ import { useAppDispatch } from "../../store";
 import { ICredentials } from "../../store/user/types";
 import { validateEmail, validatePassword } from "../../utils/validators";
 import { toastLoginError, toastFormat, toastLoginSuccess } from "utils/constants";
+import "react-toastify/dist/ReactToastify.css";
 
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { trackPromise } from "react-promise-tracker";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -44,12 +45,14 @@ const Login = () => {
             email,
             password,
         };
-        dispatch(acUserLogin(credentials))
-            .then(() => {
-                toast.success(toastLoginSuccess, toastFormat);
-                navigate("/");
-            })
-            .catch(() => toast.error(toastLoginError, toastFormat));
+        trackPromise(
+            dispatch(acUserLogin(credentials))
+                .then(() => {
+                    toast.success(toastLoginSuccess, toastFormat);
+                    navigate("/");
+                })
+                .catch(() => toast.error(toastLoginError, toastFormat)),
+        );
 
         setEmail("");
         setPassword("");

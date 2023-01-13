@@ -4,6 +4,7 @@ import { IComment, initialCommentState } from "store/comments/types";
 import { acSetComments } from "store/comments/action";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { trackPromise } from "react-promise-tracker";
 import Box from "@mui/material/Box";
 import Backdrop from "@mui/material/Backdrop";
 import Fade from "@mui/material/Fade";
@@ -18,7 +19,7 @@ const CommentsList = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(acSetComments(post_id));
+        trackPromise(dispatch(acSetComments(post_id)));
     }, []);
 
     const comment: IComment = {

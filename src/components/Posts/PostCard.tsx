@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "store";
 import ConfirmationModal from "components/ConfirmationModal";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { trackPromise } from "react-promise-tracker";
 import { toast } from "react-toastify";
 
 import Avatar from "@mui/material/Avatar";
@@ -112,9 +113,11 @@ const PostCard = ({ post }: PostCardProps) => {
     const onModalOpen = () => setModalOpen(true);
     const onModalClose = () => setModalOpen(false);
     const handleDeletePost = () => {
-        dispatch(acDeletePost(post.id))
-            .then(() => toast.success(toastDeleteSuccess("post"), toastFormat))
-            .catch(() => toast.warning(toastNotAuthorizedWarning, toastFormat));
+        trackPromise(
+            dispatch(acDeletePost(post.id))
+                .then(() => toast.success(toastDeleteSuccess("post"), toastFormat))
+                .catch(() => toast.warning(toastNotAuthorizedWarning, toastFormat)),
+        );
     };
     const handleStarClick = () => {
         if (starClicked) {

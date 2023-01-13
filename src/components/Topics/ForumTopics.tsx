@@ -3,8 +3,9 @@ import { acDeleteTopic, acSetTopics } from "store/topics/action";
 import { useAppDispatch, useAppSelector } from "store";
 import ConfirmationModal from "components/ConfirmationModal";
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { trackPromise } from "react-promise-tracker";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import EditIcon from "@mui/icons-material/Edit";
@@ -92,9 +93,8 @@ const ForumTopics = () => {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
 
-    console.log(selectionModel);
     useEffect(() => {
-        dispatch(acSetTopics());
+        trackPromise(dispatch(acSetTopics()));
         setSelectionModel(
             localStorage.getItem("subscribedTopics")
                 ? JSON.parse(localStorage.getItem("subscribedTopics") as string)
@@ -108,9 +108,11 @@ const ForumTopics = () => {
 
     const handleDeleteTopic = () => {
         onModalClose();
-        dispatch(acDeleteTopic(topicID))
-            .then(() => toast.success(toastDeleteSuccess("topic"), toastFormat))
-            .catch(() => toast.warning(toastNotAuthorizedWarning, toastFormat));
+        trackPromise(
+            dispatch(acDeleteTopic(topicID))
+                .then(() => toast.success(toastDeleteSuccess("topic"), toastFormat))
+                .catch(() => toast.warning(toastNotAuthorizedWarning, toastFormat)),
+        );
     };
 
     return (

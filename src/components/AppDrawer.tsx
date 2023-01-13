@@ -3,6 +3,7 @@ import { acUserLogout } from "store/user/action";
 import { toastLogoutSuccess, toastLogoutError, toastFormat } from "utils/constants";
 import React from "react";
 import { toast } from "react-toastify";
+import { trackPromise } from "react-promise-tracker";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "@mui/material/styles/styled";
 import Box from "@mui/material/Box";
@@ -10,11 +11,7 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded";
-import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
 type AppDrawerItemProps = {
     onClick: () => void;
@@ -49,14 +46,16 @@ const AppDrawer = ({ drawerOpen, closeDrawer }: AppDrawerProps) => {
 
     const handleLogout = () => {
         closeDrawer();
-        dispatch(acUserLogout())
-            .then(() => {
-                toast.success(toastLogoutSuccess, toastFormat);
-                navigate("/login");
-            })
-            .catch(() => {
-                toast.error(toastLogoutError, toastFormat);
-            });
+        trackPromise(
+            dispatch(acUserLogout())
+                .then(() => {
+                    toast.success(toastLogoutSuccess, toastFormat);
+                    navigate("/login");
+                })
+                .catch(() => {
+                    toast.error(toastLogoutError, toastFormat);
+                }),
+        );
     };
     return (
         <StyledDrawer open={drawerOpen} onClose={closeDrawer} transitionDuration={{ enter: 300, exit: 200 }}>

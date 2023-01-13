@@ -7,6 +7,7 @@ import ViewPost from "./components/Posts/ViewPost";
 import WriteTopic from "./components/Topics/WriteTopic";
 import CodeOfConduct from "./components/CodeOfConduct";
 import NotFound from "./components/NotFound";
+import Loading from "components/Loading";
 import ForumTopics from "components/Topics/ForumTopics";
 import { lightTheme, darkTheme, ColorContext } from "utils/theme";
 import CommentsList from "components/Comments/CommentsList";
@@ -18,6 +19,7 @@ import Navigation from "components/Navigation";
 import React, { useState, useEffect, useMemo } from "react";
 import { Routes, Route, useMatch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import CssBaseline from "@mui/material/CssBaseline";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import createTheme from "@mui/material/styles/createTheme";
@@ -36,7 +38,6 @@ const App = () => {
         }),
         [],
     );
-    const user = useAppSelector((state) => state.user);
 
     useEffect(() => {
         localStorage.setItem("mode", mode);
@@ -47,8 +48,8 @@ const App = () => {
             <ColorContext.Provider value={colorMode}>
                 <ThemeProvider theme={theme}>
                     <CssBaseline enableColorScheme />
-                    <Navigation />
                     <ToastContainer />
+
                     <Routes>
                         <Route
                             path="login"
@@ -70,7 +71,10 @@ const App = () => {
                             path="posts/:id"
                             element={
                                 <RequireAuth>
-                                    <ViewPost />
+                                    <>
+                                        <Navigation />
+                                        <ViewPost />
+                                    </>
                                 </RequireAuth>
                             }
                         >
@@ -80,7 +84,10 @@ const App = () => {
                             path="posts"
                             element={
                                 <RequireAuth>
-                                    <PostsList />
+                                    <>
+                                        <Navigation />
+                                        <PostsList />
+                                    </>
                                 </RequireAuth>
                             }
                         />
@@ -88,7 +95,10 @@ const App = () => {
                             path="writepost/:id"
                             element={
                                 <RequireAuth>
-                                    <WritePost />
+                                    <>
+                                        <Navigation />
+                                        <WritePost />
+                                    </>
                                 </RequireAuth>
                             }
                         />
@@ -96,7 +106,10 @@ const App = () => {
                             path="writepost"
                             element={
                                 <RequireAuth>
-                                    <WritePost />
+                                    <>
+                                        <Navigation />
+                                        <WritePost />
+                                    </>
                                 </RequireAuth>
                             }
                         />
@@ -104,7 +117,10 @@ const App = () => {
                             path="writetopic/:id"
                             element={
                                 <RequireAuth>
-                                    <WriteTopic />
+                                    <>
+                                        <Navigation />
+                                        <WriteTopic />
+                                    </>
                                 </RequireAuth>
                             }
                         />
@@ -112,7 +128,10 @@ const App = () => {
                             path="writetopic"
                             element={
                                 <RequireAuth>
-                                    <WriteTopic />
+                                    <>
+                                        <Navigation />
+                                        <WriteTopic />
+                                    </>
                                 </RequireAuth>
                             }
                         />
@@ -120,7 +139,10 @@ const App = () => {
                             path="forumtopics"
                             element={
                                 <RequireAuth>
-                                    <ForumTopics />
+                                    <>
+                                        <Navigation />
+                                        <ForumTopics />
+                                    </>
                                 </RequireAuth>
                             }
                         />
@@ -129,7 +151,10 @@ const App = () => {
                             path="profile"
                             element={
                                 <RequireAuth>
-                                    <Profile />
+                                    <>
+                                        <Navigation />
+                                        <Profile />
+                                    </>
                                 </RequireAuth>
                             }
                         />
@@ -138,7 +163,10 @@ const App = () => {
                             index
                             element={
                                 <RequireAuth>
-                                    <PostsList />
+                                    <>
+                                        <Navigation />
+                                        <PostsList />
+                                    </>
                                 </RequireAuth>
                             }
                         />

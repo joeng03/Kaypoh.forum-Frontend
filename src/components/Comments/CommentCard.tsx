@@ -6,6 +6,7 @@ import { acDeleteComment } from "store/comments/action";
 import { IComment } from "store/comments/types";
 import { toastDeleteSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
 import React, { useState } from "react";
+import { trackPromise } from "react-promise-tracker";
 import { toast } from "react-toastify";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -36,9 +37,11 @@ const CommentCard = ({ comment, method }: CommentCardProps) => {
     const onModalOpen = () => setModalOpen(true);
     const onModalClose = () => setModalOpen(false);
     const handleDeleteComment = () => {
-        dispatch(acDeleteComment(comment.id))
-            .then(() => toast.success(toastDeleteSuccess("comment"), toastFormat))
-            .catch(() => toast.warning(toastNotAuthorizedWarning, toastFormat));
+        trackPromise(
+            dispatch(acDeleteComment(comment.id))
+                .then(() => toast.success(toastDeleteSuccess("comment"), toastFormat))
+                .catch(() => toast.warning(toastNotAuthorizedWarning, toastFormat)),
+        );
     };
 
     return (

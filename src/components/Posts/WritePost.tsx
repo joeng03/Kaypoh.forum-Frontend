@@ -1,5 +1,4 @@
 import ContentEditor from "../ContentEditor";
-import Loading from "components/Loading";
 import PublishButton from "components/PublishButton";
 import { ITopic, initialTopicState } from "store/topics/types";
 import { acCreatePost, acUpdatePost } from "store/posts/action";
@@ -11,6 +10,7 @@ import { toastPublishSuccess, toastNotAuthorizedWarning, toastFormat } from "uti
 
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { trackPromise } from "react-promise-tracker";
 import { EditorState } from "draft-js";
 import { convertToHTML, convertFromHTML } from "draft-convert";
 import { toast } from "react-toastify";
@@ -27,7 +27,6 @@ const WritePost = () => {
     const [topic, setTopic] = useState<ITopic>(initialTopicState);
     const [editorState, setEditorState] = useState<EditorState>(() => EditorState.createEmpty());
     const [image, setImage] = useState<File>();
-    const [loading, setLoading] = useState<boolean>(true);
     const postImage = useRef<HTMLImageElement>(null);
 
     const topics = useAppSelector((state) => state.topics);
@@ -50,13 +49,10 @@ const WritePost = () => {
                             showAndSetImage(imageFile);
                         });
                     }
-                    setLoading(false);
                 })
                 .catch(() => navigate("/notfound"));
-        } else {
-            setLoading(false);
         }
-        dispatch(acSetTopics());
+        trackPromise(dispatch(acSetTopics()));
     }, []);
 
     const showAndSetImage = (file: File) => {
@@ -83,19 +79,19 @@ const WritePost = () => {
             postFormData.append("post[image]", image as Blob);
         }
 
-        (id ? dispatch(acUpdatePost(postFormData, Number(id))) : dispatch(acCreatePost(postFormData)))
-            .then(() => {
-                toast.success(toastPublishSuccess("post"), toastFormat);
-                navigate("/");
-            })
-            .catch(() => {
-                toast.warning(toastNotAuthorizedWarning, toastFormat);
-                navigate("/");
-            });
+        trackPromise(
+            (id ? dispatch(acUpdatePost(postFormData, Number(id))) : dispatch(acCreatePost(postFormData)))
+                .then(() => {
+                    toast.success(toastPublishSuccess("post"), toastFormat);
+                    navigate("/");
+                })
+                .catch(() => {
+                    toast.warning(toastNotAuthorizedWarning, toastFormat);
+                    navigate("/");
+                }),
+        );
     };
-    return loading ? (
-        <Loading />
-    ) : (
+    return (
         <Container component="main" maxWidth="s" sx={{ mt: 8, mb: 8, width: "95vw", height: "80vh" }}>
             <Box component="form" noValidate onSubmit={handlePublishPost} width="100%">
                 <Grid container spacing={1} direction="column">

@@ -9,7 +9,7 @@ import { toastSignUpSuccess, toastSignUpError, toastFormat } from "utils/constan
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { trackPromise } from "react-promise-tracker";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -54,12 +54,14 @@ const SignUp = () => {
             email,
             password,
         };
-        dispatch(acUserSignUp(credentials))
-            .then(() => {
-                toast.success(toastSignUpSuccess, toastFormat);
-                navigate("/");
-            })
-            .catch((err) => toast.error(toastSignUpError(err.response.data.errors), toastFormat));
+        trackPromise(
+            dispatch(acUserSignUp(credentials))
+                .then(() => {
+                    toast.success(toastSignUpSuccess, toastFormat);
+                    navigate("/");
+                })
+                .catch((err) => toast.error(toastSignUpError(err.response.data.errors), toastFormat)),
+        );
 
         setUsername("");
         setEmail("");

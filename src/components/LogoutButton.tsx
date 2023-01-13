@@ -2,6 +2,7 @@ import { toastLogoutSuccess, toastLogoutError, toastFormat } from "utils/constan
 import { useAppDispatch } from "store";
 import { acUserLogout } from "store/user/action";
 import React from "react";
+import { trackPromise } from "react-promise-tracker";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Box from "@mui/material/Box";
@@ -12,14 +13,16 @@ const LogoutButton = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const handleLogout = () => {
-        dispatch(acUserLogout())
-            .then(() => {
-                toast.success(toastLogoutSuccess, toastFormat);
-                navigate("/");
-            })
-            .catch(() => {
-                toast.error(toastLogoutError, toastFormat);
-            });
+        trackPromise(
+            dispatch(acUserLogout())
+                .then(() => {
+                    toast.success(toastLogoutSuccess, toastFormat);
+                    navigate("/");
+                })
+                .catch(() => {
+                    toast.error(toastLogoutError, toastFormat);
+                }),
+        );
     };
     return (
         <Box

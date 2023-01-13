@@ -1,12 +1,23 @@
 import React from "react";
+import { usePromiseTracker } from "react-promise-tracker";
 import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
 import CircularProgress from "@mui/material/CircularProgress";
-
 const Loading = () => {
+    const { promiseInProgress } = usePromiseTracker();
     return (
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "50vh" }}>
-            <CircularProgress color="inherit" />
-        </Box>
+        <>
+            {promiseInProgress && (
+                <Box
+                    sx={{
+                        width: "100%",
+                        zIndex: 2000,
+                    }}
+                >
+                    <LinearProgress color="secondary" />
+                </Box>
+            )}
+        </>
     );
 };
 

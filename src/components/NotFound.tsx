@@ -17,9 +17,9 @@ const NotFound = () => {
                     404
                 </Typography>
                 <Typography variant="h5">The requested page was not found.</Typography>
-                {/* <Link to="/" style={{ color: "#005e97", fontSize: "20px", position: "absolute", bottom: "10%" }}>
+                <Link to="/" style={{ color: "#005e97", fontSize: "20px", position: "absolute", bottom: "10%" }}>
                     Back to home page
-                </Link> */}
+                </Link>
             </Box>
         </Container>
     );
