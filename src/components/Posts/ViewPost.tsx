@@ -59,6 +59,7 @@ const ViewPost = () => {
                 post_id: post.id,
             };
             dispatch(acUserStarPost(user, star));
+
             setStarsCount(starsCount + 1);
         }
         setStarClicked(!starClicked);

@@ -1,24 +1,27 @@
-import { verifyCookie } from "../../services/auth";
+import { verifyToken } from "../../services/auth";
 import { acSetUser } from "../../store/user/action";
+import { removeToken } from "utils/token";
 import { useAppDispatch } from "store";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { trackPromise } from "react-promise-tracker";
 
 const RequireAuth: React.FC<{ children: React.ReactElement }> = ({ children }) => {
+    const [verified, setVerified] = useState<boolean>(false);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     useEffect(() => {
-        verifyCookie()
+        verifyToken()
             .then((user) => {
+                setVerified(true);
                 dispatch(acSetUser(user));
             })
             .catch(() => {
+                removeToken();
                 navigate("/login");
             });
     }, []);
 
-    return <>{children}</>;
+    return <>{verified && children}</>;
 };
 
 export default RequireAuth;

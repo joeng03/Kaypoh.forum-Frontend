@@ -10,7 +10,6 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 
-axios.defaults.withCredentials = true;
 axios.defaults.baseURL = BASE_URL;
 
 ReactDOM.render(

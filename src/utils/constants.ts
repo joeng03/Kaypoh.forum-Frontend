@@ -10,7 +10,7 @@ export const toastLoginError = "Incorrect email and/or password";
 export const toastLogoutError = "Unable to logout";
 export const toastUpdateProfileError = "Failed to update profile";
 export const toastNotAuthorizedWarning =
-    "You are not authorized to perform this action. If your session has expired, please sign in again";
+    "You are not authorized to perform this action. If your session has expired, please log in again";
 
 // General toast messages (functions)
 export const toastPublishSuccess = (item: string) => `Successfully published ${item} !`;

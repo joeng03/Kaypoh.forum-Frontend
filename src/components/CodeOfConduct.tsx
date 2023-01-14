@@ -2,7 +2,7 @@ import React from "react";
 
 const CodeOfConduct = () => {
     return (
-        <div style={{ marginTop: "4rem", marginLeft: "2rem", textAlign: "left" }}>
+        <div style={{ marginTop: "4rem", margin: "0rem 2rem", textAlign: "left" }}>
             <h1 id="citizen-code-of-conduct">Citizen Code of Conduct</h1>
             <h2 id="purpose">1. Purpose</h2>
             <p>

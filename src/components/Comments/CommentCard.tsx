@@ -54,7 +54,7 @@ const CommentCard = ({ comment, method }: CommentCardProps) => {
         >
             <Grid container spacing={0.5} height="100%" sx={{ overflow: "scroll" }}>
                 <Grid item xs={2} mt="0.8rem">
-                    <Box display="flex" flexDirection="row">
+                    <Box display="flex" flexDirection="row" ml="0.2rem">
                         <Box>
                             <Avatar src={comment.user.profile_picture} className="avatar">
                                 {comment.user.username}
@@ -111,7 +111,7 @@ const CommentCard = ({ comment, method }: CommentCardProps) => {
                                 justifyContent: "center",
                                 ml: "0.2rem",
                                 position: "absolute",
-                                bottom: "0.8rem",
+                                bottom: "0.5rem",
                                 borderRadius: "50%",
                             }}
                         >

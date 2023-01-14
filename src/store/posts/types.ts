@@ -11,6 +11,7 @@ export interface IPost {
     user: IUser;
     topic: ITopic;
     stars_count: number;
+    comment_count: number;
 }
 
 //-1 is used as the default id for an empty IPost object as database ids are non-negative
@@ -25,4 +26,5 @@ export const initialPostState = {
     user: initialUserState,
     topic: initialTopicState,
     stars_count: 0,
+    comment_count: 0,
 };
