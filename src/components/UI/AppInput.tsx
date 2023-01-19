@@ -1,4 +1,4 @@
-import Warning from "./Authentication/Warning";
+import Warning from "./Warning";
 import { stringMaxLength } from "utils/constants";
 import React from "react";
 import styled from "@mui/material/styles/styled";
@@ -14,7 +14,7 @@ const StyledInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-type InputProps = {
+type AppInputProps = {
     placeholder: string;
     value: string;
     setValue: React.Dispatch<React.SetStateAction<string>>;
@@ -30,7 +30,7 @@ type InputProps = {
     maxLength?: number;
 };
 
-const Input = ({
+const AppInput = ({
     placeholder,
     value,
     setValue,
@@ -44,7 +44,7 @@ const Input = ({
     multiline = false,
     rows = 1,
     maxLength = stringMaxLength,
-}: InputProps) => {
+}: AppInputProps) => {
     return (
         <>
             <StyledInput
@@ -68,4 +68,4 @@ const Input = ({
     );
 };
 
-export default Input;
+export default AppInput;

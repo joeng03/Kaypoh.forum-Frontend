@@ -149,6 +149,9 @@ const CodeOfConduct = () => {
                 </a>
             </p>
             <p>
+                <em>Revision 2.4. Posted 15 January 2023.</em>
+            </p>
+            <p>
                 <em>Revision 2.3. Posted 6 March 2017.</em>
             </p>
             <p>

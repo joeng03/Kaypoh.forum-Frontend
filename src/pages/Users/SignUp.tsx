@@ -1,10 +1,11 @@
-import Input from "../Input";
-import "../../App.css";
 import { acUserSignUp } from "../../store/user/action";
 import { useAppDispatch } from "../../store";
 import { ICredentials } from "../../store/user/types";
 import { validateUsername, validateEmail, validatePassword } from "../../utils/validators";
 import { toastSignUpSuccess, toastSignUpError, toastFormat } from "utils/constants";
+import AppTypewriter from "components/UI/AppTypewriter";
+import Input from "components/UI/AppInput";
+import Loading from "components/UI/Loading";
 
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -72,17 +73,8 @@ const SignUp = () => {
         <Container className="gradient-background" sx={{ display: "flex" }}>
             <Slide direction="up" in={show} timeout={650}>
                 <Box className="noselect form" maxWidth="s" sx={{ height: "80vh" }}>
-                    <Typography
-                        component="h1"
-                        variant="h5"
-                        sx={{
-                            fontWeight: "bold",
-                            fontFamily: "'Open Sans'",
-                        }}
-                    >
-                        Welcome to Kaypoh.forum
-                    </Typography>
-                    <Typography component="h1" variant="h6">
+                    <AppTypewriter />
+                    <Typography component="h1" variant="h6" sx={{ fontFamily: "'Open Sans'" }}>
                         Sign Up
                     </Typography>
 
@@ -144,6 +136,7 @@ const SignUp = () => {
                     </Box>
                 </Box>
             </Slide>
+            <Loading type="circular" />
         </Container>
     );
 };

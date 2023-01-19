@@ -1,10 +1,10 @@
 import AppPagination from "./AppPagination";
 import { useAppDispatch } from "store";
 import { acSetPosts } from "store/posts/action";
-import SwitchModeButton from "components/SwitchModeButton";
-import HomeButton from "components/HomeButton";
-import AppDrawer from "components/AppDrawer";
-import Loading from "components/Loading";
+import SwitchModeButton from "components/UI/SwitchModeButton";
+import HomeButton from "components/UI/HomeButton";
+import AppDrawer from "components/UI/AppDrawer";
+import Loading from "components/UI/Loading";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { styled } from "@mui/material/styles";
@@ -208,7 +208,7 @@ const Navigation = () => {
                     )}
                     <SwitchModeButton />
                 </Toolbar>
-                <Loading />
+                <Loading type="linear" />
             </AppBar>
             {isPostsPage && (
                 <AppPagination

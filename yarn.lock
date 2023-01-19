@@ -5325,6 +5325,18 @@ draft-convert@^2.1.13:
     immutable "~3.7.4"
     invariant "^2.2.1"
 
+draft-js-export-html@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/draft-js-export-html/-/draft-js-export-html-1.4.1.tgz#7cdad970c6f7f2cdd19ce4c1f5073fdf0f313b4d"
+  integrity sha512-G4VGBSalPowktIE4wp3rFbhjs+Ln9IZ2FhXeHjsZDSw0a2+h+BjKu5Enq+mcsyVb51RW740GBK8Xbf7Iic51tw==
+  dependencies:
+    draft-js-utils "^1.4.0"
+
+draft-js-utils@^1.4.0:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/draft-js-utils/-/draft-js-utils-1.4.1.tgz#a59c792ad621f7050292031a237d524708a6d509"
+  integrity sha512-xE81Y+z/muC5D5z9qWmKfxEW1XyXfsBzSbSBk2JRsoD0yzMGGHQm/0MtuqHl/EUDkaBJJLjJ2EACycoDMY/OOg==
+
 draft-js@^0.11.7:
   version "0.11.7"
   resolved "https://registry.yarnpkg.com/draft-js/-/draft-js-0.11.7.tgz#be293aaa255c46d8a6647f3860aa4c178484a206"
@@ -11051,10 +11063,10 @@ typescript@^4.1.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.2.tgz#8ac1fba9f52256fdb06fb89e4122fa6a346c2998"
   integrity sha512-5BlMof9H1yGt0P8/WF+wPNw6GfctgGjXp5hkblpyT+8rkASSmkUKMXrxR0Xg8ThVCi/JnHQiKXeBaEwCeQwMFw==
 
-typewriter-effect@^2.18.2:
-  version "2.18.2"
-  resolved "https://registry.yarnpkg.com/typewriter-effect/-/typewriter-effect-2.18.2.tgz#cc96af78869e35fda615fb866bcf09d5a4be8c17"
-  integrity sha512-I6VLfaICftFgZ3sauoVrvHmqzD2r1t+roopD6pyQ1EV4fmq3kZ4ssfLJk9mPd1VHdnwb9XxSnDH09QHNJ/HrXw==
+typewriter-effect@^2.19.0:
+  version "2.19.0"
+  resolved "https://registry.yarnpkg.com/typewriter-effect/-/typewriter-effect-2.19.0.tgz#396fe35e1313279ae6202775bf8dff5db37c5b64"
+  integrity sha512-rhUX1ukmAXNFWUnMFx8CDU1uLWJQ7pRYzDU7WfHJRq43i6SmWSP9vFiUsOGfXINodUAgZiJ5xnzwLciHxZDGDg==
   dependencies:
     prop-types "^15.6.2"
     raf "^3.4.0"

@@ -1,4 +1,4 @@
-import Input from "./Input";
+import AppInput from "../../components/UI/AppInput";
 import { acUserUpdateProfile } from "store/user/action";
 import { useAppSelector, useAppDispatch } from "store";
 import fetchBlob from "services/blob";
@@ -38,7 +38,7 @@ const Profile = () => {
                 showAndSetImage(imageFile);
             });
         }
-    }, []);
+    }, [user]);
 
     const handleUpdateProfile = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -107,23 +107,23 @@ const Profile = () => {
                         sx={{ p: "0.9rem 0rem" }}
                     />
                 </Box>
-                <Input
+                <AppInput
                     placeholder="Username"
                     value={username}
                     setValue={setUsername}
                     setMessage={setUsernameErr}
                     validate={validateUsername}
                     message={usernameErr}
-                ></Input>
-                <Input
+                ></AppInput>
+                <AppInput
                     placeholder="Email"
                     value={email}
                     setValue={setEmail}
                     setMessage={setEmailErr}
                     validate={validateEmail}
                     message={emailErr}
-                ></Input>
-                <Input
+                ></AppInput>
+                <AppInput
                     placeholder="Bio"
                     value={bio}
                     setValue={setBio}
@@ -131,7 +131,7 @@ const Profile = () => {
                     validate={() => ""}
                     message={""}
                     required={false}
-                ></Input>
+                ></AppInput>
 
                 <div style={{ marginTop: "3.5rem" }}>
                     <Button component="label" variant="outlined" size="small" endIcon={<FileUploadOutlinedIcon />}>

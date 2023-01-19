@@ -1,6 +1,6 @@
 import ViewComment from "./ViewComment";
 import WriteComment from "./WriteComment";
-import ConfirmationModal from "components/ConfirmationModal";
+import ConfirmationModal from "components/UI/ConfirmationModal";
 import { useAppDispatch, useAppSelector } from "store";
 import { acDeleteComment } from "store/comments/action";
 import { IComment } from "store/comments/types";
@@ -119,7 +119,7 @@ const CommentCard = ({ comment, method }: CommentCardProps) => {
                             {/* {comment.sentiment} */}
                             {comment.sentiment < 0 ? (
                                 <SentimentDissatisfiedRoundedIcon sx={{ color: "icon.negative" }} />
-                            ) : comment.sentiment > 0.25 ? (
+                            ) : comment.sentiment > 0.3 ? (
                                 <SentimentSatisfiedAltRoundedIcon sx={{ color: "icon.positive" }} />
                             ) : (
                                 <SentimentNeutralRoundedIcon sx={{ color: "icon.neutral" }} />

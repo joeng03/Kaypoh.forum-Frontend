@@ -14,18 +14,17 @@ const SwitchModeButton = () => {
         <Box
             sx={{
                 display: "block",
-                fontSize: "1rem",
             }}
         >
-            <Typography sx={{ display: { xxs: "none", m: "inline-block" }, fontSize: "0.95rem" }}>
+            <Typography sx={{ display: { xxs: "none", m: "inline-block" }, fontSize: "0.9rem" }}>
                 {" "}
                 {theme.palette.mode === "light" ? "Light" : "Dark"} mode
             </Typography>
             <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode}>
                 {theme.palette.mode === "dark" ? (
-                    <LightIcon sx={{ fontSize: "2rem", color: "icon.sun" }} />
+                    <LightIcon sx={{ color: "icon.sun", fontSize: "1.7rem" }} />
                 ) : (
-                    <DarkIcon sx={{ fontSize: "2rem", color: "icon.moon" }} />
+                    <DarkIcon sx={{ color: "icon.moon", fontSize: "1.7rem" }} />
                 )}
             </IconButton>
         </Box>

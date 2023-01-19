@@ -3,8 +3,8 @@ import { useAppDispatch } from "store";
 import { readOne } from "services/topics";
 import { ITopic, initialTopicState } from "store/topics/types";
 import { toastPublishSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
-import Input from "components/Input";
-import PublishButton from "components/PublishButton";
+import AppInput from "components/UI/AppInput";
+import PublishButton from "components/UI/PublishButton";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { trackPromise } from "react-promise-tracker";
@@ -27,12 +27,14 @@ const WriteTopic = () => {
 
     useEffect(() => {
         if (id) {
-            readOne(Number(id))
-                .then((topic) => {
-                    setName(topic.name);
-                    setDescription(topic.description);
-                })
-                .catch(() => navigate("/notfound"));
+            trackPromise(
+                readOne(Number(id))
+                    .then((topic) => {
+                        setName(topic.name);
+                        setDescription(topic.description);
+                    })
+                    .catch(() => navigate("/notfound")),
+            );
         }
     }, []);
 
@@ -66,7 +68,7 @@ const WriteTopic = () => {
                 sx={{ margin: "0 auto", position: "relative" }}
                 noValidate
             >
-                <Input
+                <AppInput
                     placeholder="Topic name"
                     value={name}
                     setValue={setName}
@@ -74,8 +76,8 @@ const WriteTopic = () => {
                     validate={() => ""}
                     message={""}
                     required
-                ></Input>
-                <Input
+                ></AppInput>
+                <AppInput
                     placeholder="Description"
                     value={description}
                     setValue={setDescription}
@@ -85,7 +87,7 @@ const WriteTopic = () => {
                     rows={5}
                     required={false}
                     multiline
-                ></Input>
+                ></AppInput>
                 <PublishButton />
             </Box>
         </Box>

@@ -41,5 +41,6 @@ export const toastFormat: ToastOptions = {
 export const emailRegex = new RegExp(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/);
 
 export const passwordMinLength = 6;
+export const usernameMaxLength = 10;
 export const stringMaxLength = 255;
 export const textMaxLength = 3e4;

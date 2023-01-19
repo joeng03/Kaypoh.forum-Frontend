@@ -1,4 +1,4 @@
-import Input from "components/Input";
+import AppInput from "components/UI/AppInput";
 import { IComment } from "store/comments/types";
 import { acCreateComment, acUpdateComment } from "store/comments/action";
 import { useAppDispatch } from "store";
@@ -59,7 +59,7 @@ const WriteComment = ({ comment, method, onCancel }: WriteCommentProps) => {
         <Box component="form" noValidate onSubmit={handlePublishComment}>
             <Grid container spacing={1} direction="column">
                 <Grid item xs={10} position="relative">
-                    <Input
+                    <AppInput
                         placeholder="Add comment..."
                         value={content}
                         setValue={setContent}
@@ -70,7 +70,7 @@ const WriteComment = ({ comment, method, onCancel }: WriteCommentProps) => {
                         required={false}
                         maxLength={textMaxLength}
                         multiline
-                    ></Input>
+                    ></AppInput>
                 </Grid>
                 <Grid item xs={2} sx={{ position: "relative" }}>
                     {method === "update" && (

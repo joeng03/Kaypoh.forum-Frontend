@@ -1,7 +1,7 @@
 import { toastDeleteSuccess, toastNotAuthorizedWarning, toastFormat } from "../../utils/constants";
 import { acDeleteTopic, acSetTopics } from "store/topics/action";
 import { useAppDispatch, useAppSelector } from "store";
-import ConfirmationModal from "components/ConfirmationModal";
+import ConfirmationModal from "components/UI/ConfirmationModal";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -48,6 +48,7 @@ const ForumTopics = () => {
         },
         {
             ...GRID_CHECKBOX_SELECTION_COL_DEF,
+            type: "string",
             headerName: "Subscribed",
             width: 130,
         },
@@ -98,7 +99,7 @@ const ForumTopics = () => {
         setSelectionModel(
             localStorage.getItem("subscribedTopics")
                 ? JSON.parse(localStorage.getItem("subscribedTopics") as string)
-                : [],
+                : [2, 4, 8], // default subscription for demonstration purposes
         );
     }, []);
 
@@ -136,14 +137,12 @@ const ForumTopics = () => {
                 experimentalFeatures={{ newEditingApi: true }}
                 selectionModel={selectionModel}
                 onSelectionModelChange={(ids) => {
-                    console.log(ids);
                     setSelectionModel(ids);
                     localStorage.setItem("subscribedTopics", JSON.stringify(ids));
                 }}
                 sx={{
                     "& .MuiDataGrid-columnHeaderCheckbox .MuiDataGrid-columnHeaderTitleContainer:before": {
                         content: "'Subscribed'",
-                        fontWeight: "bold",
                     },
                 }}
                 checkboxSelection

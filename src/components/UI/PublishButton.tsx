@@ -9,7 +9,7 @@ const PublishButton = () => {
             variant="contained"
             size="small"
             endIcon={<SendIcon />}
-            sx={{ m: "0 auto", position: "absolute", right: "0.2rem" }}
+            sx={{ m: "0 auto", position: "absolute", right: "0.7rem" }}
         >
             Publish
         </Button>

@@ -1,5 +1,5 @@
-import ContentEditor from "../ContentEditor";
-import PublishButton from "components/PublishButton";
+import ContentEditor from "../../components/UI/ContentEditor";
+import PublishButton from "components/UI/PublishButton";
 import { ITopic, initialTopicState } from "store/topics/types";
 import { acCreatePost, acUpdatePost } from "store/posts/action";
 import { acSetTopics } from "store/topics/action";
@@ -13,6 +13,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { trackPromise } from "react-promise-tracker";
 import { EditorState } from "draft-js";
 import { convertToHTML, convertFromHTML } from "draft-convert";
+import { stateToHTML } from "draft-js-export-html";
+
 import { toast } from "react-toastify";
 import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
@@ -35,6 +37,7 @@ const WritePost = () => {
     const navigate = useNavigate();
 
     const { id } = useParams();
+
     //if id is undefined, this is a "create" process, else it is an "update" process
     useEffect(() => {
         if (id) {
@@ -73,6 +76,7 @@ const WritePost = () => {
 
         postFormData.append("post[title]", title);
         postFormData.append("post[content]", convertToHTML(editorState.getCurrentContent()));
+        console.log(stateToHTML(editorState.getCurrentContent()));
         postFormData.append("post[topic_id]", topic.id === -1 ? topics[0].id.toString() : topic.id.toString());
 
         if (image) {
@@ -92,78 +96,74 @@ const WritePost = () => {
         );
     };
     return (
-        <Container component="main" maxWidth="s" sx={{ mt: 8, mb: 8, width: "95vw", height: "80vh" }}>
-            <Box component="form" noValidate onSubmit={handlePublishPost} width="100%">
-                <Grid container spacing={1} direction="column">
-                    <Grid item xs={1}>
+        <Container component="main" maxWidth="m" sx={{ m: "5rem auto", width: "95vw", height: "80vh" }}>
+            <Box component="form" noValidate onSubmit={handlePublishPost}>
+                <TextField
+                    placeholder="Title"
+                    variant="standard"
+                    value={title}
+                    onChange={({ target }) => setTitle(target.value)}
+                    InputProps={{ disableUnderline: true }}
+                    sx={{ p: "0rem 1rem 1rem 1rem" }}
+                    fullWidth
+                ></TextField>
+                <Autocomplete
+                    size="small"
+                    value={topic}
+                    onChange={(event: any, newTopic) => {
+                        if (newTopic) {
+                            setTopic(newTopic);
+                        }
+                    }}
+                    options={topics}
+                    getOptionLabel={(topic) => topic.name}
+                    renderInput={(params) => (
                         <TextField
-                            placeholder="Title"
+                            {...params}
                             variant="standard"
-                            value={title}
-                            onChange={({ target }) => setTitle(target.value)}
-                            InputProps={{ disableUnderline: true }}
-                            sx={{ p: "0rem 1rem 1rem 1rem" }}
+                            placeholder="Topic"
+                            sx={{ p: "0rem 1rem 2rem 1rem" }}
                             fullWidth
-                        ></TextField>
-                        <Autocomplete
-                            size="small"
-                            value={topic}
-                            defaultValue={topics[0]}
-                            onChange={(event: any, newTopic) => {
-                                if (newTopic) {
-                                    setTopic(newTopic);
-                                }
-                            }}
-                            options={topics}
-                            getOptionLabel={(topic) => topic.name}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    variant="standard"
-                                    placeholder="Topic"
-                                    sx={{ p: "0rem 1rem 2rem 1rem" }}
-                                    fullWidth
-                                />
-                            )}
-                            disablePortal
                         />
-                    </Grid>
-                    <Grid item xs={9}>
-                        <ContentEditor
-                            editorState={editorState}
-                            setEditorState={setEditorState}
-                            placeholder="Tell your story..."
+                    )}
+                    // renderOption={(props, option) => (
+                    //     <Box
+                    //         sx={{
+                    //             textAlign: "left",
+                    //             padding: "0.5rem 0.25rem",
+                    //             "&:hover": { background: "rgb(192,192,192,0.5)" },
+                    //             cursor: "pointer",
+                    //         }}
+                    //     >
+                    //         {option.name}
+                    //     </Box>
+                    // )}
+                    disablePortal
+                />
+                <ContentEditor
+                    editorState={editorState}
+                    setEditorState={setEditorState}
+                    placeholder="Tell your story..."
+                />
+                <Box component="img" width="100%" ref={postImage} sx={{ display: "block", pb: "0.5rem" }}></Box>
+                <Box display="block" position="relative" mb="5rem">
+                    <Button
+                        component="label"
+                        variant="outlined"
+                        size="small"
+                        endIcon={<FileUploadOutlinedIcon />}
+                        sx={{ position: "absolute", left: "0.7rem" }}
+                    >
+                        Upload Image
+                        <input
+                            accept="image/*"
+                            type="file"
+                            onChange={({ target }) => showAndSetImage((target.files as FileList)[0])}
+                            hidden
                         />
-                    </Grid>
-                    <Grid item xs={2} sx={{ position: "relative", mb: 8 }}>
-                        <Box component="img" width="100%" ref={postImage} sx={{ display: "block", pb: "0.5rem" }}></Box>
-                        <Button
-                            component="label"
-                            variant="outlined"
-                            size="small"
-                            endIcon={<FileUploadOutlinedIcon />}
-                            sx={{ position: "absolute", left: "0.7rem" }}
-                        >
-                            Upload Image
-                            <input
-                                accept="image/*"
-                                type="file"
-                                onChange={({ target }) => showAndSetImage((target.files as FileList)[0])}
-                                hidden
-                            />
-                        </Button>
-                        {/* <Button
-                            type="submit"
-                            variant="contained"
-                            size="small"
-                            endIcon={<SendIcon />}
-                            sx={{ m: "0 auto", position: "absolute", right: "0.2rem" }}
-                        >
-                            Publish
-                        </Button> */}
-                        <PublishButton />
-                    </Grid>
-                </Grid>
+                    </Button>
+                    <PublishButton />
+                </Box>
             </Box>
         </Container>
     );

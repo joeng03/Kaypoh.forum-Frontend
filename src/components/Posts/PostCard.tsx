@@ -4,7 +4,7 @@ import { toastDeleteSuccess, toastNotAuthorizedWarning, toastFormat } from "util
 import { acDeletePost } from "store/posts/action";
 import { acUserStarPost, acUserUnStarPost } from "store/user/action";
 import { useAppDispatch, useAppSelector } from "store";
-import ConfirmationModal from "components/ConfirmationModal";
+import ConfirmationModal from "components/UI/ConfirmationModal";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { trackPromise } from "react-promise-tracker";
@@ -60,13 +60,25 @@ type PostCardContentProps = {
 const PostCardContent = ({ post_id, title, content, verticalLayout = false }: PostCardContentProps) => {
     return (
         <Link to={`/posts/${post_id}`} style={{ color: "inherit", textDecoration: "inherit" }}>
-            <CardContent sx={{ height: "100%", pb: 0, cursor: "pointer" }}>
+            <CardContent
+                sx={{
+                    height: "100%",
+                    pb: 0,
+                    cursor: "pointer",
+                    overflow: "hidden",
+                }}
+            >
                 <Typography
                     variant="h6"
                     sx={{
                         fontWeight: "bold",
                         fontFamily: "Open Sans, sans-serif",
                         mb: verticalLayout ? "0.4rem " : "1rem",
+                        mt: "0.8rem",
+                        display: "-webkit-box",
+                        WebkitBoxOrient: "vertical",
+                        WebkitLineClamp: 2,
+                        overflow: "hidden",
                     }}
                 >
                     {title}
@@ -75,11 +87,11 @@ const PostCardContent = ({ post_id, title, content, verticalLayout = false }: Po
                     variant="body1"
                     sx={{
                         display: "-webkit-box",
-                        overflow: "hidden",
                         WebkitBoxOrient: "vertical",
                         WebkitLineClamp: verticalLayout ? 3 : 4,
                         textAlign: "left",
-                        wordWrap: "break-word",
+                        wordWrap: "break-all",
+                        overflow: "hidden",
                     }}
                 >
                     {extractContent(content)}
@@ -165,8 +177,8 @@ const PostCard = ({ post }: PostCardProps) => {
                     </Grid>
                 </Grid>
             )}
+            <Divider />
             <div style={{ position: "absolute", bottom: "0", width: "100%" }}>
-                <Divider />
                 <Grid>
                     <CardActions sx={{ position: "relative" }}>
                         <Avatar

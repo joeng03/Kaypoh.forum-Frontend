@@ -1,4 +1,4 @@
-import CommentCard from "./CommentCard";
+import CommentCard from "../../components/Comments/CommentCard";
 import { useAppDispatch, useAppSelector } from "store";
 import { IComment, initialCommentState } from "store/comments/types";
 import { acSetComments } from "store/comments/action";

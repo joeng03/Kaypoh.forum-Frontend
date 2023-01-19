@@ -1,6 +1,6 @@
 import "./index.css";
 import App from "./App";
-import ScrollToTop from "./components/ScrollToTop";
+import ScrollToTop from "./components/UI/ScrollToTop";
 import store from "store";
 import { BASE_URL } from "utils/endpoints";
 

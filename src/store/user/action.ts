@@ -33,7 +33,6 @@ export const acUserUnStarPost = (user: IUser, star_id: number): AppThunk<Promise
 export const acUserUpdateProfile = (user: FormData): AppThunk<Promise<PayloadAction<IUser>>> => {
     return async (dispatch) => {
         const updatedUser: IUser = await authService.update(user);
-        console.log(updatedUser);
         return dispatch(setUser(updatedUser));
     };
 };
