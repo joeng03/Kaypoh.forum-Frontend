@@ -1,4 +1,4 @@
-import { toastLogoutSuccess, toastLogoutError, toastFormat } from "utils/constants";
+import { toastLogoutSuccess, toastLogoutError, toastFormat } from "config/constants";
 import { useAppDispatch } from "store";
 import { acUserLogout } from "store/user/action";
 import React from "react";

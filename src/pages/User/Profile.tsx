@@ -1,9 +1,9 @@
-import AppInput from "../../components/UI/AppInput";
+import AppInput from "../../components/UI/Input/AppInput";
 import { acUserUpdateProfile } from "store/user/action";
 import { useAppSelector, useAppDispatch } from "store";
 import fetchBlob from "services/blob";
-import { validateEmail, validateUsername } from "utils/validators";
-import { toastUpdateProfileSuccess, toastUpdateProfileError, toastFormat } from "utils/constants";
+import { validateEmail, validateUsername } from "config/validators";
+import { toastUpdateProfileSuccess, toastUpdateProfileError, toastFormat } from "config/constants";
 import React, { useState, useEffect, useRef } from "react";
 import { trackPromise } from "react-promise-tracker";
 import { toast } from "react-toastify";

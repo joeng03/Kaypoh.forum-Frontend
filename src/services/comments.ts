@@ -1,4 +1,4 @@
-import { COMMENTS } from "../utils/endpoints";
+import { COMMENTS } from "../config/endpoints";
 import { IComment } from "../store/comments/types";
 import axios from "axios";
 

@@ -6,9 +6,6 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { trackPromise } from "react-promise-tracker";
 import Box from "@mui/material/Box";
-import Backdrop from "@mui/material/Backdrop";
-import Fade from "@mui/material/Fade";
-import Modal from "@mui/material/Modal";
 
 const CommentsList = () => {
     const { id } = useParams();
@@ -29,28 +26,6 @@ const CommentsList = () => {
     };
 
     return (
-        // <>
-        //     {" "}
-        //     <CommentCard comment={comment} method="create" />
-        //     {comments.map((comment) => (
-        //         <CommentCard key={comment.id} comment={comment} method="update" />
-        //     ))}
-        // </>
-        // display: flex;
-        // flex-direction: column;
-        // row-gap: 1rem;
-        // position: absolute;
-        // top: 50%;
-        // left: 50%;
-        // transform: translate(-50%, -50%);
-        // max-width: 400px;
-        // width: 90vw;
-        // background-color: white;
-        // border-radius: .5rem!important;
-        // box-shadow: 24%;
-        // padding:2rem;
-
-        // <Fade in timeout={{ enter: 700, exit: 400 }}>
         <Box
             sx={{
                 margin: "3.5rem 0rem",
@@ -62,7 +37,6 @@ const CommentsList = () => {
                 <CommentCard key={comment.id} comment={comment} method="update" />
             ))}
         </Box>
-        // </Fade>
     );
 };
 

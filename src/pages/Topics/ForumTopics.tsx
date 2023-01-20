@@ -1,7 +1,7 @@
-import { toastDeleteSuccess, toastNotAuthorizedWarning, toastFormat } from "../../utils/constants";
+import { toastDeleteSuccess, toastNotAuthorizedWarning, toastFormat } from "../../config/constants";
 import { acDeleteTopic, acSetTopics } from "store/topics/action";
 import { useAppDispatch, useAppSelector } from "store";
-import ConfirmationModal from "components/UI/ConfirmationModal";
+import ConfirmationModal from "components/UI/Modals/ConfirmationModal";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";

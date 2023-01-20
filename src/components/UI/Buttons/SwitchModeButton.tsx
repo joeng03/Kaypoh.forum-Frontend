@@ -1,4 +1,4 @@
-import { ColorContext } from "utils/theme";
+import { ColorContext } from "config/theme";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import useTheme from "@mui/material/styles/useTheme";

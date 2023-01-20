@@ -1,8 +1,8 @@
-import AppInput from "components/UI/AppInput";
+import AppInput from "components/UI/Input/AppInput";
 import { IComment } from "store/comments/types";
 import { acCreateComment, acUpdateComment } from "store/comments/action";
 import { useAppDispatch } from "store";
-import { toastPublishSuccess, toastNotAuthorizedWarning, toastFormat, textMaxLength } from "utils/constants";
+import { toastPublishSuccess, toastNotAuthorizedWarning, toastFormat, textMaxLength } from "config/constants";
 
 import React, { useState, useEffect } from "react";
 import { trackPromise } from "react-promise-tracker";

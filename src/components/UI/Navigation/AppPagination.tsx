@@ -9,8 +9,8 @@ const StyledBox = styled(Box)(({ theme }) => ({
     bottom: 0,
     padding: "0.3rem 0rem",
     zIndex: 1,
-    background: theme.palette.mode === "light" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.4)",
-    backdropFilter: "blur(20px)",
+    background: theme.palette.mode === "light" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)",
+    backdropFilter: "blur(30px)",
     color: "transparent",
 }));
 

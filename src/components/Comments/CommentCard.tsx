@@ -1,10 +1,10 @@
 import ViewComment from "./ViewComment";
 import WriteComment from "./WriteComment";
-import ConfirmationModal from "components/UI/ConfirmationModal";
+import ConfirmationModal from "components/UI/Modals/ConfirmationModal";
 import { useAppDispatch, useAppSelector } from "store";
 import { acDeleteComment } from "store/comments/action";
 import { IComment } from "store/comments/types";
-import { toastDeleteSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
+import { toastDeleteSuccess, toastNotAuthorizedWarning, toastFormat } from "config/constants";
 import React, { useState } from "react";
 import { trackPromise } from "react-promise-tracker";
 import { toast } from "react-toastify";

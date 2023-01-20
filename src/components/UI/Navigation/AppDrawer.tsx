@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "store";
 import { acUserLogout } from "store/user/action";
-import { toastLogoutSuccess, toastLogoutError, toastFormat } from "utils/constants";
+import { toastLogoutSuccess, toastLogoutError, toastFormat } from "config/constants";
 import React from "react";
 import { toast } from "react-toastify";
 import { trackPromise } from "react-promise-tracker";

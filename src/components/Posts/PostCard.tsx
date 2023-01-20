@@ -1,10 +1,10 @@
 import { IPost } from "store/posts/types";
 import { IStar } from "store/user/types";
-import { toastDeleteSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
+import { toastDeleteSuccess, toastNotAuthorizedWarning, toastFormat } from "config/constants";
 import { acDeletePost } from "store/posts/action";
 import { acUserStarPost, acUserUnStarPost } from "store/user/action";
 import { useAppDispatch, useAppSelector } from "store";
-import ConfirmationModal from "components/UI/ConfirmationModal";
+import ConfirmationModal from "components/UI/Modals/ConfirmationModal";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { trackPromise } from "react-promise-tracker";

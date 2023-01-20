@@ -1,6 +1,6 @@
-import { SIGN_UP, LOG_IN, LOG_OUT } from "../utils/endpoints";
+import { SIGN_UP, LOG_IN, LOG_OUT } from "../config/endpoints";
 import { ICredentials, IUser } from "../store/user/types";
-import { setToken, removeToken } from "utils/token";
+import { setToken, removeToken } from "config/token";
 import axios from "axios";
 
 export const verifyToken = async (): Promise<IUser> => {

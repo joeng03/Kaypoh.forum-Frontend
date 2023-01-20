@@ -1,4 +1,4 @@
-import { STARS } from "utils/endpoints";
+import { STARS } from "config/endpoints";
 import { IStar } from "store/user/types";
 import axios from "axios";
 

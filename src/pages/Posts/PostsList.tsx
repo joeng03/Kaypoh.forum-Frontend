@@ -1,7 +1,6 @@
 import PostCard from "../../components/Posts/PostCard";
-import Loading from "components/UI/Loading";
 import { useAppSelector } from "store";
-import React, { useEffect } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 
 const PostsList = () => {

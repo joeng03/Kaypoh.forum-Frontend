@@ -1,12 +1,12 @@
-import Warning from "./Warning";
-import { stringMaxLength } from "utils/constants";
+import Warning from "../Effects/Warning";
+import { stringMaxLength } from "config/constants";
 import React from "react";
 import styled from "@mui/material/styles/styled";
 import InputBase from "@mui/material/InputBase";
 
 const StyledInput = styled(InputBase)(({ theme }) => ({
     padding: "0.4rem 0.75rem 0.1rem ",
-    borderRadius: "0.75rem",
+    borderRadius: "1rem",
     transition: "0.4s",
     background: theme.palette.mode === "light" ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.2)",
     "&:hover": {

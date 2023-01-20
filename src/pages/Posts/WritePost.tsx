@@ -1,12 +1,12 @@
-import ContentEditor from "../../components/UI/ContentEditor";
-import PublishButton from "components/UI/PublishButton";
+import ContentEditor from "../../components/UI/Input/ContentEditor";
+import PublishButton from "components/UI/Buttons/PublishButton";
 import { ITopic, initialTopicState } from "store/topics/types";
 import { acCreatePost, acUpdatePost } from "store/posts/action";
 import { acSetTopics } from "store/topics/action";
 import { readOne } from "services/posts";
 import { useAppSelector, useAppDispatch } from "store";
 import fetchBlob from "services/blob";
-import { toastPublishSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
+import { toastPublishSuccess, toastNotAuthorizedWarning, toastFormat } from "config/constants";
 
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -20,7 +20,6 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import TextField from "@mui/material/TextField";
 
@@ -110,7 +109,7 @@ const WritePost = () => {
                 <Autocomplete
                     size="small"
                     value={topic}
-                    onChange={(event: any, newTopic) => {
+                    onChange={(event, newTopic) => {
                         if (newTopic) {
                             setTopic(newTopic);
                         }
@@ -126,18 +125,6 @@ const WritePost = () => {
                             fullWidth
                         />
                     )}
-                    // renderOption={(props, option) => (
-                    //     <Box
-                    //         sx={{
-                    //             textAlign: "left",
-                    //             padding: "0.5rem 0.25rem",
-                    //             "&:hover": { background: "rgb(192,192,192,0.5)" },
-                    //             cursor: "pointer",
-                    //         }}
-                    //     >
-                    //         {option.name}
-                    //     </Box>
-                    // )}
                     disablePortal
                 />
                 <ContentEditor

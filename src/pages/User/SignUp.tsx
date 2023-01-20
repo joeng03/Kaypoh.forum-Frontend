@@ -1,11 +1,11 @@
 import { acUserSignUp } from "../../store/user/action";
 import { useAppDispatch } from "../../store";
 import { ICredentials } from "../../store/user/types";
-import { validateUsername, validateEmail, validatePassword } from "../../utils/validators";
-import { toastSignUpSuccess, toastSignUpError, toastFormat } from "utils/constants";
-import AppTypewriter from "components/UI/AppTypewriter";
-import Input from "components/UI/AppInput";
-import Loading from "components/UI/Loading";
+import { validateUsername, validateEmail, validatePassword } from "../../config/validators";
+import { toastSignUpSuccess, toastSignUpError, toastFormat } from "config/constants";
+import AppTypewriter from "components/UI/Effects/AppTypewriter";
+import Input from "components/UI/Input/AppInput";
+import Loading from "components/UI/General/Loading";
 
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";

@@ -17,7 +17,13 @@ const AppTypewriter = () => {
                     delay: 55,
                 }}
                 onInit={(typewriter) => {
-                    typewriter.typeString("Welcome to ").deleteAll(35).pauseFor(250).typeString("Kaypoh.forum").start();
+                    typewriter
+                        .typeString("Welcome to ")
+                        .deleteAll(35)
+                        .pauseFor(220)
+                        .typeString("Kaypoh.forum")
+                        .pasteString("🎉", null)
+                        .start();
                 }}
             />
         </Typography>

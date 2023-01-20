@@ -1,4 +1,4 @@
-import { TOPICS } from "../utils/endpoints";
+import { TOPICS } from "../config/endpoints";
 import { ITopic } from "../store/topics/types";
 import axios from "axios";
 

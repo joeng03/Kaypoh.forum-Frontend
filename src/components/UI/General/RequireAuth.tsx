@@ -1,6 +1,6 @@
-import { verifyToken } from "../../services/auth";
-import { acSetUser } from "../../store/user/action";
-import { removeToken } from "utils/token";
+import { verifyToken } from "../../../services/auth";
+import { acSetUser } from "../../../store/user/action";
+import { removeToken } from "config/token";
 import { useAppDispatch } from "store";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";

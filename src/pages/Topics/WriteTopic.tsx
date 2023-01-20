@@ -2,18 +2,14 @@ import { acCreateTopic, acUpdateTopic } from "store/topics/action";
 import { useAppDispatch } from "store";
 import { readOne } from "services/topics";
 import { ITopic, initialTopicState } from "store/topics/types";
-import { toastPublishSuccess, toastNotAuthorizedWarning, toastFormat } from "utils/constants";
-import AppInput from "components/UI/AppInput";
-import PublishButton from "components/UI/PublishButton";
+import { toastPublishSuccess, toastNotAuthorizedWarning, toastFormat } from "config/constants";
+import AppInput from "components/UI/Input/AppInput";
+import PublishButton from "components/UI/Buttons/PublishButton";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { trackPromise } from "react-promise-tracker";
 import { useParams, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 
 const WriteTopic = () => {
     const [name, setName] = useState<string>("");

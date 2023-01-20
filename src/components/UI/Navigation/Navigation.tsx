@@ -1,10 +1,10 @@
 import AppPagination from "./AppPagination";
 import { useAppDispatch } from "store";
 import { acSetPosts } from "store/posts/action";
-import SwitchModeButton from "components/UI/SwitchModeButton";
-import HomeButton from "components/UI/HomeButton";
-import AppDrawer from "components/UI/AppDrawer";
-import Loading from "components/UI/Loading";
+import SwitchModeButton from "components/UI/Buttons/SwitchModeButton";
+import HomeButton from "components/UI/Buttons/HomeButton";
+import AppDrawer from "components/UI/Navigation/AppDrawer";
+import Loading from "components/UI/General/Loading";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { styled } from "@mui/material/styles";

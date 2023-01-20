@@ -1,11 +1,11 @@
-import AppTypewriter from "../../components/UI/AppTypewriter";
-import Input from "../../components/UI/AppInput";
-import Loading from "../../components/UI/Loading";
+import AppTypewriter from "../../components/UI/Effects/AppTypewriter";
+import Input from "../../components/UI/Input/AppInput";
+import Loading from "../../components/UI/General/Loading";
 import { acUserLogin } from "../../store/user/action";
 import { useAppDispatch } from "../../store";
 import { ICredentials } from "../../store/user/types";
-import { validateEmail, validatePassword } from "../../utils/validators";
-import { toastLoginError, toastFormat, toastLoginSuccess } from "utils/constants";
+import { validateEmail, validatePassword } from "../../config/validators";
+import { toastLoginError, toastFormat, toastLoginSuccess } from "config/constants";
 import "react-toastify/dist/ReactToastify.css";
 
 import React, { useState, useEffect } from "react";

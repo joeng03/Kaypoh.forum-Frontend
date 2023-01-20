@@ -1,4 +1,4 @@
-import { POSTS } from "../utils/endpoints";
+import { POSTS } from "../config/endpoints";
 import { IPost } from "../store/posts/types";
 import axios from "axios";
 
