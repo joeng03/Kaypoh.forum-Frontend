@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 
 const PostsList = () => {
     const posts = useAppSelector((state) => state.posts);
-
+    console.log(posts);
     return (
         <Box m="3.5rem 0rem">
             <Box display="flex" flexDirection="column">

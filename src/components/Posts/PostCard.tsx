@@ -74,7 +74,7 @@ const PostCardContent = ({ post_id, title, content, verticalLayout = false }: Po
                         fontWeight: "bold",
                         fontFamily: "Open Sans, sans-serif",
                         mb: verticalLayout ? "0.4rem " : "1rem",
-                        mt: "0.8rem",
+                        mt: verticalLayout ? "0rem" : "0.8rem",
                         display: "-webkit-box",
                         WebkitBoxOrient: "vertical",
                         WebkitLineClamp: 2,
@@ -111,6 +111,9 @@ const PostCard = ({ post }: PostCardProps) => {
     const [starsCount, setStarsCount] = useState<number>(post.stars_count);
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
+    useEffect(() => {
+        setStarsCount(post.stars_count);
+    }, [post]);
     useEffect(() => {
         if (user) {
             setStarClicked(user.stars.find((star) => star.post_id === post.id) !== undefined);

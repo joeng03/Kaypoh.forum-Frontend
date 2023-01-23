@@ -29,10 +29,6 @@ const AppDrawerItem: React.FC<AppDrawerItemProps> = ({ onClick, text, children }
     );
 };
 
-const StyledDrawer = styled(Drawer)(({ theme }) => ({
-    background: theme.palette.mode === "light" ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.4)",
-}));
-
 type AppDrawerProps = {
     drawerOpen: boolean;
     closeDrawer: () => void;
@@ -58,7 +54,7 @@ const AppDrawer = ({ drawerOpen, closeDrawer }: AppDrawerProps) => {
         );
     };
     return (
-        <StyledDrawer open={drawerOpen} onClose={closeDrawer} transitionDuration={{ enter: 300, exit: 200 }}>
+        <Drawer open={drawerOpen} onClose={closeDrawer} transitionDuration={{ enter: 300, exit: 200 }}>
             <Box sx={{ width: "9rem", mt: "3rem" }} role="presentation">
                 <List>
                     {user.admin_level > 0 && (
@@ -97,7 +93,7 @@ const AppDrawer = ({ drawerOpen, closeDrawer }: AppDrawerProps) => {
                     </AppDrawerItem>
                 </List>
             </Box>
-        </StyledDrawer>
+        </Drawer>
     );
 };
 

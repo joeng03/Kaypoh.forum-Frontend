@@ -21,7 +21,7 @@ const ForumTopics = () => {
         {
             field: "description",
             headerName: "Description",
-            width: 200,
+            minWidth: 200,
             flex: 1,
             editable: true,
         },

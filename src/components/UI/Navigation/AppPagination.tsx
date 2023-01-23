@@ -1,4 +1,5 @@
-import React from "react";
+import { useAppSelector } from "store";
+import React, { useState, useEffect } from "react";
 import styled from "@mui/material/styles/styled";
 import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
@@ -20,10 +21,17 @@ type AppPaginationProps = {
 };
 
 const AppPagination = ({ page, onChange }: AppPaginationProps) => {
+    const [count, setCount] = useState<number>(100);
+    // const posts = useAppSelector((state) => state.posts);
+    // useEffect(() => {
+    //     console.log(posts.length);
+    //     setCount(Math.ceil(posts.length / 10));
+    // }, [posts]);
+
     return (
         <StyledBox>
             <Pagination
-                count={100}
+                count={count}
                 variant="outlined"
                 color="primary"
                 page={page}

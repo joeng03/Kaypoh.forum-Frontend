@@ -39,7 +39,6 @@ const WriteComment = ({ comment, method, onCancel }: WriteCommentProps) => {
         trackPromise(
             (method === "update"
                 ? dispatch(acUpdateComment(currentComment)).then(() => {
-                      toast.success(toastPublishSuccess("comment"), toastFormat);
                       onCancel();
                   })
                 : dispatch(acCreateComment(currentComment))
@@ -56,7 +55,7 @@ const WriteComment = ({ comment, method, onCancel }: WriteCommentProps) => {
     };
 
     return (
-        <Box component="form" noValidate onSubmit={handlePublishComment}>
+        <Box component="form" onSubmit={handlePublishComment} noValidate>
             <Grid container spacing={1} direction="column">
                 <Grid item xs={10} position="relative">
                     <AppInput
@@ -70,7 +69,7 @@ const WriteComment = ({ comment, method, onCancel }: WriteCommentProps) => {
                         required={false}
                         maxLength={textMaxLength}
                         multiline
-                    ></AppInput>
+                    />
                 </Grid>
                 <Grid item xs={2} sx={{ position: "relative" }}>
                     {method === "update" && (

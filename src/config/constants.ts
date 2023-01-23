@@ -13,9 +13,9 @@ export const toastNotAuthorizedWarning =
     "You are not authorized to perform this action. If your session has expired, please log in again";
 
 // General toast messages (functions)
-export const toastPublishSuccess = (item: string) => `Successfully published ${item} !`;
+export const toastPublishSuccess = (item: string) => `Successfully published ${item}!`;
 
-export const toastDeleteSuccess = (item: string) => `Successfully deleted ${item} !`;
+export const toastDeleteSuccess = (item: string) => `Successfully deleted ${item}!`;
 
 export const toastSignUpError = (errors: { email?: string; username?: string }): string => {
     let message = "";

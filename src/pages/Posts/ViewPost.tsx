@@ -45,7 +45,7 @@ const ViewPost = () => {
                     .catch(() => navigate("/notfound")),
             );
         }
-    }, []);
+    }, [user]);
 
     const handleStarClick = () => {
         if (starClicked) {
@@ -141,7 +141,7 @@ const ViewPost = () => {
                                     </Tooltip>
                                 </IconButton>
                                 {starsCount}
-                                <Link to={"comments"}>
+                                <Link to="comments">
                                     <IconButton aria-label="comment">
                                         <Tooltip title="Comments" placement="bottom" disableInteractive>
                                             <ChatBubbleOutlineRoundedIcon />
@@ -152,10 +152,7 @@ const ViewPost = () => {
                         </Grid>
                     </Grid>
 
-                    <Typography
-                        dangerouslySetInnerHTML={sanitizeData(post.content)}
-                        sx={{ textAlign: "left" }}
-                    ></Typography>
+                    <Typography dangerouslySetInnerHTML={sanitizeData(post.content)} sx={{ textAlign: "left" }} />
                     <Outlet />
                 </Box>
             )}

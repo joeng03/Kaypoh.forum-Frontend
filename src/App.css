@@ -65,8 +65,9 @@
 .chip{
   top: 0.6rem;
   right: 0.6rem;
-  position: absolute;
   font-size: 0.85rem;
+  position: absolute;
+  z-index:1;
 }
 
 .modal{

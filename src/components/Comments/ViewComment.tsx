@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import DOMPurify from "isomorphic-dompurify";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 
 const maxDisplayLength = 300;
 

@@ -53,7 +53,7 @@ const CommentCard = ({ comment, method }: CommentCardProps) => {
             sx={{ maxWidth: "48rem", height: "11.5rem" }}
         >
             <Grid container spacing={0.5} height="100%" sx={{ overflow: "scroll" }}>
-                <Grid item xs={2} mt="0.8rem">
+                <Grid item xs={2} mt="0.8rem" minWidth="6.5rem">
                     <Box display="flex" flexDirection="row" ml="0.2rem">
                         <Box>
                             <Avatar src={comment.user.profile_picture} className="avatar">
@@ -116,7 +116,6 @@ const CommentCard = ({ comment, method }: CommentCardProps) => {
                             }}
                         >
                             <Typography variant="caption"> Sentiment: </Typography>
-                            {/* {comment.sentiment} */}
                             {comment.sentiment < 0 ? (
                                 <SentimentDissatisfiedRoundedIcon sx={{ color: "icon.negative" }} />
                             ) : comment.sentiment > 0.3 ? (
@@ -127,7 +126,7 @@ const CommentCard = ({ comment, method }: CommentCardProps) => {
                         </Box>
                     )}
                 </Grid>
-                <Grid item xs={10}>
+                <Grid item xs={true}>
                     <CardContent>
                         {isView ? (
                             <ViewComment content={comment.content} />
