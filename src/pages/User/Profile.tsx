@@ -15,16 +15,20 @@ import Typography from "@mui/material/Typography";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import SendIcon from "@mui/icons-material/Send";
 
+/**
+ * Displays the user profile page of the currently logged in user.
+ * @returns React.Element
+ */
 const Profile = () => {
     const [email, setEmail] = useState<string>("");
     const [username, setUsername] = useState<string>("");
     const [bio, setBio] = useState<string>("");
     const [profilePic, setProfilePic] = useState<File>();
-
     const [emailErr, setEmailErr] = useState<string>("");
     const [usernameErr, setUsernameErr] = useState<string>("");
 
     const profilePicRef = useRef<HTMLImageElement>(null);
+
     const user = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
 
