@@ -1,29 +1,160 @@
-Name: Ng Yin Joe
+---
+description: A guide for the Kaypoh.forum Frontend
+---
 
-Matriculation number: A0255771X
+# Frontend
 
-Kaypoh.forum is a user-centric online platform for free and constructive exchange of ideas.
+### Setting Up
 
-Below is a description of the tech stack used in developing this project.
+{% hint style="info" %}
+You may want to look into each detailed Git commit message to understand the chronology of the development of features in the Frontend!
+{% endhint %}
 
-Frontend:
+Make sure you have Git, Node, and yarn installed correctly on your machine. Then run the following commands:
 
-Flux Architecture
+<pre data-line-numbers><code><strong>git clone https://github.com/joeng03/CVWO-Winter-Assignment-Frontend-Final-Submission.git
+</strong>cd CVWO-Winter-Assignment-Frontend-Final-Submission
+yarn install
+<strong>yarn start
+</strong></code></pre>
 
--TypeScript
+You could also use Docker to set up the Frontend after cloning it.
 
--React
 
--Redux
 
--MaterialUI
+### Docker
 
-Backend:
+**Run Docker Frontend Development Server:**
 
-MVC Architecture (With Frontend as the View layer)
+`docker-compose -f docker-compose-dev.yml up -d -–build`
 
--Ruby on Rails
+**Run Docker Frontend Production Server:**
 
--Postgresql
+`docker-compose -f docker-compose-prod.yml up -d -–build`
 
--Redis
+###
+
+### User/Admin Access
+
+Gain user access by signing up for an account using the frontend **/signup** page.
+
+Use the following credentials to gain admin access:
+
+```
+email:     yinjoeng2003@gmail.com
+password:  admin2023
+```
+
+****
+
+### **Directory Structure:**
+
+This is the structure of the /src folder: (files included)
+
+```
+│   App.css
+│   App.tsx
+│   index.css
+│   index.tsx
+│   react-app-env.d.ts
+│
+├───components
+│   ├───Comments
+│   │       CommentCard.tsx
+│   │       ViewComment.tsx
+│   │       WriteComment.tsx
+│   │
+│   ├───Posts
+│   │       PostCard.tsx
+│   │
+│   └───UI
+│           AppDrawer.tsx
+│           AppInput.tsx
+│           AppPagination.tsx
+│           AppTypewriter.tsx
+│           ConfirmationModal.tsx
+│           ContentEditor.tsx
+│           HomeButton.tsx
+│           Loading.tsx
+│           LogoutButton.tsx
+│           Navigation.tsx
+│           PublishButton.tsx
+│           RequireAuth.tsx
+│           ScrollToTop.tsx
+│           SwitchModeButton.tsx
+│           Warning.tsx
+│
+├───pages
+│   ├───Comments
+│   │       CommentsList.tsx
+│   │
+│   ├───General
+│   │       CodeOfConduct.tsx
+│   │       NotFound.tsx
+│   │
+│   ├───Posts
+│   │       PostsList.tsx
+│   │       ViewPost.tsx
+│   │       WritePost.tsx
+│   │
+│   ├───Topics
+│   │       ForumTopics.tsx
+│   │       WriteTopic.tsx
+│   │
+│   └───Users
+│           Login.tsx
+│           Profile.tsx
+│           SignUp.tsx
+│
+├───services
+│       auth.ts
+│       blob.ts
+│       comments.ts
+│       posts.ts
+│       stars.ts
+│       topics.ts
+│
+├───store
+│   │   index.ts
+│   │
+│   ├───comments
+│   │       action.ts
+│   │       reducer.ts
+│   │       types.ts
+│   │
+│   ├───posts
+│   │       action.ts
+│   │       reducer.ts
+│   │       types.ts
+│   │
+│   ├───topics
+│   │       action.ts
+│   │       reducer.ts
+│   │       types.ts
+│   │
+│   └───user
+│           action.ts
+│           reducer.ts
+│           types.ts
+│
+└───utils
+        constants.ts
+        endpoints.ts
+        theme.ts
+        token.ts
+        validators.ts
+```
+
+### Documentation
+
+<figure><img src=".gitbook/assets/image (17).png" alt=""><figcaption><p>TypeDoc Documentation for the IPost interface</p></figcaption></figure>
+
+Run the command:
+
+```
+yarn docs
+```
+
+to generate TypeDoc documentation of the current version of the project, which would be stored in the /docs folder in the root directory.
+
+You could also contribute by adding custom documentation using the [TSDoc](https://tsdoc.org/) format and standard.
