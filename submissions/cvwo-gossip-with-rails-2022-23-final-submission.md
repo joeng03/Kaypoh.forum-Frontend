@@ -6,8 +6,6 @@ description: Made with ❤️ by Yin Joe
 
 ### **Accomplishments**
 
-****
-
 **·        Exploring and Enjoying UI/UX Design**
 
 As I have no prior experience in UI/UX design, I had to acquire new skills to design user-friendly interfaces. Through reading articles about UI/UX design principles and best practices, studying the MUI Documentation, and relying on my artistic intuition, I had a solid foundation of knowledge to build on as I began to experiment with different design techniques and elements.
@@ -53,5 +51,5 @@ One of the challenges I have faced as a web developer for this project is when I
 ### User Manual
 
 {% hint style="success" %}
-Please refer to [this](cvwo-gossip-with-rails-2022-23-final-submission.md#user-guide) detailed version of the user manual
+Please refer to [this](cvwo-gossip-with-rails-2022-23-final-submission.md#user-manual) detailed version of the user manual
 {% endhint %}

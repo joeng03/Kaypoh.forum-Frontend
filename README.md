@@ -47,6 +47,22 @@ password:  admin2023
 
 ****
 
+### Documentation
+
+<figure><img src=".gitbook/assets/image (17).png" alt=""><figcaption><p>TypeDoc Documentation for the IPost interface</p></figcaption></figure>
+
+Run the command:
+
+```
+yarn docs
+```
+
+to generate TypeDoc documentation of the current version of the project, which would be stored in the /docs folder in the root directory.
+
+You could also contribute by adding custom documentation using the [TSDoc](https://tsdoc.org/) format and standard.
+
+
+
 ### **Directory Structure:**
 
 This is the structure of the /src folder: (files included)
@@ -68,21 +84,39 @@ This is the structure of the /src folder: (files included)
 │   │       PostCard.tsx
 │   │
 │   └───UI
-│           AppDrawer.tsx
-│           AppInput.tsx
-│           AppPagination.tsx
-│           AppTypewriter.tsx
-│           ConfirmationModal.tsx
-│           ContentEditor.tsx
-│           HomeButton.tsx
-│           Loading.tsx
-│           LogoutButton.tsx
-│           Navigation.tsx
-│           PublishButton.tsx
-│           RequireAuth.tsx
-│           ScrollToTop.tsx
-│           SwitchModeButton.tsx
-│           Warning.tsx
+│       ├───Buttons
+│       │       HomeButton.tsx
+│       │       LogoutButton.tsx
+│       │       PublishButton.tsx
+│       │       SwitchModeButton.tsx
+│       │
+│       ├───Effects
+│       │       AppTypewriter.tsx
+│       │       Warning.tsx
+│       │
+│       ├───General
+│       │       Loading.tsx
+│       │       RequireAuth.tsx
+│       │       ScrollToTop.tsx
+│       │
+│       ├───Input
+│       │       AppInput.tsx
+│       │       ContentEditor.tsx
+│       │
+│       ├───Modals
+│       │       ConfirmationModal.tsx
+│       │
+│       └───Navigation
+│               AppDrawer.tsx
+│               AppPagination.tsx
+│               Navigation.tsx
+│
+├───config
+│       constants.ts
+│       endpoints.ts
+│       theme.ts
+│       token.ts
+│       validators.ts
 │
 ├───pages
 │   ├───Comments
@@ -101,7 +135,7 @@ This is the structure of the /src folder: (files included)
 │   │       ForumTopics.tsx
 │   │       WriteTopic.tsx
 │   │
-│   └───Users
+│   └───User
 │           Login.tsx
 │           Profile.tsx
 │           SignUp.tsx
@@ -114,47 +148,27 @@ This is the structure of the /src folder: (files included)
 │       stars.ts
 │       topics.ts
 │
-├───store
-│   │   index.ts
-│   │
-│   ├───comments
-│   │       action.ts
-│   │       reducer.ts
-│   │       types.ts
-│   │
-│   ├───posts
-│   │       action.ts
-│   │       reducer.ts
-│   │       types.ts
-│   │
-│   ├───topics
-│   │       action.ts
-│   │       reducer.ts
-│   │       types.ts
-│   │
-│   └───user
-│           action.ts
-│           reducer.ts
-│           types.ts
-│
-└───utils
-        constants.ts
-        endpoints.ts
-        theme.ts
-        token.ts
-        validators.ts
+└───store
+    │   index.ts
+    │
+    ├───comments
+    │       action.ts
+    │       reducer.ts
+    │       types.ts
+    │
+    ├───posts
+    │       action.ts
+    │       reducer.ts
+    │       types.ts
+    │
+    ├───topics
+    │       action.ts
+    │       reducer.ts
+    │       types.ts
+    │
+    └───user
+            action.ts
+            reducer.ts
+            types.ts
 ```
 
-### Documentation
-
-<figure><img src=".gitbook/assets/image (17).png" alt=""><figcaption><p>TypeDoc Documentation for the IPost interface</p></figcaption></figure>
-
-Run the command:
-
-```
-yarn docs
-```
-
-to generate TypeDoc documentation of the current version of the project, which would be stored in the /docs folder in the root directory.
-
-You could also contribute by adding custom documentation using the [TSDoc](https://tsdoc.org/) format and standard.
