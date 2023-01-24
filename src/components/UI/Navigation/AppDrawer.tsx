@@ -57,6 +57,13 @@ const AppDrawer = ({ drawerOpen, closeDrawer }: AppDrawerProps) => {
         <Drawer open={drawerOpen} onClose={closeDrawer} transitionDuration={{ enter: 300, exit: 200 }}>
             <Box sx={{ width: "9rem", mt: "3rem" }} role="presentation">
                 <List>
+                    <Link to="/profile" style={{ color: "inherit", textDecoration: "inherit" }}>
+                        <AppDrawerItem onClick={closeDrawer} text={"My profile"}>
+                            <span>😎</span>
+
+                            {/* <AccountCircleRoundedIcon sx={{ fontSize: "0.9rem" }} /> */}
+                        </AppDrawerItem>
+                    </Link>
                     {user.admin_level > 0 && (
                         <Link to="/writetopic" style={{ color: "inherit", textDecoration: "inherit" }}>
                             <AppDrawerItem onClick={closeDrawer} text={"Write topic"}>
@@ -77,13 +84,6 @@ const AppDrawer = ({ drawerOpen, closeDrawer }: AppDrawerProps) => {
                             <span>✉️</span>
 
                             {/* <BorderColorRoundedIcon sx={{ fontSize: "0.9rem" }} /> */}
-                        </AppDrawerItem>
-                    </Link>
-                    <Link to="/profile" style={{ color: "inherit", textDecoration: "inherit" }}>
-                        <AppDrawerItem onClick={closeDrawer} text={"My profile"}>
-                            <span>😎</span>
-
-                            {/* <AccountCircleRoundedIcon sx={{ fontSize: "0.9rem" }} /> */}
                         </AppDrawerItem>
                     </Link>
                     <AppDrawerItem onClick={handleLogout} text={"Logout "}>

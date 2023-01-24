@@ -9,7 +9,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
     position: "fixed",
     bottom: 0,
     padding: "0.3rem 0rem",
-    zIndex: 1,
+    zIndex: 2,
     background: theme.palette.mode === "light" ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)",
     backdropFilter: "blur(30px)",
     color: "transparent",

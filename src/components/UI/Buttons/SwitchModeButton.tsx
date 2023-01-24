@@ -20,7 +20,7 @@ const SwitchModeButton = () => {
                 {" "}
                 {theme.palette.mode === "light" ? "Light" : "Dark"} mode
             </Typography>
-            <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode}>
+            <IconButton onClick={colorMode.toggleColorMode}>
                 {theme.palette.mode === "dark" ? (
                     <LightIcon sx={{ color: "icon.sun", fontSize: "1.7rem" }} />
                 ) : (

@@ -85,7 +85,7 @@ const Navigation = () => {
         localStorage.getItem("columnName") ? (localStorage.getItem("columnName") as string) : "title",
     );
     const [sortBy, setSortBy] = useState<string>(
-        localStorage.getItem("sortBy") ? (localStorage.getItem("sortBy") as string) : "created_at DESC",
+        localStorage.getItem("sortBy") ? (localStorage.getItem("sortBy") as string) : "stars",
     );
     const [page, setPage] = useState<number>(1);
     const [drawerOpen, setDrawerOpen] = useState<boolean>(false);

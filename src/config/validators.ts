@@ -4,11 +4,11 @@ export const validateUsername = (username: string): string => {
     if (!username) {
         return "Username is required";
     }
-    if (username.indexOf(" ") >= 0) {
-        return "Username must not contain whitespace";
-    }
     if (username.length > usernameMaxLength) {
         return `Username must have at most ${usernameMaxLength} characters`;
+    }
+    if (username.indexOf(" ") >= 0) {
+        return "Username must not contain whitespace";
     }
     return "";
 };
@@ -16,11 +16,11 @@ export const validateEmail = (email: string): string => {
     if (!email) {
         return "Email is required";
     }
-    if (!emailRegex.test(email)) {
-        return "Incorrect email format";
-    }
     if (email.length > stringMaxLength) {
         return `Email must have at most ${stringMaxLength} characters`;
+    }
+    if (!emailRegex.test(email)) {
+        return "Incorrect email format";
     }
     return "";
 };
