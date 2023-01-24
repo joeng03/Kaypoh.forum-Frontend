@@ -75,7 +75,6 @@ const WritePost = () => {
 
         postFormData.append("post[title]", title);
         postFormData.append("post[content]", convertToHTML(editorState.getCurrentContent()));
-        console.log(stateToHTML(editorState.getCurrentContent()));
         postFormData.append("post[topic_id]", topic.id === -1 ? topics[0].id.toString() : topic.id.toString());
 
         if (image) {
