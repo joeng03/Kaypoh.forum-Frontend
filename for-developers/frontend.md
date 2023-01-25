@@ -50,7 +50,7 @@ password:  admin2023
 
 ### Documentation
 
-<figure><img src=".gitbook/assets/image (17).png" alt=""><figcaption><p>TypeDoc Documentation for the IPost interface</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (17).png" alt=""><figcaption><p>TypeDoc Documentation for the IPost interface</p></figcaption></figure>
 
 Run the command:
 
