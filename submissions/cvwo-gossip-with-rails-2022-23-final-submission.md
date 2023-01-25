@@ -51,5 +51,5 @@ One of the challenges I have faced as a web developer for this project is when I
 ### User Manual
 
 {% hint style="success" %}
-Please refer to [this](broken-reference) detailed version of the user manual
+Please refer to [this](../user-manual/) detailed version of the user manual
 {% endhint %}
