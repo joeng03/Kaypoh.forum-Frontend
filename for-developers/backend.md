@@ -16,11 +16,12 @@ As the environment variables of the backend are confidential, to run the backend
 
 Make sure you have Git, Ruby 3.1.2, and Bundler installed correctly on your machine. Then run the following commands:
 
-<pre data-line-numbers><code><strong>git clone https://github.com/joeng03/CVWO-Winter-Assignment-Backend-Final-Submission.git
-</strong>cd CVWO-Winter-Assignment-Backend-Final-Submission.git
+```
+git clone https://github.com/joeng03/CVWO-Winter-Assignment-Backend-Final-Submission.git
+cd CVWO-Winter-Assignment-Backend-Final-Submission.git
 bundle
-<strong>rails s
-</strong></code></pre>
+rails s
+```
 
 You could also use Docker to set up the Backend after cloning it.
 
@@ -107,6 +108,4 @@ This is the structure of the /app folder: (files included)
         topic_serializer.rb
         user_serializer.rb
 ```
-
-
 

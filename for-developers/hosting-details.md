@@ -2,11 +2,11 @@
 
 ### URLs
 
-Kaypoh.forum is hosted on Netlify [https://kaypoh.netlify.app/](https://kaypoh.netlify.app/) [![Netlify Status](https://api.netlify.com/api/v1/badges/0c4342cd-930d-49a5-b773-de3b193aefd6/deploy-status)](https://app.netlify.com/sites/kaypoh/deploys). Due to constraints of backend computing resources (free tier), this site may load slower 🐢 (thank you for your patience!)&#x20;
+Kaypoh.forum is hosted on Netlify [https://kaypoh.netlify.app/](https://kaypoh.netlify.app/) [![Netlify Status](https://api.netlify.com/api/v1/badges/0c4342cd-930d-49a5-b773-de3b193aefd6/deploy-status)](https://app.netlify.com/sites/kaypoh/deploys). Due to constraints of backend computing resources \[free tier], this site may load slower 🐢 \[thank you for your patience!]
 
 
 
-Kaypoh.forum is also hosted on Amazon AWS [http://ec2-13-213-114-232.ap-southeast-1.compute.amazonaws.com:3001/](http://ec2-13-213-114-232.ap-southeast-1.compute.amazonaws.com:3001/) \[This site has lightning⚡speed] . Since I did not purchase a domain name for Kaypoh.forum, this site is not configured with an SSL certificate and thus must be accessed through http only.&#x20;
+Kaypoh.forum is also hosted on Amazon AWS [http://ec2-13-213-114-232.ap-southeast-1.compute.amazonaws.com:3001/](http://ec2-13-213-114-232.ap-southeast-1.compute.amazonaws.com:3001/) \[This site loads with lightning⚡speed] . Since I have not (yet) purchased a domain name for Kaypoh.forum, this endpoint is not configured with an SSL certificate and thus must be accessed through http only.&#x20;
 
 
 

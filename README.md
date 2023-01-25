@@ -12,11 +12,12 @@ You may want to look into each detailed Git commit message to understand the chr
 
 Make sure you have Git, Node, and yarn installed correctly on your machine. Then run the following commands:
 
-<pre data-line-numbers><code><strong>git clone https://github.com/joeng03/CVWO-Winter-Assignment-Frontend-Final-Submission.git
-</strong>cd CVWO-Winter-Assignment-Frontend-Final-Submission
+```
+git clone https://github.com/joeng03/CVWO-Winter-Assignment-Frontend-Final-Submission.git
+cd CVWO-Winter-Assignment-Frontend-Final-Submission
 yarn install
-<strong>yarn start
-</strong></code></pre>
+yarn start
+```
 
 You could also use Docker to set up the Frontend after cloning it.
 

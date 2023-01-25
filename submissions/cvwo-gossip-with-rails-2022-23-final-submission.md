@@ -10,7 +10,7 @@ description: Made with ❤️ by Yin Joe
 
 As I have no prior experience in UI/UX design, I had to acquire new skills to design user-friendly interfaces. Through reading articles about UI/UX design principles and best practices, studying the MUI Documentation, and relying on my artistic intuition, I had a solid foundation of knowledge to build on as I began to experiment with different design techniques and elements.
 
-I wanted the web forum to be as user-centric, customizable, and responsive as possible. For a better user experience, I added a rich text editor, and the functionality to upload images for posts and profile pictures.  I also integrated the usage of pagination for posts, thus increasing the scalability of the project when the number of posts grows.
+I wanted the web forum to be as user-centric, customizable, and responsive as possible. For a better user experience, I added a rich text editor, and the functionality to upload images for posts and profile pictures. I also integrated the usage of pagination for posts, thus increasing the scalability of the project when the number of posts grows.
 
 By using Data Grids for forum topics and Cards for posts, I was able to give users a taste of different UI designs. Data Grids were used to sort and search for data efficiently, thus enabling users to quickly read the statistics of each topic (creator, creation date, number of posts) and subscribe/ unsubscribe from them. On the other hand, Cards give a social media-like experience to users, where each post is presented as an individual component, which links to a page displaying more detailed information about the post. Portrait and landscape Card layouts were designed to cater to different screen sizes.
 
@@ -51,5 +51,5 @@ One of the challenges I have faced as a web developer for this project is when I
 ### User Manual
 
 {% hint style="success" %}
-Please refer to [this](cvwo-gossip-with-rails-2022-23-final-submission.md#user-manual) detailed version of the user manual
+Please refer to [this](broken-reference) detailed version of the user manual
 {% endhint %}
