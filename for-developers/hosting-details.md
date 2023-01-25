@@ -2,7 +2,7 @@
 
 ### URLs
 
-Kaypoh.forum is hosted on Netlify [https://kaypoh.netlify.app/](https://kaypoh.netlify.app/) [![Netlify Status](https://api.netlify.com/api/v1/badges/0c4342cd-930d-49a5-b773-de3b193aefd6/deploy-status)](https://app.netlify.com/sites/kaypoh/deploys). Due to constraints of backend computing resources \[free tier], this site may load slower 🐢 \[thank you for your patience!]
+Kaypoh.forum is hosted on Netlify [https://kaypoh.netlify.app/](https://kaypoh.netlify.app/) [![Netlify Status](https://api.netlify.com/api/v1/badges/0c4342cd-930d-49a5-b773-de3b193aefd6/deploy-status)](https://app.netlify.com/sites/kaypoh/deploys). Due to constraints of backend computing resources \[free tier], this site may load slower 🐢 (thank you for your patience!)
 
 
 
