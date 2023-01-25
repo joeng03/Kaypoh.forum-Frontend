@@ -4,6 +4,7 @@
 
 * [Frontend](README.md)
 * [Backend](for-developers/backend.md)
+* [Hosting Details](for-developers/hosting-details.md)
 
 ## 📜 User Manual
 
@@ -12,6 +13,7 @@
 * [Posts](user-manual/posts.md)
 * [Comments](user-manual/comments.md)
 * [User Profile](user-manual/user-profile.md)
+* [General](user-manual/general.md)
 
 ## 📚 Submissions
 
