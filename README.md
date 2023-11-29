@@ -6,7 +6,7 @@ Visit [this GitBook site](https://joeng03.gitbook.io/kaypoh.forum/) for a better
 
 Admin Account: 
 ```
-Username: admin
+Email: yinjoeng0003@gmail.com
 Password: kaypohforumreactredux
 ```
 
